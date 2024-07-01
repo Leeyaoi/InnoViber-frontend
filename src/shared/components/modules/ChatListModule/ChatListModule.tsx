@@ -1,7 +1,20 @@
+import ChatComponent from "../../components/ChatComponent/ChatComponent";
 import "./ChatListModule.scss";
 
 const ChatListModule = () => {
-  return <div className="MainPage_classList">ChatListModule</div>;
+  return (
+    <ul className="MainPage_ChatList">
+      <li>
+        <ChatComponent />
+      </li>
+      <li>
+        <ChatComponent />
+      </li>
+      <li>
+        <ChatComponent />
+      </li>
+    </ul>
+  );
 };
 
 export default ChatListModule;
