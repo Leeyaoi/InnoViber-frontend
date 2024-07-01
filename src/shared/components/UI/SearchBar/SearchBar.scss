@@ -1,0 +1,33 @@
+.search-input-box{
+    display: flex;
+    border-radius: 1.5rem;
+    width: 90%;
+    margin: 0.5rem auto;
+    background-color: #fff;
+
+    input{
+        border: none !important;
+        outline: none !important;
+    }
+}
+
+.search-input{
+    border-radius: inherit;
+    border: none;
+    width: 90%;
+    padding:0.5rem;
+}
+
+.search-icon{
+    object-fit: cover;
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.search-input::-webkit-search-cancel-button{
+    display: none;
+}
+
+.search-input:-webkit-input-placeholder{
+    border: none;
+}

@@ -2,9 +2,9 @@ $back-color: rgb(20, 81, 30);
 $light-color: rgb(242, 228, 209);
 
 .MainPage_ChatList{
+    padding: 0;
     list-style-type: none;
-    padding-left: 1rem;
     border: 1px solid $light-color;
     background-color: $back-color;
-    width: 33%;
+    width: 25rem;
 }
