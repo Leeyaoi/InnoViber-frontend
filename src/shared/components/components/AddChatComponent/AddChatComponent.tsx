@@ -1,12 +1,20 @@
-import DefaultLabel from "../../UI/DefaultLabel/DefaultLabel";
-import DefaultButton from "../../UI/DefaultButton/DefaultButton";
 import "./AddChatComponent.scss";
+import { IconButton, Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const AddChatComponent = () => {
   return (
     <div className="MainPage_ChatList_AddChat">
-      <DefaultButton value="+" />
-      <DefaultLabel text="Add chat" />
+      <IconButton
+        sx={{
+          border: "1px solid primary.light",
+          color: "primary.light",
+          bgcolor: "primary.dark",
+        }}
+      >
+        <AddIcon />
+      </IconButton>
+      <Typography sx={{ ml: "2rem" }}>Add chat</Typography>
     </div>
   );
 };

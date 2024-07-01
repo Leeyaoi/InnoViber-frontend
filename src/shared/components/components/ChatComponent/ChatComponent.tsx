@@ -1,6 +1,5 @@
-import RoundPicture from "../../UI/RoundPicture/RoundPicture";
-import DefaultLabel from "../../UI/DefaultLabel/DefaultLabel";
 import "./ChatComponent.scss";
+import { Avatar, Typography } from "@mui/material";
 
 interface Props {
   chatName?: string;
@@ -13,10 +12,10 @@ const ChatComponent = ({
 }: Props) => {
   return (
     <div className="MainPage_ChatList_ChatBlock">
-      <RoundPicture />
+      <Avatar src="src\shared\assets\profile.jpg" />
       <div className="MainPage_ChatList_ChatBlock_ChatInfo">
-        <DefaultLabel text={chatName} />
-        <DefaultLabel text={lastMessage} smaller={true} />
+        <Typography variant="h1">{chatName}</Typography>
+        <Typography>{lastMessage}</Typography>
       </div>
     </div>
   );

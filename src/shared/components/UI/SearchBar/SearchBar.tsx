@@ -1,3 +1,4 @@
+import SearchIcon from "@mui/icons-material/Search";
 import "./SearchBar.scss";
 
 interface Props {
@@ -14,7 +15,12 @@ const SearchBar = ({ placeholder = "Search" }: Props) => {
         placeholder={placeholder}
         onChange={() => {}}
       />
-      <img src="src\shared\assets\search.png" className="search-icon" />
+      <SearchIcon
+        sx={{
+          color: "primary.dark",
+          my: "auto",
+        }}
+      />
     </div>
   );
 };
