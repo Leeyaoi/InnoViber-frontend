@@ -1,7 +1,12 @@
 $light-color: rgb(242, 228, 209);
-$btn-color: #084107;
+$darker-color: #084107;
 $back-color: rgb(20, 81, 30);
+$font-color: rgb(242, 228, 209);
 
 body{
     margin: 0 auto;
+}
+
+.active{
+    background-color: $darker-color;
 }
