@@ -1,5 +1,4 @@
-$back-color: rgb(20, 81, 30);
-$light-color: rgb(242, 228, 209);
+@import "../../../../index.scss";
 
 .MainPage_ChatList{
     padding: 0;
@@ -7,4 +6,8 @@ $light-color: rgb(242, 228, 209);
     border: 1px solid $light-color;
     background-color: $back-color;
     width: 25rem;
+}
+
+.MainPage_ChatList > *{
+    border-top: 1px solid $light-color;
 }
