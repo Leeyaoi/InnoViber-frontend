@@ -1,35 +1,37 @@
 import ChatComponent from "../../components/ChatComponent/ChatComponent";
 import SearchBar from "../../UI/SearchBar/SearchBar";
 import AddChatComponent from "../../components/AddChatComponent/AddChatComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ChatListModule.scss";
+import ShortChatType from "../../../types/ShortChatType";
+import client from "../../../api/BaseAxiosInstance";
 
 const ChatListModule = () => {
   const [selectedIndex, SetSelectedIndex] = useState(-1);
+  const [chatList, SetChatList] = useState([] as ShortChatType[]);
+
+  useEffect(() => {
+    client.get("/Chat").then((response) => {
+      SetChatList(response.data);
+    });
+  });
 
   return (
     <>
       <ul className="MainPage_ChatList">
         <SearchBar placeholder="Search chat" />
         <AddChatComponent />
-        <li
-          className={selectedIndex === 0 ? "active" : ""}
-          onClick={() => SetSelectedIndex(0)}
-        >
-          <ChatComponent />
-        </li>
-        <li
-          className={selectedIndex === 1 ? "active" : ""}
-          onClick={() => SetSelectedIndex(1)}
-        >
-          <ChatComponent />
-        </li>
-        <li
-          className={selectedIndex === 2 ? "active" : ""}
-          onClick={() => SetSelectedIndex(2)}
-        >
-          <ChatComponent />
-        </li>
+        {chatList.map((item, index) => {
+          return (
+            <li
+              className={selectedIndex === index ? "active" : ""}
+              onClick={() => SetSelectedIndex(index)}
+              key={item.id}
+            >
+              <ChatComponent chatName={item.name} />
+            </li>
+          );
+        })}
       </ul>
     </>
   );
