@@ -1,32 +1,20 @@
 import ChatComponent from "../../components/ChatComponent/ChatComponent";
 import SearchBar from "../../shared/UI/SearchBar/SearchBar";
 import AddChatComponent from "../../components/AddChatComponent/AddChatComponent";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./ChatListModule.scss";
-import ShortChatType from "../../shared/types/ShortChatType";
-import client from "../../shared/api/BaseAxiosInstance";
 import { List, ListItem } from "@mui/material";
+import { useChatState } from "../../shared/states/ChatStates";
 
 const ChatListModule = () => {
-  const [selectedIndex, SetSelectedIndex] = useState(-1);
-  const [chatList, SetChatList] = useState([] as ShortChatType[]);
-  const [filteredChatList, SetFilteredChatList] = useState(
-    [] as ShortChatType[]
-  );
+  const selectedIndex = useChatState((state) => state.currentItem);
+  const SetSelectedIndex = useChatState((state) => state.updateCurrentChat);
+  const chatList = useChatState((state) => state.data);
+  const filteredChatList = useChatState((state) => state.filteredData);
+  const SetFilteredChatList = useChatState((state) => state.setFilteredData);
+  const fetch = useChatState((state) => state.execute);
 
   useEffect(() => {
-    const fetch = async () => {
-      await client
-        .get("/Chat")
-        .then((response) => {
-          SetChatList(response.data);
-          return response;
-        })
-        .then((response) => {
-          SetFilteredChatList(response.data);
-        });
-    };
-
     fetch();
   }, []);
 
@@ -39,10 +27,10 @@ const ChatListModule = () => {
           SetSearchResults={SetFilteredChatList}
         />
         <AddChatComponent />
-        {filteredChatList.map((item, index) => (
+        {filteredChatList.map((item) => (
           <ListItem
-            className={selectedIndex === index ? "activeItem" : ""}
-            onClick={() => SetSelectedIndex(index)}
+            className={selectedIndex === item.id ? "activeItem" : ""}
+            onClick={() => SetSelectedIndex(item.id)}
             key={item.id}
           >
             <ChatComponent chatName={item.name} />
