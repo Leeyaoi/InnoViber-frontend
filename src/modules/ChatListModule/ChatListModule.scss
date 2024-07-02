@@ -1,0 +1,13 @@
+@import "../../index.scss";
+
+.MainPage_ChatList{
+    padding: 0;
+    list-style-type: none;
+    border: 1px solid $light-color;
+    background-color: $back-color;
+    width: 25rem;
+}
+
+.MainPage_ChatList > *{
+    border-top: 1px solid $light-color;
+}

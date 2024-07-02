@@ -1,0 +1,22 @@
+@import "../../../index.scss";
+
+.SearchBar{
+    display: flex;
+    border-radius: 1.5rem;
+    width: 90%;
+    margin: 0.5rem auto;
+    background-color: $white;
+}
+
+.InputBar{
+    border: none;
+    width: 90%;
+    padding: 0.5rem;
+}
+
+.SearchIco{
+    color: $darker-color;
+    margin: auto 0;
+    height: 2.5rem;
+    width: 2.5rem;
+}

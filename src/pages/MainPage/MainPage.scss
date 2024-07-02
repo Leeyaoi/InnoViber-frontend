@@ -1,7 +1,7 @@
-$back-color: rgb(38, 98, 48);
-$font-color: rgb(242, 228, 209);
+@import "../../index.scss";
 
-:root{
+.Container{
     background-color: $back-color;
     color: $font-color;
+    width: 100%;
 }

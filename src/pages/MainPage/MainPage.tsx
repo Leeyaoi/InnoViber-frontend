@@ -1,8 +1,13 @@
-import ChatListModule from "../../shared/components/modules/ChatListModule/ChatListModule";
+import { Container } from "@mui/material";
+import ChatListModule from "../../modules/ChatListModule/ChatListModule";
 import "./MainPage.scss";
 
 const MainPage = () => {
-  return <ChatListModule />;
+  return (
+    <Container className="Container">
+      <ChatListModule />
+    </Container>
+  );
 };
 
 export default MainPage;
