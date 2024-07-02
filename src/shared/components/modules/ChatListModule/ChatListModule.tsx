@@ -13,8 +13,9 @@ const ChatListModule = () => {
   useEffect(() => {
     client.get("/Chat").then((response) => {
       SetChatList(response.data);
+      console.log(response);
     });
-  });
+  }, []);
 
   return (
     <>
