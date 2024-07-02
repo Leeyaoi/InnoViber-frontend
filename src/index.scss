@@ -2,11 +2,12 @@ $light-color: #f2e4d1;
 $darker-color: #084107;
 $back-color: #14511e;
 $font-color: rgb(242, 228, 209);
+$white: #fff;
 
 body{
     margin: 0 auto;
 }
 
-.active{
+.activeItem{
     background-color: $darker-color;
 }

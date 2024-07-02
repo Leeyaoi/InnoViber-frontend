@@ -1,9 +1,21 @@
+@import "../../index.scss";
+
 .MainPage_ChatList_AddChat{
     display: flex;
     justify-content: baseline;
     padding: 0.5rem;
+    padding-left: 1rem;
 }
 
 .MainPage_ChatList_AddChat > p{
     margin: auto 1rem;
+}
+
+.MainPage_ChatList_AddChat_Button{
+    color: $light-color !important;
+    background-color: $darker-color !important;
+}
+
+.MainPage_ChatList_AddChat_Label{
+    margin-left: 2rem;
 }

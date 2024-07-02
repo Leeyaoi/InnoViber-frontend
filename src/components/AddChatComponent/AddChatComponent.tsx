@@ -6,15 +6,18 @@ const AddChatComponent = () => {
   return (
     <div className="MainPage_ChatList_AddChat">
       <IconButton
-        sx={{
-          border: "1px solid primary.light",
-          color: "primary.light",
-          bgcolor: "primary.dark",
-        }}
+        className="MainPage_ChatList_AddChat_Button"
+        sx={
+          {
+            //bgcolor: "primary.dark",
+          }
+        }
       >
         <AddIcon />
       </IconButton>
-      <Typography sx={{ ml: "2rem" }}>Add chat</Typography>
+      <Typography className="MainPage_ChatList_AddChat_Label">
+        Add chat
+      </Typography>
     </div>
   );
 };

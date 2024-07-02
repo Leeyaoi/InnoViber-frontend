@@ -12,7 +12,7 @@ const ChatComponent = ({
 }: Props) => {
   return (
     <div className="MainPage_ChatList_ChatBlock">
-      <Avatar src="src\shared\assets\profile.jpg" />
+      <Avatar src="\profile.jpg" />
       <div className="MainPage_ChatList_ChatBlock_ChatInfo">
         <Typography variant="h1">{chatName}</Typography>
         <Typography>{lastMessage}</Typography>

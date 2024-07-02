@@ -1,10 +1,10 @@
 import { Container } from "@mui/material";
-import ChatListModule from "../../shared/components/modules/ChatListModule/ChatListModule";
+import ChatListModule from "../../modules/ChatListModule/ChatListModule";
 import "./MainPage.scss";
 
 const MainPage = () => {
   return (
-    <Container sx={{ bgcolor: "primary.main", color: "primary.contrastText" }}>
+    <Container className="Container">
       <ChatListModule />
     </Container>
   );
