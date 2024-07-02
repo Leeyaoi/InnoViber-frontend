@@ -16,7 +16,7 @@ const ChatListModule = () => {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [fetch]);
 
   return (
     <>

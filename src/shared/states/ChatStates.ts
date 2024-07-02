@@ -31,7 +31,6 @@ export const useChatState = create<initialChat>((set, get) => ({
         try {
             const res = await axios.get("https://localhost:7060/api/Chat");
             set({ success: true, data: res.data, filteredData: res.data });
-            console.log(res);
         } catch (err) {
             console.error("Error in data fetch:", err);
             set({ error: true, errorData: err });
