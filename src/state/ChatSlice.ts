@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import ShortChatType from '../types/ShortChatType';
-import client from '../helpers/client';
+import ShortChatType from '../shared/types/ShortChatType';
+import client from '../shared/helpers/client';
 
 interface ChatSlice {
     loading: boolean,
@@ -30,7 +30,7 @@ export const useChatState = create<ChatSlice>((set, get) => ({
             }
             set({ success: true, chats: res.data, loading: false });
         } catch (error) {
-            set({ errorMessage: error, loading: false })
+            set({ errorMessage: error as string, loading: false })
         }        
     },
     createChat: async (ChatName: string) => {
@@ -44,7 +44,7 @@ export const useChatState = create<ChatSlice>((set, get) => ({
             }
             set({ success: true, chats: [...get().chats, res.data], loading: false });
         } catch (error) {
-            set({ errorMessage: error, loading: false })
+            set({ errorMessage: error as string, loading: false })
         }
     }
 }));

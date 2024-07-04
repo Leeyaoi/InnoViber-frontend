@@ -4,7 +4,7 @@ import AddChatComponent from "../../components/AddChatComponent/AddChatComponent
 import { useEffect, useState } from "react";
 import "./ChatListModule.scss";
 import { List, ListItem } from "@mui/material";
-import { useChatState } from "../../shared/state/ChatSlice";
+import { useChatState } from "../../state/ChatSlice";
 import ShortChatType from "../../shared/types/ShortChatType";
 
 const ChatListModule = () => {
@@ -17,12 +17,16 @@ const ChatListModule = () => {
     })
   );
 
+  const [filteredChatList, SetFilteredChatList] =
+    useState<ShortChatType[]>(chats);
+
   useEffect(() => {
     fetchChats();
   }, [fetchChats]);
 
-  const [filteredChatList, SetFilteredChatList] =
-    useState<ShortChatType[]>(chats);
+  useEffect(() => {
+    SetFilteredChatList(chats);
+  }, [chats]);
 
   return (
     <>
