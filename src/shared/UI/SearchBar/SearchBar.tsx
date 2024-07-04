@@ -6,7 +6,7 @@ import { InputBase } from "@mui/material";
 interface Props {
   placeholder?: string;
   list: ShortChatType[];
-  SetSearchResults: (value: React.SetStateAction<ShortChatType[]>) => void;
+  SetSearchResults: (value: ShortChatType[]) => void;
 }
 
 const SearchBar = ({
@@ -20,20 +20,22 @@ const SearchBar = ({
     }
 
     const results = list.filter((item) =>
-      item.name.includes(event.target.value)
+      item.name.toLowerCase().includes(event.target.value.toLowerCase())
     );
     return SetSearchResults(results);
   };
 
   return (
-    <div className="SearchBar">
-      <InputBase
-        className="InputBar"
-        type="text"
-        placeholder={placeholder}
-        onChange={HandleSearchChange}
-      />
-      <SearchIcon className="SearchIco" />
+    <div>
+      <div className="SearchBar">
+        <InputBase
+          className="InputBar"
+          type="text"
+          placeholder={placeholder}
+          onChange={HandleSearchChange}
+        />
+        <SearchIcon className="SearchIco" />
+      </div>
     </div>
   );
 };
