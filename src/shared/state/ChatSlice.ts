@@ -7,7 +7,7 @@ interface ChatSlice {
     success: boolean,
     errorMessage: string,
     chats: ShortChatType[],
-    currentChat: string,
+    currentChatId: string,
     updateCurrentChat: (id: string) => void,
     fetchChats: () => void,
     createChat: (ChatName: string) => void
@@ -18,8 +18,8 @@ export const useChatState = create<ChatSlice>((set, get) => ({
     success: false,
     errorMessage: "",
     chats: [],
-    currentChat: "",
-    updateCurrentChat: (id: string) => { set({ currentChat: id }) },
+    currentChatId: "",
+    updateCurrentChat: (id: string) => { set({ currentChatId: id }) },
     fetchChats: async () => {
         set({ loading: true });
         try {

@@ -8,9 +8,9 @@ import { useChatState } from "../../shared/state/ChatSlice";
 import ShortChatType from "../../shared/types/ShortChatType";
 
 const ChatListModule = () => {
-  const { currentChat, updateCurrentChat, chats, fetchChats } = useChatState(
+  const { currentChatId, updateCurrentChat, chats, fetchChats } = useChatState(
     (state) => ({
-      currentChat: state.currentChat,
+      currentChatId: state.currentChatId,
       updateCurrentChat: state.updateCurrentChat,
       chats: state.chats,
       fetchChats: state.fetchChats,
@@ -24,9 +24,6 @@ const ChatListModule = () => {
     fetchChats();
   }, [fetchChats]);
 
-  console.log(chats);
-  console.log(filteredChatList);
-
   return (
     <>
       <List className="MainPage_ChatList">
@@ -36,9 +33,9 @@ const ChatListModule = () => {
           SetSearchResults={SetFilteredChatList}
         />
         <AddChatComponent />
-        {filteredChatList.map((item: ShortChatType) => (
+        {filteredChatList.map((item) => (
           <ListItem
-            className={currentChat === item.id ? "activeItem" : ""}
+            className={currentChatId === item.id ? "activeItem" : ""}
             onClick={() => updateCurrentChat(item.id)}
             key={item.id}
           >
