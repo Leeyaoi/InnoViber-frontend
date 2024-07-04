@@ -17,12 +17,12 @@ const ChatListModule = () => {
     })
   );
 
-  const [filteredChatList, SetFilteredChatList] =
-    useState<ShortChatType[]>(chats);
-
   useEffect(() => {
     fetchChats();
   }, [fetchChats]);
+
+  const [filteredChatList, SetFilteredChatList] =
+    useState<ShortChatType[]>(chats);
 
   return (
     <>
