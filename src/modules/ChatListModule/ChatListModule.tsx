@@ -5,14 +5,19 @@ import { useEffect } from "react";
 import "./ChatListModule.scss";
 import { List, ListItem } from "@mui/material";
 import { useChatState } from "../../shared/states/ChatStates";
+import ShortChatType from "../../shared/types/ShortChatType";
 
 const ChatListModule = () => {
-  const selectedIndex = useChatState((state) => state.currentItem);
-  const SetSelectedIndex = useChatState((state) => state.updateCurrentChat);
-  const chatList = useChatState((state) => state.data);
-  const filteredChatList = useChatState((state) => state.filteredData);
-  const SetFilteredChatList = useChatState((state) => state.setFilteredData);
-  const fetch = useChatState((state) => state.execute);
+  const [selectedChat, SetSelectedChat] = useChatState((state) => [
+    state.currentChat,
+    state.updateCurrentChat,
+  ]);
+  const [filteredChatList, SetFilteredChatList] = useChatState((state) => [
+    state.filteredChats,
+    state.setFilteredChats,
+  ]);
+  const chatList = useChatState((state) => state.chats);
+  const fetch = useChatState((state) => state.fetchChats);
 
   useEffect(() => {
     fetch();
@@ -27,10 +32,10 @@ const ChatListModule = () => {
           SetSearchResults={SetFilteredChatList}
         />
         <AddChatComponent />
-        {filteredChatList.map((item) => (
+        {filteredChatList.map((item: ShortChatType) => (
           <ListItem
-            className={selectedIndex === item.id ? "activeItem" : ""}
-            onClick={() => SetSelectedIndex(item.id)}
+            className={selectedChat === item.id ? "activeItem" : ""}
+            onClick={() => SetSelectedChat(item.id)}
             key={item.id}
           >
             <ChatComponent chatName={item.name} />

@@ -2,48 +2,51 @@ import axios from 'axios';
 import { create } from 'zustand'
 import ShortChatType from '../types/ShortChatType';
 
-interface initialChat {
+interface ChatSlice {
     loading: boolean,
     success: boolean,
-    error: boolean,
-    data: ShortChatType[],
-    errorData: unknown,
-    currentItem: string,
-    filteredData: ShortChatType[],
-    setFilteredData: (data: ShortChatType[]) => void,
+    error: string,
+    chats: ShortChatType[],
+    currentChat: string,
+    filteredChats: ShortChatType[],
+    setFilteredChats: (data: ShortChatType[]) => void,
     updateCurrentChat: (id: string) => void,
-    execute: () => void,
-    addChat: (ChatName: string) => void
+    fetchChats: () => void,
+    createChat: (ChatName: string) => void
   }
 
-export const useChatState = create<initialChat>((set, get) => ({
+export const useChatState = create<ChatSlice>((set, get) => ({
     loading: false,
     success: false,
-    error: false,
-    data: [],
-    errorData: null,
-    currentItem: "",
-    filteredData: [],
-    setFilteredData: (data: ShortChatType[]) => {set({filteredData: data })},
-    updateCurrentChat: (id: string) => { set({ currentItem: id }) },
-    execute: async () => {
+    error: "",
+    chats: [],
+    currentChat: "",
+    filteredChats: [],
+    setFilteredChats: (data: ShortChatType[]) => {set({filteredChats: data })},
+    updateCurrentChat: (id: string) => { set({ currentChat: id }) },
+    fetchChats: async () => {
         set({ loading: true });
-        try {
-            const res = await axios.get("https://localhost:7060/api/Chat");
-            set({ success: true, data: res.data, filteredData: res.data });
-        } catch (err) {
-            console.error("Error in data fetch:", err);
-            set({ error: true, errorData: err });
+            
+        const res = await axios.get("https://localhost:7060/api/Chat");
+
+        if (res.status >= 400) {
+            set({ error: res.statusText })
+            return;
         }
+
+        set({ success: true, chats: res.data, filteredChats: res.data });
+        
     },
-    addChat: async (ChatName: string) => {
+    createChat: async (ChatName: string) => {
         set({ loading: true });
-        try {
-            const res = await axios.post("https://localhost:7060/api/Chat", { name: ChatName });
-            set({ success: true, data: [...get().data, res.data] });
-        } catch (err) {
-            console.error("Error in data fetch:", err);
-            set({ error: true, errorData: err });
+            
+        const res = await axios.post("https://localhost:7060/api/Chat", { name: ChatName });
+            
+        if (res.status >= 400) {
+            set({ error: res.statusText })
+            return;
         }
+            
+        set({ success: true, chats: [...get().chats, res.data] });
     }
 }));
