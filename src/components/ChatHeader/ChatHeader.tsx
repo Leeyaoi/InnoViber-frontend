@@ -6,18 +6,18 @@ import MenuButton from "../../shared/UI/MenuButton/MenuButton";
 
 interface Props {
   chat: ShortChatType;
-  updateCurrentChat: (id: string) => void;
+  setCurrentChatId: (id: string) => void;
   deleteChat: (id: string) => void;
 }
 
-const ChatHeader = ({ chat, updateCurrentChat, deleteChat }: Props) => {
+const ChatHeader = ({ chat, setCurrentChatId, deleteChat }: Props) => {
   return (
     <div className="MainPage_ChatModule_Header">
       <div className="MainPage_ChatModule_MainData">
         <IconButton
           id="MainPage_ChatModule_Header_ArrowButton"
           onClick={() => {
-            updateCurrentChat("");
+            setCurrentChatId("");
           }}
         >
           <ArrowBackRoundedIcon id="MainPage_ChatModule_Header_Arrow" />
@@ -33,7 +33,7 @@ const ChatHeader = ({ chat, updateCurrentChat, deleteChat }: Props) => {
           {
             name: "Delete",
             task: () => {
-              updateCurrentChat("");
+              setCurrentChatId("");
               deleteChat(chat.id);
             },
           },

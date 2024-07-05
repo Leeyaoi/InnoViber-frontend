@@ -1,26 +1,37 @@
+import { useEffect } from "react";
 import ChatHeader from "../../components/ChatHeader/ChatHeader";
 import { useChatState } from "../../state/ChatSlice";
 import "./ChatModule.scss";
 
 const ChatModule = () => {
-  const { currentChatId, chats, updateCurrentChat, deleteChat } = useChatState(
-    (state) => ({
-      currentChatId: state.currentChatId,
-      chats: state.chats,
-      updateCurrentChat: state.updateCurrentChat,
-      deleteChat: state.deleteChat,
-    })
-  );
+  const {
+    currentChatId,
+    currentChat,
+    setCurrentChatId,
+    getChatById,
+    deleteChat,
+  } = useChatState((state) => ({
+    currentChatId: state.currentChatId,
+    currentChat: state.currentChat,
+    setCurrentChatId: state.setCurrentChatId,
+    getChatById: state.getChatById,
+    deleteChat: state.deleteChat,
+  }));
 
-  const chat = chats.find((chat) => chat.id === currentChatId);
-  if (typeof chat == "undefined") {
+  useEffect(() => {
+    if (currentChatId != "") {
+      getChatById(currentChatId);
+    }
+  }, [getChatById, currentChatId]);
+
+  if (typeof currentChat == "undefined") {
     return <></>;
   }
   return (
     <div className="ChatModule">
       <ChatHeader
-        chat={chat}
-        updateCurrentChat={updateCurrentChat}
+        chat={currentChat}
+        setCurrentChatId={setCurrentChatId}
         deleteChat={deleteChat}
       />
     </div>
