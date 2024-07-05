@@ -1,11 +1,16 @@
 @import "../../index.scss";
 
+.MainPage_ChatList_Paper{
+    overflow: ;
+}
+
 .MainPage_ChatList{
     padding: 0;
     list-style-type: none;
     border: 1px solid $light-color;
     background-color: $back-color;
     width: 25rem;
+    height: 100%;
 }
 
 .MainPage_ChatList > *{
