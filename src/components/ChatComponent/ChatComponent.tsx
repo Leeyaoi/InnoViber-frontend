@@ -14,7 +14,7 @@ const ChatComponent = ({
     <div className="MainPage_ChatList_ChatBlock">
       <Avatar src="\profile.jpg" />
       <div className="MainPage_ChatList_ChatBlock_ChatInfo">
-        <Typography variant="h1">{chatName}</Typography>
+        <Typography variant="h2">{chatName}</Typography>
         <Typography>{lastMessage}</Typography>
       </div>
     </div>
