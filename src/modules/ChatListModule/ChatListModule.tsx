@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import "./ChatListModule.scss";
 import { List, ListItem } from "@mui/material";
 import { useChatState } from "../../state/ChatSlice";
-import { Paper } from "@mui/material";
 import ShortChatType from "../../shared/types/ShortChatType";
 
 const ChatListModule = () => {
@@ -31,25 +30,23 @@ const ChatListModule = () => {
 
   return (
     <>
-      <Paper className="MainPage_ChatList_Paper">
-        <List className="MainPage_ChatList">
-          <SearchBar
-            placeholder="Search chat"
-            list={chats}
-            SetSearchResults={SetFilteredChatList}
-          />
-          <AddChatComponent />
-          {filteredChatList.map((item) => (
-            <ListItem
-              className={currentChatId === item.id ? "activeItem" : ""}
-              onClick={() => updateCurrentChat(item.id)}
-              key={item.id}
-            >
-              <ChatComponent chatName={item.name} />
-            </ListItem>
-          ))}
-        </List>
-      </Paper>
+      <List className="MainPage_ChatList">
+        <SearchBar
+          placeholder="Search chat"
+          list={chats}
+          SetSearchResults={SetFilteredChatList}
+        />
+        <AddChatComponent />
+        {filteredChatList.map((item) => (
+          <ListItem
+            className={currentChatId === item.id ? "activeItem" : ""}
+            onClick={() => updateCurrentChat(item.id)}
+            key={item.id}
+          >
+            <ChatComponent chatName={item.name} />
+          </ListItem>
+        ))}
+      </List>
     </>
   );
 };
