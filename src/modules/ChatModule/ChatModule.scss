@@ -1,4 +1,30 @@
+@import "../../index.scss";
+
 .ChatModule{
     width: 100%;
     height: 100%;
+}
+
+.NotSelectedChat{
+    background-image: url("public/bg_pic.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.ImgBlur{
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #ffffff, $alpha: 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#SelectChatSuggestion{
+    display: block;
+    background-color: rgba($color: $back-color, $alpha: 0.5) ;
+    width: fit-content;
+    padding: 0.5rem;
+    margin: auto;
 }
