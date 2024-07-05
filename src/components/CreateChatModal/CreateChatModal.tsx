@@ -47,7 +47,7 @@ const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
         <DialogTitle>Create chat</DialogTitle>
         <FormControl>
           <DialogContent>
-            <DialogContentText className="ModalCreateChat_Content_Text">
+            <DialogContentText id="ModalCreateChat_Content_Text">
               Chat name
             </DialogContentText>
             <TextField
@@ -62,7 +62,7 @@ const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
             />
           </DialogContent>
           <DialogActions>
-            <Button type="submit" className="ModalCreateChat_Button_Submit">
+            <Button type="submit" id="ModalCreateChat_Button_Submit">
               Add Chat
             </Button>
           </DialogActions>

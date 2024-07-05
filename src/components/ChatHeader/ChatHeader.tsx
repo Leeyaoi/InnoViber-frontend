@@ -2,7 +2,7 @@ import ShortChatType from "../../shared/types/ShortChatType";
 import "./ChatHeader.scss";
 import { Avatar, Typography, IconButton } from "@mui/material";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-import MenuUIItem from "../../shared/UI/MenuUIItem/MenuUIItem";
+import MenuButton from "../../shared/UI/MenuButton/MenuButton";
 
 interface Props {
   chat: ShortChatType;
@@ -15,23 +15,20 @@ const ChatHeader = ({ chat, updateCurrentChat, deleteChat }: Props) => {
     <div className="MainPage_ChatModule_Header">
       <div className="MainPage_ChatModule_MainData">
         <IconButton
-          className="MainPage_ChatModule_Header_ArrowButton"
+          id="MainPage_ChatModule_Header_ArrowButton"
           onClick={() => {
             updateCurrentChat("");
           }}
         >
-          <ArrowBackRoundedIcon className="MainPage_ChatModule_Header_Arrow" />
+          <ArrowBackRoundedIcon id="MainPage_ChatModule_Header_Arrow" />
         </IconButton>
-        <Avatar
-          className="MainPage_ChatModule_Header_Avatar"
-          src="\profile.jpg"
-        />
-        <Typography className="MainPage_ChatModule_Header_Name" variant="h1">
+        <Avatar id="MainPage_ChatModule_Header_Avatar" src="\profile.jpg" />
+        <Typography id="MainPage_ChatModule_Header_Name" variant="h1">
           {chat.name}
         </Typography>
       </div>
-      <MenuUIItem
-        className="MainPage_ChatModule_Header_Menu"
+      <MenuButton
+        id="MainPage_ChatModule_Header_Menu"
         options={[
           {
             name: "Delete",

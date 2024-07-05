@@ -13,7 +13,7 @@ const AddChatComponent = () => {
 
   return (
     <div className="MainPage_ChatList_AddChat" onClick={handleClick}>
-      <IconButton className="MainPage_ChatList_AddChat_Button">
+      <IconButton id="MainPage_ChatList_AddChat_Button">
         <AddIcon />
       </IconButton>
       <Typography className="MainPage_ChatList_AddChat_Label">

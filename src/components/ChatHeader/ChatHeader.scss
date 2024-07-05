@@ -14,41 +14,41 @@
     flex-direction: row;
 }
 
-.MainPage_ChatModule_Header_ArrowButton{
-    color: $light-color !important;
+#MainPage_ChatModule_Header_ArrowButton{
+    color: $light-color;
 }
 
-.MainPage_ChatModule_Header_Arrow{
-    height: 2rem !important;
-    width: 2rem !important;
+#MainPage_ChatModule_Header_Arrow{
+    height: 2rem;
+    width: 2rem;
     margin: auto 0.5rem;
 }
 
-.MainPage_ChatModule_Header_Avatar{
-    height: 3rem !important;
-    width: 3rem !important;
+#MainPage_ChatModule_Header_Avatar{
+    height: 3rem;
+    width: 3rem;
     margin: auto 0.225rem;
 }
 
-.MainPage_ChatModule_Header_Name{
+#MainPage_ChatModule_Header_Name{
     display: block;
     height: fit-content;
-    margin: auto 0.25rem !important;
+    margin: auto 0.25rem;
 }
 
-.MainPage_ChatModule_Header_Menu{
+#MainPage_ChatModule_Header_Menu{
     width: 2.5rem;
     height: fit-content;
-    margin: auto 0.5rem !important;
+    margin: auto 0.5rem;
     margin-left: auto;
 }
 
-.MainPage_ChatModule_Header_Menu > .MuiButtonBase-root{
-    padding: 0 !important;
+#MainPage_ChatModule_Header_Menu > .MuiButtonBase-root{
+    padding: 0;
 }
 
-.MainPage_ChatModule_Header_Menu > .MuiButtonBase-root > .MuiSvgIcon-root{
-    color: $light-color !important;
-    width: 100% !important;
-    height: 100% !important;
+#MainPage_ChatModule_Header_Menu > .MuiButtonBase-root > .MuiSvgIcon-root{
+    color: $light-color;
+    width: 100%;
+    height: 100%;
 }

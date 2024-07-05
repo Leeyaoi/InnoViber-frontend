@@ -3,14 +3,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListRoundedIcon from "@mui/icons-material/ListRounded";
 import { useState } from "react";
-import "./MenuUIItem.scss";
+import "./MenuButton.scss";
 
 interface Props {
   options: { name: string; task: () => void }[];
-  className: string;
+  id: string;
 }
 
-const MenuUIItem = ({ options, className }: Props) => {
+const MenuButton = ({ options, id }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,7 +21,7 @@ const MenuUIItem = ({ options, className }: Props) => {
   };
 
   return (
-    <div className={className}>
+    <div id={id}>
       <IconButton
         aria-controls={open ? "long-menu" : undefined}
         aria-expanded={open ? "true" : undefined}
@@ -46,4 +46,4 @@ const MenuUIItem = ({ options, className }: Props) => {
   );
 };
 
-export default MenuUIItem;
+export default MenuButton;
