@@ -1,0 +1,62 @@
+@import "../../index.scss";
+
+.ModalCreateChat{
+    position: fixed;
+    z-index: 1300;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+
+    :focus-visible{
+        outline: none;
+    }
+}
+
+.ModalCreateChat_Content{
+    background-color: $back-color;
+    color: $light-color;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.MuiPaper-root{
+    border-radius: 1rem !important;
+}
+
+.ModalCreateChat_Content_Text{
+    color: $light-color !important;
+}
+
+.ModalCreateChat_Content_NameInput > .MuiInputBase-root{
+    color: $light-color !important;
+}
+
+.ModalCreateChat_Content_NameInput > .MuiInputBase-root::before{
+        border-color: $light-color !important;
+}
+
+.ModalCreateChat_Content_NameInput > .MuiInputBase-root::after{
+    border-color: $light-color !important;
+}
+
+.ModalCreateChat_Content_NameInput > .MuiFormHelperText-root{
+    color: $light-color;
+}
+
+.ModalCreateChat_Content_NameInput > .MuiInputBase-input{
+    color: $light-color !important;
+}
+
+.MuiDialogContent-root{
+    padding-top: 0 !important;
+}
+
+.ModalCreateChat_Button_Submit{
+    color: $light-color !important;
+}
+
+.ModalCreateChat_Button_Submit:hover{
+    background-color: $darker-color !important;
+}
