@@ -27,7 +27,7 @@ const ChatModule = () => {
 
   if (typeof currentChat == "undefined") {
     return (
-      <div className="NotSelectedChat">
+      <div className="ChatBackground">
         <div className="ImgBlur">
           <Typography variant="h1" id="SelectChatSuggestion">
             Select a chat
@@ -43,6 +43,9 @@ const ChatModule = () => {
         setCurrentChatId={setCurrentChatId}
         deleteChat={deleteChat}
       />
+      <div className="ChatBackground">
+        <div className="ImgBlur" id="Chat_is_opened"></div>
+      </div>
     </div>
   );
 };
