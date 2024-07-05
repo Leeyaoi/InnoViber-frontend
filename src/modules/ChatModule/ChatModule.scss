@@ -6,7 +6,8 @@
 }
 
 .ChatBackground{
-    background-image: url("public/bg_pic.png");
+    background-image: url("public/bg_pic.jpg");
+    background-position: center center;
     background-size: cover;
     width: 100%;
     height: 100%;
@@ -15,7 +16,7 @@
 .ImgBlur{
     width: 100%;
     height: 100%;
-    background-color: rgba($color: #ffffff, $alpha: 0.1);
+    background-color: rgba($color: #ffffff, $alpha: 0.05);
     display: flex;
     justify-content: center;
     align-items: center;

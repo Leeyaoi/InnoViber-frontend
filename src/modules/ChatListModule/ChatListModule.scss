@@ -9,6 +9,8 @@
     overflow: auto;
 }
 
-.MainPage_ChatList > *{
-    border-bottom: 1px solid $light-color;
+.MainPage_ChatItems > *{
+    border: 1px solid $light-color;
+    border-radius: 0.5rem;
+    margin-top: 0.3rem;
 }
