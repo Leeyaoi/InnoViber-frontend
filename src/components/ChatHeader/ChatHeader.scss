@@ -1,54 +1,53 @@
 @import "../../index.scss";
 
-.MainPage_BigChatModule_Header{
+.MainPage_ChatModule_Header{
     border: 0.0625rem solid $light-color;
     border-left: none;
-    width: 46.8rem;
     height: 4rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.MainPage_BigChatModule_MainData{
+.MainPage_ChatModule_MainData{
     display: flex;
     flex-direction: row;
 }
 
-.MainPage_BigChatModule_Header_ArrowButton{
+.MainPage_ChatModule_Header_ArrowButton{
     color: $light-color !important;
 }
 
-.MainPage_BigChatModule_Header_Arrow{
+.MainPage_ChatModule_Header_Arrow{
     height: 2rem !important;
     width: 2rem !important;
     margin: auto 0.5rem;
 }
 
-.MainPage_BigChatModule_Header_Avatar{
+.MainPage_ChatModule_Header_Avatar{
     height: 3rem !important;
     width: 3rem !important;
     margin: auto 0.225rem;
 }
 
-.MainPage_BigChatModule_Header_Name{
+.MainPage_ChatModule_Header_Name{
     display: block;
     height: fit-content;
     margin: auto 0.25rem !important;
 }
 
-.MainPage_BigChatModule_Header_Menu{
+.MainPage_ChatModule_Header_Menu{
     width: 2.5rem;
     height: fit-content;
     margin: auto 0.5rem !important;
     margin-left: auto;
 }
 
-.MainPage_BigChatModule_Header_Menu > .MuiButtonBase-root{
+.MainPage_ChatModule_Header_Menu > .MuiButtonBase-root{
     padding: 0 !important;
 }
 
-.MainPage_BigChatModule_Header_Menu > .MuiButtonBase-root > .MuiSvgIcon-root{
+.MainPage_ChatModule_Header_Menu > .MuiButtonBase-root > .MuiSvgIcon-root{
     color: $light-color !important;
     width: 100% !important;
     height: 100% !important;

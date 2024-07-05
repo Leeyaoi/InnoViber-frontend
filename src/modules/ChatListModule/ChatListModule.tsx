@@ -1,4 +1,4 @@
-import ChatComponent from "../../components/ChatComponent/ChatComponent";
+import ChatItem from "../../components/ChatItem/ChatItem";
 import SearchBar from "../../shared/UI/SearchBar/SearchBar";
 import AddChatComponent from "../../components/AddChatComponent/AddChatComponent";
 import { useEffect, useState } from "react";
@@ -43,7 +43,7 @@ const ChatListModule = () => {
             onClick={() => updateCurrentChat(item.id)}
             key={item.id}
           >
-            <ChatComponent chatName={item.name} />
+            <ChatItem chatName={item.name} />
           </ListItem>
         ))}
       </List>

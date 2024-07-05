@@ -1,14 +1,18 @@
-import { Container } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import ChatListModule from "../../modules/ChatListModule/ChatListModule";
-import BigChatModule from "../../modules/BigChatModule/BigChatModule";
+import ChatModule from "../../modules/ChatModule/ChatModule";
 import "./MainPage.scss";
 
 const MainPage = () => {
   return (
-    <Container className="Container">
-      <ChatListModule />
-      <BigChatModule />
-    </Container>
+    <Grid container className="Container">
+      <Grid item xs={4}>
+        <ChatListModule />
+      </Grid>
+      <Grid item xs={8}>
+        <ChatModule />
+      </Grid>
+    </Grid>
   );
 };
 

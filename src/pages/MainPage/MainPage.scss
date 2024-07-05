@@ -4,7 +4,8 @@
     background-color: $back-color;
     color: $font-color;
     height: 100%;
-    display: flex !important;
     flex-direction: row;
+    max-width: 1600px;
     padding: 0;
+    margin: 0 auto;
 }

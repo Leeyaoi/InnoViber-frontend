@@ -1,5 +1,5 @@
 import ShortChatType from "../../shared/types/ShortChatType";
-import "./BigChatHeader.scss";
+import "./ChatHeader.scss";
 import { Avatar, Typography, IconButton } from "@mui/material";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import MenuUIItem from "../../shared/UI/MenuUIItem/MenuUIItem";
@@ -10,28 +10,28 @@ interface Props {
   deleteChat: (id: string) => void;
 }
 
-const BigChatHeader = ({ chat, updateCurrentChat, deleteChat }: Props) => {
+const ChatHeader = ({ chat, updateCurrentChat, deleteChat }: Props) => {
   return (
-    <div className="MainPage_BigChatModule_Header">
-      <div className="MainPage_BigChatModule_MainData">
+    <div className="MainPage_ChatModule_Header">
+      <div className="MainPage_ChatModule_MainData">
         <IconButton
-          className="MainPage_BigChatModule_Header_ArrowButton"
+          className="MainPage_ChatModule_Header_ArrowButton"
           onClick={() => {
             updateCurrentChat("");
           }}
         >
-          <ArrowBackRoundedIcon className="MainPage_BigChatModule_Header_Arrow" />
+          <ArrowBackRoundedIcon className="MainPage_ChatModule_Header_Arrow" />
         </IconButton>
         <Avatar
-          className="MainPage_BigChatModule_Header_Avatar"
+          className="MainPage_ChatModule_Header_Avatar"
           src="\profile.jpg"
         />
-        <Typography className="MainPage_BigChatModule_Header_Name" variant="h1">
+        <Typography className="MainPage_ChatModule_Header_Name" variant="h1">
           {chat.name}
         </Typography>
       </div>
       <MenuUIItem
-        className="MainPage_BigChatModule_Header_Menu"
+        className="MainPage_ChatModule_Header_Menu"
         options={[
           {
             name: "Delete",
@@ -46,4 +46,4 @@ const BigChatHeader = ({ chat, updateCurrentChat, deleteChat }: Props) => {
   );
 };
 
-export default BigChatHeader;
+export default ChatHeader;

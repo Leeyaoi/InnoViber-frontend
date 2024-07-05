@@ -1,8 +1,8 @@
-import BigChatHeader from "../../components/BigChatHeader/BigChatHeader";
+import ChatHeader from "../../components/ChatHeader/ChatHeader";
 import { useChatState } from "../../state/ChatSlice";
-import "./BigChatModule.scss";
+import "./ChatModule.scss";
 
-const BigChatModule = () => {
+const ChatModule = () => {
   const { currentChatId, chats, updateCurrentChat, deleteChat } = useChatState(
     (state) => ({
       currentChatId: state.currentChatId,
@@ -17,12 +17,14 @@ const BigChatModule = () => {
     return <></>;
   }
   return (
-    <BigChatHeader
-      chat={chat}
-      updateCurrentChat={updateCurrentChat}
-      deleteChat={deleteChat}
-    />
+    <div className="ChatModule">
+      <ChatHeader
+        chat={chat}
+        updateCurrentChat={updateCurrentChat}
+        deleteChat={deleteChat}
+      />
+    </div>
   );
 };
 
-export default BigChatModule;
+export default ChatModule;
