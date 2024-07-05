@@ -7,7 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import { Button, FormControl } from "@mui/material";
 import { useChatState } from "../../state/ChatSlice";
 import { useState } from "react";
-import "./AddChatFormComponent.scss";
+import "./CreateChatModal.scss";
 
 interface Props {
   isOpen: boolean;
