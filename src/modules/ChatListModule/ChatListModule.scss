@@ -6,6 +6,8 @@
     border: 1px solid $light-color;
     background-color: $back-color;
     width: 25rem;
+    height: 100%;
+    overflow: auto;
 }
 
 .MainPage_ChatList > *{

@@ -4,8 +4,18 @@ $back-color: #14511e;
 $font-color: rgb(242, 228, 209);
 $white: #fff;
 
+html{
+    height: 100%;
+}
+
 body{
     margin: 0 auto;
+    height: 100%;
+}
+
+#root{
+    height: 100%;
+    overflow: hidden;
 }
 
 .activeItem{
