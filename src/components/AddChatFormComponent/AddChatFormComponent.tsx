@@ -5,6 +5,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import { Button, FormControl } from "@mui/material";
+import { useChatState } from "../../state/ChatSlice";
+import { useState } from "react";
 import "./AddChatFormComponent.scss";
 
 interface Props {
@@ -13,22 +15,33 @@ interface Props {
 }
 
 const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
-  const handleClose = (
-    event: object,
-    reason: "backdropClick" | "escapeKeyDown"
+  const createChat = useChatState((state) => state.createChat);
+  const [textInput, setTextInput] = useState("");
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  const handleTextInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (reason != "backdropClick") {
-      setIsOpen(false);
-    }
-    console.log(event);
+    setTextInput(event.target.value);
   };
 
   return (
     <Dialog
       className="ModalCreateChat"
-      aria-labelledby="modal-title"
       open={isOpen}
-      onClose={(event, reason) => handleClose(event, reason)}
+      onClose={handleClose}
+      PaperProps={{
+        component: "form",
+        onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+          event.preventDefault();
+          createChat(textInput);
+          handleClose();
+          setTextInput("");
+        },
+      }}
     >
       <div className="ModalCreateChat_Content">
         <DialogTitle>Create chat</DialogTitle>
@@ -41,6 +54,8 @@ const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
               className="ModalCreateChat_Content_NameInput"
               helperText="Please enter new chat name"
               variant="standard"
+              value={textInput}
+              onChange={handleTextInputChange}
               fullWidth
               autoFocus
               required
