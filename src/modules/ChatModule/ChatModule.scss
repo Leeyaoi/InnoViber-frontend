@@ -6,7 +6,7 @@
 }
 
 .ChatBackground{
-    background-image: url("public/bg_pic.jpg");
+    background-image: url("public/bg_pic2.jpg");
     background-position: center center;
     background-size: cover;
     width: 100%;
@@ -16,14 +16,14 @@
 .ImgBlur{
     width: 100%;
     height: 100%;
-    background-color: rgba($color: #ffffff, $alpha: 0.05);
+    background-color: rgba($color: #ffffff, $alpha: 0);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #Chat_is_opened{
-    background-color: rgba($color: #ffffff, $alpha: 0.15);
+    background-color: rgba($color: #ffffff, $alpha: 0.05);
     background-size: contain;
 }
 
@@ -33,4 +33,5 @@
     width: fit-content;
     padding: 0.5rem;
     margin: auto;
+    color: $white;
 }
