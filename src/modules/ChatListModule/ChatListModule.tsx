@@ -8,10 +8,10 @@ import { useChatState } from "../../state/ChatSlice";
 import ShortChatType from "../../shared/types/ShortChatType";
 
 const ChatListModule = () => {
-  const { currentChatId, updateCurrentChat, chats, fetchChats } = useChatState(
+  const { currentChatId, setCurrentChatId, chats, fetchChats } = useChatState(
     (state) => ({
       currentChatId: state.currentChatId,
-      updateCurrentChat: state.updateCurrentChat,
+      setCurrentChatId: state.setCurrentChatId,
       chats: state.chats,
       fetchChats: state.fetchChats,
     })
@@ -40,7 +40,7 @@ const ChatListModule = () => {
         {filteredChatList.map((item) => (
           <ListItem
             className={currentChatId === item.id ? "activeItem" : ""}
-            onClick={() => updateCurrentChat(item.id)}
+            onClick={() => setCurrentChatId(item.id)}
             key={item.id}
           >
             <ChatItem chatName={item.name} />
