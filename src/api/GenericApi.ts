@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import client from "../shared/helpers/client";
 
@@ -9,39 +9,53 @@ interface Props {
   id?: string;
 }
 
-export const HttpRequest = async ({
+type SuccessResponse<V> = {
+  code: "success";
+  data: V;
+};
+
+type ErrorResponse<E = AxiosError> = {
+  code: "error";
+  error: E;
+};
+
+type BaseResponse<V, E> = SuccessResponse<V> | ErrorResponse<E>;
+
+export const HttpRequest = async <V, E = AxiosError>({
   uri,
   method,
   item = {},
   id = "",
-}: Props) => {
-  let res: AxiosResponse<unknown, unknown>;
+}: Props): Promise<BaseResponse<V, E>> => {
+  let res: AxiosResponse<V>;
   try {
     switch (method) {
       case RESTMethod.Get:
-        res = await client.get(uri);
+        res = await client.get<V>(uri);
         break;
       case RESTMethod.GetById:
-        res = await client.get(uri + "/" + id);
+        res = await client.get<V>(uri + "/" + id);
         break;
       case RESTMethod.Post:
-        res = await client.post(uri, item);
+        res = await client.post<V>(uri, item);
         break;
       case RESTMethod.Delete:
-        res = await client.delete(uri + "/" + id);
-        res.data = { deleted: "Ok" };
+        res = await client.delete<V>(uri + "/" + id);
         break;
       case RESTMethod.Put:
-        res = await client.put(uri + "/" + id, item);
+        res = await client.put<V>(uri + "/" + id, item);
         break;
       default:
         throw "Bad request";
     }
     if (res.status >= 400) {
-      throw res.statusText;
+      return {
+        code: "error",
+        error: new Error(`Request failed with status ${res.status}`) as E,
+      };
     }
-    return res.data;
+    return { code: "success", data: res.data };
   } catch (error) {
-    return error;
+    return { code: "error", error: error as E };
   }
 };
