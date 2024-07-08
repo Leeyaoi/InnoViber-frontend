@@ -1,8 +1,7 @@
 import { create } from 'zustand'
 import ShortChatType from '../shared/types/ShortChatType';
-import { HttpRequest } from '../shared/helpers/GenericApi';
+import { HttpRequest } from '../api/GenericApi';
 import { RESTMethod } from '../shared/types/MethodEnum';
-import { AxiosResponse } from 'axios';
 
 interface ChatSlice {
     loading: boolean,
@@ -28,47 +27,50 @@ export const useChatState = create<ChatSlice>((set, get) => ({
     setCurrentChatId: (id: string) => { set({ currentChatId: id, currentChat: undefined }) },
     fetchChats: async () => {
         set({ loading: true });
-        try {
-            const res = await HttpRequest({ uri: "/Chat", method: RESTMethod.Get }) as AxiosResponse<unknown, unknown>;
-            set({ success: true, chats: res.data as ShortChatType[], loading: false });
-        } catch (error) {
-            set({ errorMessage: error as string, loading: false })
-        }        
+        const res = await HttpRequest({ uri: "/Chat", method: RESTMethod.Get });
+        if (typeof res === "string") {
+            set({ errorMessage: res as string, loading: false });
+        }
+        else {
+            set({ success: true, chats: res as ShortChatType[], loading: false });
+        }
     },
     createChat: async (ChatName: string) => {
         set({ loading: true });
-        try {
-            const res = await HttpRequest({
-                uri: "/Chat", method: RESTMethod.Post,
-                item: { name: ChatName }
-            }) as AxiosResponse<ShortChatType, unknown>;
-            set({ success: true, chats: [...get().chats, res.data], loading: false });
-        } catch (error) {
-            set({ errorMessage: error as string, loading: false })
+        const res = await HttpRequest({
+            uri: "/Chat", method: RESTMethod.Post,
+            item: { name: ChatName }
+        });
+        if(typeof res === "string") {
+            set({ errorMessage: res as string, loading: false })
+        } else {
+            set({ success: true, chats: [...get().chats, res as ShortChatType], loading: false });
         }       
     },
     deleteChat: async (id: string) => {
         set({ loading: true });
-        try {
-            await HttpRequest({uri: "/Chat", method: RESTMethod.Delete, id: id});
+        const res = await HttpRequest({ uri: "/Chat", method: RESTMethod.Delete, id: id });
+        console.log(res);
+        console.log(typeof res)
+        if(typeof res === "string") {
+            set({ errorMessage: res, loading: false })
+        } else {
             get().fetchChats();
-        } catch (error) {
-            set({ errorMessage: error as string, loading: false })
         }
     },
     getChatById: async (id: string) => {
         set({ loading: true });
-        try {
-            const res = await HttpRequest({
-                uri: "/Chat",
-                method: RESTMethod.GetById, id: id
-            }) as AxiosResponse<ShortChatType, unknown>;
+        const res = await HttpRequest({
+            uri: "/Chat",
+            method: RESTMethod.GetById, id: id
+        });
+        if(typeof res === "string") {
+            set({ errorMessage: res, loading: false })
+        } else {
             if (!get().chats.find(chat => chat.id === id)) {
-                set({ chats: [...get().chats, res.data]})
+                set({ chats: [...get().chats, res  as ShortChatType]})
             }
-            set({currentChat: res.data})
-        } catch (error) {
-            set({ errorMessage: error as string, loading: false })
-        }
+            set({currentChat: res  as ShortChatType})
+        } 
     },
 }));
