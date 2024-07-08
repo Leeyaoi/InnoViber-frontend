@@ -3,6 +3,7 @@ import ChatHeader from "../../components/ChatHeader/ChatHeader";
 import { useGlobalStore } from "../../state/GlobalStore";
 import "./ChatModule.scss";
 import { Typography } from "@mui/material";
+import CreateMessageComponent from "../../components/CreateMessageComponent/CreateMessageComponent";
 
 const ChatModule = () => {
   const {
@@ -43,9 +44,10 @@ const ChatModule = () => {
         setCurrentChatId={setCurrentChatId}
         deleteChat={deleteChat}
       />
-      <div className="ChatBackground">
+      <div className="ChatBackground" id="Chat_is_opened_bg">
         <div className="ImgBlur" id="Chat_is_opened"></div>
       </div>
+      <CreateMessageComponent />
     </div>
   );
 };

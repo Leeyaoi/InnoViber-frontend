@@ -1,0 +1,28 @@
+@import "../../index.scss";
+
+#CreateMessageComponent{
+    display: flex;
+    margin: auto;
+    padding: 0.7rem;
+}
+
+#CreateMessageComponent > *{
+    color: $font-color;
+    margin: auto;
+}
+
+.CreateMessageComponent_Input_Box{
+    width: 90%;
+    height: fit-content;
+}
+
+.CreateMessageComponent_Input{
+    border-radius: 0.5rem;
+    background-color: $light-color;
+    width: 100%;
+}
+
+.CreateMessageComponent_Input_Box .Mui-focused .MuiOutlinedInput-notchedOutline{
+    border-color: $darker-color !important;
+    border-radius: 0.5rem;
+}
