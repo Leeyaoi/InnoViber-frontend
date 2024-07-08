@@ -15,9 +15,11 @@ interface Props {
 }
 
 const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
-  const createChat = useGlobalStore((state) => state.createChat);
+  const { createChat, currentUserId } = useGlobalStore((state) => ({
+    createChat: state.createChat,
+    currentUserId: state.currentUserId,
+  }));
   const [textInput, setTextInput] = useState("");
-  const userId = useGlobalStore((state) => state.currentUserId);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -38,7 +40,7 @@ const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
         component: "form",
         onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
           event.preventDefault();
-          createChat(textInput, userId);
+          createChat(textInput, currentUserId);
           handleClose();
           setTextInput("");
         },
