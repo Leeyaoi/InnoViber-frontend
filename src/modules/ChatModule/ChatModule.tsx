@@ -33,7 +33,7 @@ const ChatModule = () => {
       getChatById(currentChatId);
       fetchMessages(currentChatId);
     }
-  }, [getChatById, currentChatId, fetchMessages]);
+  }, [getChatById, currentChatId, fetchMessages, messages]);
 
   if (typeof currentChat == "undefined") {
     return (
