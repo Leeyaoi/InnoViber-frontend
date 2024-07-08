@@ -4,6 +4,8 @@ import { useGlobalStore } from "../../state/GlobalStore";
 import "./ChatModule.scss";
 import { Typography } from "@mui/material";
 import CreateMessageComponent from "../../components/CreateMessageComponent/CreateMessageComponent";
+import UsersMessage from "../../components/UsersMessage/UsersMessage";
+import OthersMessage from "../../components/OthersMessage/OthersMessage";
 
 const ChatModule = () => {
   const {
@@ -12,19 +14,26 @@ const ChatModule = () => {
     setCurrentChatId,
     getChatById,
     deleteChat,
+    messages,
+    fetchMessages,
+    currentUserId,
   } = useGlobalStore((state) => ({
     currentChatId: state.currentChatId,
     currentChat: state.currentChat,
     setCurrentChatId: state.setCurrentChatId,
     getChatById: state.getChatById,
     deleteChat: state.deleteChat,
+    messages: state.messages,
+    fetchMessages: state.fetchMessages,
+    currentUserId: state.currentUserId,
   }));
 
   useEffect(() => {
     if (currentChatId != "") {
       getChatById(currentChatId);
+      fetchMessages(currentChatId);
     }
-  }, [getChatById, currentChatId]);
+  }, [getChatById, currentChatId, fetchMessages]);
 
   if (typeof currentChat == "undefined") {
     return (
@@ -45,7 +54,15 @@ const ChatModule = () => {
         deleteChat={deleteChat}
       />
       <div className="ChatBackground" id="Chat_is_opened_bg">
-        <div className="ImgBlur" id="Chat_is_opened"></div>
+        <div className="Messages_List">
+          {messages.map((item) => {
+            if (item.userId != currentUserId) {
+              return <OthersMessage text={item.text} key={item.id} />;
+            } else {
+              return <UsersMessage text={item.text} key={item.id} />;
+            }
+          })}
+        </div>
       </div>
       <CreateMessageComponent />
     </div>
