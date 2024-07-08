@@ -8,7 +8,7 @@ import { Button, FormControl } from "@mui/material";
 import { useChatState } from "../../state/ChatSlice";
 import { useState } from "react";
 import "./CreateChatModal.scss";
-import { useUserSlice } from "../../state/UserSlice";
+import { useUserStore } from "../../state/UserSlice";
 
 interface Props {
   isOpen: boolean;
@@ -18,7 +18,7 @@ interface Props {
 const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
   const createChat = useChatState((state) => state.createChat);
   const [textInput, setTextInput] = useState("");
-  const userId = useUserSlice((state) => state.currentUserId);
+  const userId = useUserStore((state) => state.currentUserId);
 
   const handleClose = () => {
     setIsOpen(false);
