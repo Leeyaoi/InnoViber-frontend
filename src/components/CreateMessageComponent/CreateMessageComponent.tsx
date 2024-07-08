@@ -41,6 +41,7 @@ const CreateMessageComponent = () => {
           id="outlined-multiline-flexible"
           className="CreateMessageComponent_Input"
           variant="outlined"
+          placeholder="Write message"
           onChange={handleTextInputChange}
           value={messageText}
         />
