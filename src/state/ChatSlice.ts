@@ -12,7 +12,7 @@ interface ChatSlice {
   currentChat: ShortChatType | undefined;
   setCurrentChatId: (id: string) => void;
   fetchChats: () => void;
-  createChat: (ChatName: string) => void;
+  createChat: (ChatName: string, userId: string) => void;
   deleteChat: (id: string) => void;
   getChatById: (id: string) => void;
 }
@@ -39,12 +39,12 @@ export const useChatState = create<ChatSlice>((set, get) => ({
       set({ success: true, chats: res.data, loading: false });
     }
   },
-  createChat: async (ChatName: string) => {
+  createChat: async (ChatName: string, userId: string) => {
     set({ loading: true });
     const res = await HttpRequest<ShortChatType>({
       uri: "/Chat",
       method: RESTMethod.Post,
-      item: { name: ChatName },
+      item: { name: ChatName, userId: userId },
     });
     if (res.code == "error") {
       set({ errorMessage: res.error.message, loading: false });
