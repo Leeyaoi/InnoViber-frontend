@@ -3,7 +3,7 @@ import ShortChatType from "../shared/types/ShortChatType";
 import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
 
-interface ChatSlice {
+export interface ChatSlice {
   loading: boolean;
   success: boolean;
   errorMessage: string;
@@ -17,7 +17,7 @@ interface ChatSlice {
   getChatById: (id: string) => void;
 }
 
-export const useChatState = create<ChatSlice>((set, get) => ({
+export const useChatStore = create<ChatSlice>((set, get) => ({
   loading: false,
   success: false,
   errorMessage: "",

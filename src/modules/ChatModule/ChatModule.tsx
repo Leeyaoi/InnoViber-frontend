@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import ChatHeader from "../../components/ChatHeader/ChatHeader";
-import { useChatState } from "../../state/ChatSlice";
+import { useGlobalStore } from "../../state/GlobalStore";
 import "./ChatModule.scss";
 import { Typography } from "@mui/material";
 
@@ -11,7 +11,7 @@ const ChatModule = () => {
     setCurrentChatId,
     getChatById,
     deleteChat,
-  } = useChatState((state) => ({
+  } = useGlobalStore((state) => ({
     currentChatId: state.currentChatId,
     currentChat: state.currentChat,
     setCurrentChatId: state.setCurrentChatId,

@@ -4,11 +4,11 @@ import AddChatComponent from "../../components/AddChatComponent/AddChatComponent
 import { useEffect, useState } from "react";
 import "./ChatListModule.scss";
 import { List, ListItem } from "@mui/material";
-import { useChatState } from "../../state/ChatSlice";
+import { useGlobalStore } from "../../state/GlobalStore";
 import ShortChatType from "../../shared/types/ShortChatType";
 
 const ChatListModule = () => {
-  const { currentChatId, setCurrentChatId, chats, fetchChats } = useChatState(
+  const { currentChatId, setCurrentChatId, chats, fetchChats } = useGlobalStore(
     (state) => ({
       currentChatId: state.currentChatId,
       setCurrentChatId: state.setCurrentChatId,

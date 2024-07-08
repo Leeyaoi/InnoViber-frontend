@@ -3,9 +3,9 @@ import { create } from "zustand";
 import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import MessageType from "../shared/types/MessageType";
-import { useChatState } from "./ChatSlice";
+import { useChatStore } from "./ChatSlice";
 
-interface MessageSlice {
+export interface MessageSlice {
   loading: boolean;
   success: boolean;
   errorMessage: string;
@@ -15,7 +15,7 @@ interface MessageSlice {
   deleteMessage: (id: string) => void;
 }
 
-export const useMessageState = create<MessageSlice>((set, get) => ({
+export const useMessageStore = create<MessageSlice>((set, get) => ({
   loading: false,
   success: false,
   errorMessage: "",
@@ -65,7 +65,7 @@ export const useMessageState = create<MessageSlice>((set, get) => ({
     if (res.code == "error") {
       set({ errorMessage: res.error.message, loading: false });
     } else {
-      const chatId = useChatState((state) => state.currentChatId);
+      const chatId = useChatStore((state) => state.currentChatId);
       get().fetchMessages(chatId);
     }
   },

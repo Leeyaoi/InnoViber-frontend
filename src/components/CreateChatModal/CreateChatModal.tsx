@@ -5,10 +5,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import { Button, FormControl } from "@mui/material";
-import { useChatState } from "../../state/ChatSlice";
+import { useChatStore } from "../../state/ChatSlice";
 import { useState } from "react";
 import "./CreateChatModal.scss";
-import { useUserStore } from "../../state/UserSlice";
+import { useGlobalStore } from "../../state/GlobalStore";
 
 interface Props {
   isOpen: boolean;
@@ -16,9 +16,9 @@ interface Props {
 }
 
 const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
-  const createChat = useChatState((state) => state.createChat);
+  const createChat = useChatStore((state) => state.createChat);
   const [textInput, setTextInput] = useState("");
-  const userId = useUserStore((state) => state.currentUserId);
+  const userId = useGlobalStore((state) => state.currentUserId);
 
   const handleClose = () => {
     setIsOpen(false);
