@@ -31,7 +31,7 @@ export const useChatState = create<ChatSlice>((set, get) => ({
     set({ loading: true });
     const res = await HttpRequest({ uri: "/Chat", method: RESTMethod.Get });
     if (typeof res === "string") {
-      set({ errorMessage: res as string, loading: false });
+      set({ errorMessage: res, loading: false });
     } else {
       set({ success: true, chats: res as ShortChatType[], loading: false });
     }
@@ -44,7 +44,7 @@ export const useChatState = create<ChatSlice>((set, get) => ({
       item: { name: ChatName },
     });
     if (typeof res === "string") {
-      set({ errorMessage: res as string, loading: false });
+      set({ errorMessage: res, loading: false });
     } else {
       set({
         success: true,
