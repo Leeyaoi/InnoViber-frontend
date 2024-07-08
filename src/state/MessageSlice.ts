@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { create } from "zustand";
+import { StateCreator } from "zustand";
 import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import MessageType from "../shared/types/MessageType";
-import { useChatStore } from "./ChatSlice";
+import { useGlobalStore } from "./GlobalStore";
+import { ChatSlice } from "./ChatSlice";
+import { UserSlice } from "./UserSlice";
 
 export interface MessageSlice {
   loading: boolean;
@@ -15,7 +17,12 @@ export interface MessageSlice {
   deleteMessage: (id: string) => void;
 }
 
-export const useMessageStore = create<MessageSlice>((set, get) => ({
+export const MessageStore: StateCreator<
+  ChatSlice & MessageSlice & UserSlice,
+  [],
+  [],
+  MessageSlice
+> = (set, get) => ({
   loading: false,
   success: false,
   errorMessage: "",
@@ -60,13 +67,11 @@ export const useMessageStore = create<MessageSlice>((set, get) => ({
       method: RESTMethod.Delete,
       id: id,
     });
-    console.log(res);
-    console.log(typeof res);
     if (res.code == "error") {
       set({ errorMessage: res.error.message, loading: false });
     } else {
-      const chatId = useChatStore((state) => state.currentChatId);
+      const chatId = useGlobalStore((state) => state.currentChatId);
       get().fetchMessages(chatId);
     }
   },
-}));
+});
