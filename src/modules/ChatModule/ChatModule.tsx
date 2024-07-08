@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import ChatHeader from "../../components/ChatHeader/ChatHeader";
 import { useChatState } from "../../state/ChatSlice";
 import "./ChatModule.scss";
+import { Typography } from "@mui/material";
 
 const ChatModule = () => {
   const {
@@ -25,7 +26,15 @@ const ChatModule = () => {
   }, [getChatById, currentChatId]);
 
   if (typeof currentChat == "undefined") {
-    return <></>;
+    return (
+      <div className="ChatBackground">
+        <div className="ImgBlur">
+          <Typography variant="h1" id="SelectChatSuggestion">
+            Select a chat
+          </Typography>
+        </div>
+      </div>
+    );
   }
   return (
     <div className="ChatModule">
@@ -34,6 +43,9 @@ const ChatModule = () => {
         setCurrentChatId={setCurrentChatId}
         deleteChat={deleteChat}
       />
+      <div className="ChatBackground">
+        <div className="ImgBlur" id="Chat_is_opened"></div>
+      </div>
     </div>
   );
 };

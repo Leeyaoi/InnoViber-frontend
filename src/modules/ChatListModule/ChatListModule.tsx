@@ -36,16 +36,18 @@ const ChatListModule = () => {
           list={chats}
           SetSearchResults={SetFilteredChatList}
         />
-        <AddChatComponent />
-        {filteredChatList.map((item) => (
-          <ListItem
-            className={currentChatId === item.id ? "activeItem" : ""}
-            onClick={() => setCurrentChatId(item.id)}
-            key={item.id}
-          >
-            <ChatItem chatName={item.name} />
-          </ListItem>
-        ))}
+        <div className="MainPage_ChatItems">
+          <AddChatComponent />
+          {filteredChatList.map((item) => (
+            <ListItem
+              className={currentChatId === item.id ? "activeItem" : ""}
+              onClick={() => setCurrentChatId(item.id)}
+              key={item.id}
+            >
+              <ChatItem chatName={item.name} />
+            </ListItem>
+          ))}
+        </div>
       </List>
     </>
   );
