@@ -25,8 +25,8 @@
     border-radius: 1rem !important;
 }
 
-.ModalCreateChat_Content_Text{
-    color: $light-color !important;
+#ModalCreateChat_Content_Text{
+    color: $light-color;
 }
 
 .ModalCreateChat_Content_NameInput > .MuiInputBase-root{
@@ -53,10 +53,10 @@
     padding-top: 0 !important;
 }
 
-.ModalCreateChat_Button_Submit{
-    color: $light-color !important;
+#ModalCreateChat_Button_Submit{
+    color: $light-color;
 }
 
-.ModalCreateChat_Button_Submit:hover{
-    background-color: $darker-color !important;
+#ModalCreateChat_Button_Submit:hover{
+    background-color: $darker-color;
 }

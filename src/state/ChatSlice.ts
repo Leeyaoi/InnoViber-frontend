@@ -10,7 +10,8 @@ interface ChatSlice {
     currentChatId: string,
     updateCurrentChat: (id: string) => void,
     fetchChats: () => void,
-    createChat: (ChatName: string) => void
+    createChat: (ChatName: string) => void,
+    deleteChat: (id: string) => void
   }
 
 export const useChatState = create<ChatSlice>((set, get) => ({
@@ -43,6 +44,20 @@ export const useChatState = create<ChatSlice>((set, get) => ({
                 return;
             }
             set({ success: true, chats: [...get().chats, res.data], loading: false });
+        } catch (error) {
+            set({ errorMessage: error as string, loading: false })
+        }
+    },
+    deleteChat: async (id: string) => {
+        set({ loading: true });
+        
+        try {
+            const res = await client.delete("/Chat/" + id);
+            if (res.status >= 400) {
+                set({ errorMessage: res.statusText, loading: false })
+                return;
+            }
+            get().fetchChats();
         } catch (error) {
             set({ errorMessage: error as string, loading: false })
         }

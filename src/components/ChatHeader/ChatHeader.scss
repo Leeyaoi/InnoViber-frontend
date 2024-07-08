@@ -1,0 +1,54 @@
+@import "../../index.scss";
+
+.MainPage_ChatModule_Header{
+    border: 0.0625rem solid $light-color;
+    border-left: none;
+    height: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.MainPage_ChatModule_MainData{
+    display: flex;
+    flex-direction: row;
+}
+
+#MainPage_ChatModule_Header_ArrowButton{
+    color: $light-color;
+}
+
+#MainPage_ChatModule_Header_Arrow{
+    height: 2rem;
+    width: 2rem;
+    margin: auto 0.5rem;
+}
+
+#MainPage_ChatModule_Header_Avatar{
+    height: 3rem;
+    width: 3rem;
+    margin: auto 0.225rem;
+}
+
+#MainPage_ChatModule_Header_Name{
+    display: block;
+    height: fit-content;
+    margin: auto 0.25rem;
+}
+
+#MainPage_ChatModule_Header_Menu{
+    width: 2.5rem;
+    height: fit-content;
+    margin: auto 0.5rem;
+    margin-left: auto;
+}
+
+#MainPage_ChatModule_Header_Menu > .MuiButtonBase-root{
+    padding: 0;
+}
+
+#MainPage_ChatModule_Header_Menu > .MuiButtonBase-root > .MuiSvgIcon-root{
+    color: $light-color;
+    width: 100%;
+    height: 100%;
+}

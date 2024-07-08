@@ -11,9 +11,9 @@
     margin: auto 1rem;
 }
 
-.MainPage_ChatList_AddChat_Button{
-    color: $light-color !important;
-    background-color: $darker-color !important;
+#MainPage_ChatList_AddChat_Button{
+    color: $light-color;
+    background-color: $darker-color;
 }
 
 .MainPage_ChatList_AddChat_Label{
