@@ -2,8 +2,6 @@ import { StateCreator } from "zustand";
 import ShortChatType from "../shared/types/ShortChatType";
 import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
-import { MessageSlice } from "./MessageSlice";
-import { UserSlice } from "./UserSlice";
 
 export interface ChatSlice {
   loading: boolean;
@@ -19,12 +17,7 @@ export interface ChatSlice {
   getChatById: (id: string) => void;
 }
 
-export const ChatStore: StateCreator<
-  ChatSlice & MessageSlice & UserSlice,
-  [],
-  [],
-  ChatSlice
-> = (set, get) => ({
+export const ChatStore: StateCreator<ChatSlice> = (set, get) => ({
   loading: false,
   success: false,
   errorMessage: "",
