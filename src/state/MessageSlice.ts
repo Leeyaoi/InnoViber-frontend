@@ -26,7 +26,6 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => ({
       uri: "/Message",
       method: RESTMethod.Get,
     });
-    console.log(chatId);
     if (res.code == "error") {
       set({ errorMessage: res.error.message, loading: false });
     } else {
