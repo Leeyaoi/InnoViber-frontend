@@ -31,7 +31,12 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => ({
     } else {
       set({
         success: true,
-        messages: res.data.filter((mes) => mes.chatId == chatId),
+        messages: res.data
+          .filter((mes) => mes.chatId == chatId)
+          .sort((m1, m2) => {
+            if (m1.date > m2.date) return 0;
+            return -1;
+          }),
         loading: false,
       });
     }

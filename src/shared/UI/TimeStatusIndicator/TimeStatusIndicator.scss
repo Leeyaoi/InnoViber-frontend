@@ -1,0 +1,21 @@
+.TimeStatusIndicator{
+    display: grid;
+    grid-auto-flow: column;
+    align-self: flex-end;
+}
+
+.status_icon{
+    display: inline-block;
+    width: 1rem !important;
+    height: 1rem !important;
+    margin: 0 0.1rem;
+}
+
+.MessageTime{
+    display: inline-block;
+    height: 100%;
+}
+
+.delivered{
+    color: cadetblue;
+}
