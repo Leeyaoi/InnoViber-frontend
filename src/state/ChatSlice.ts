@@ -19,12 +19,7 @@ export interface ChatSlice {
   getChatById: (id: string) => void;
 }
 
-export const ChatStore: StateCreator<
-  ChatSlice & MessageSlice & UserSlice,
-  [],
-  [],
-  ChatSlice
-> = (set, get) => ({
+export const ChatStore: StateCreator<ChatSlice> = (set, get) => ({
   loading: false,
   success: false,
   errorMessage: "",
