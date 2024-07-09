@@ -34,6 +34,7 @@ const TimeStatusIndicator = ({
             minute: "2-digit",
           })}
         </Typography>
+        {"\t"}
         {getStatusIcon()}
       </div>
     );
@@ -41,6 +42,7 @@ const TimeStatusIndicator = ({
     return (
       <div className="TimeStatusIndicator">
         {getStatusIcon()}
+        {"\t"}
         <Typography variant="h6" className="MessageTime">
           {new Date(date).toLocaleString("by-BR", {
             hour: "numeric",

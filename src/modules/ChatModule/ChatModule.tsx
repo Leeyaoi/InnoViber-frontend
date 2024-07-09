@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { createRef, RefObject, useEffect } from "react";
 import ChatHeader from "../../components/ChatHeader/ChatHeader";
 import { useGlobalStore } from "../../state/GlobalStore";
 import "./ChatModule.scss";
@@ -28,12 +28,23 @@ const ChatModule = () => {
     currentUserId: state.currentUserId,
   }));
 
+  const messagesEnd: RefObject<HTMLDivElement> = createRef();
+
   useEffect(() => {
     if (currentChatId != "") {
       getChatById(currentChatId);
+    }
+  }, [getChatById, currentChatId]);
+
+  useEffect(() => {
+    if (currentChatId != "") {
       fetchMessages(currentChatId);
     }
-  }, [getChatById, currentChatId, fetchMessages, messages]);
+  }, [currentChatId, fetchMessages]);
+
+  useEffect(() => {
+    messagesEnd.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, messagesEnd]);
 
   if (typeof currentChat == "undefined") {
     return (
@@ -46,6 +57,7 @@ const ChatModule = () => {
       </div>
     );
   }
+
   return (
     <div className="ChatModule">
       <ChatHeader
@@ -62,6 +74,7 @@ const ChatModule = () => {
               return <UsersMessage message={item} key={item.id} />;
             }
           })}
+          <div ref={messagesEnd}></div>
         </div>
       </div>
       <CreateMessageComponent />
