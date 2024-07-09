@@ -4,8 +4,6 @@ import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import MessageType from "../shared/types/MessageType";
 import { useGlobalStore } from "./GlobalStore";
-import { ChatSlice } from "./ChatSlice";
-import { UserSlice } from "./UserSlice";
 
 export interface MessageSlice {
   loading: boolean;
@@ -17,12 +15,7 @@ export interface MessageSlice {
   deleteMessage: (id: string) => void;
 }
 
-export const MessageStore: StateCreator<
-  ChatSlice & MessageSlice & UserSlice,
-  [],
-  [],
-  MessageSlice
-> = (set, get) => ({
+export const MessageStore: StateCreator<MessageSlice> = (set, get) => ({
   loading: false,
   success: false,
   errorMessage: "",
