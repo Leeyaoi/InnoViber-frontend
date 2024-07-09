@@ -1,9 +1,9 @@
-import { create } from "zustand";
+import { StateCreator } from "zustand";
 import ShortChatType from "../shared/types/ShortChatType";
 import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
 
-interface ChatSlice {
+export interface ChatSlice {
   loading: boolean;
   success: boolean;
   errorMessage: string;
@@ -12,12 +12,12 @@ interface ChatSlice {
   currentChat: ShortChatType | undefined;
   setCurrentChatId: (id: string) => void;
   fetchChats: () => void;
-  createChat: (ChatName: string) => void;
+  createChat: (ChatName: string, userId: string) => void;
   deleteChat: (id: string) => void;
   getChatById: (id: string) => void;
 }
 
-export const useChatState = create<ChatSlice>((set, get) => ({
+export const ChatStore: StateCreator<ChatSlice> = (set, get) => ({
   loading: false,
   success: false,
   errorMessage: "",
@@ -39,12 +39,12 @@ export const useChatState = create<ChatSlice>((set, get) => ({
       set({ success: true, chats: res.data, loading: false });
     }
   },
-  createChat: async (ChatName: string) => {
+  createChat: async (ChatName: string, userId: string) => {
     set({ loading: true });
     const res = await HttpRequest<ShortChatType>({
       uri: "/Chat",
       method: RESTMethod.Post,
-      item: { name: ChatName },
+      item: { name: ChatName, userId: userId },
     });
     if (res.code == "error") {
       set({ errorMessage: res.error.message, loading: false });
@@ -63,8 +63,6 @@ export const useChatState = create<ChatSlice>((set, get) => ({
       method: RESTMethod.Delete,
       id: id,
     });
-    console.log(res);
-    console.log(typeof res);
     if (res.code == "error") {
       set({ errorMessage: res.error.message, loading: false });
     } else {
@@ -87,4 +85,4 @@ export const useChatState = create<ChatSlice>((set, get) => ({
       set({ currentChat: res.data });
     }
   },
-}));
+});
