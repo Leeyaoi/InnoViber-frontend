@@ -1,0 +1,16 @@
+.TimeStatusIndicator{
+    display: block;
+    align-self: flex-end;
+}
+
+.status_icon{
+    display: inline-block;
+    width: 1rem !important;
+    height: 1rem !important;
+    margin: 0;
+}
+
+.MessageTime{
+    display: inline-block;
+    height: 100%;
+}

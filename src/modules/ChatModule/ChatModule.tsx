@@ -57,9 +57,9 @@ const ChatModule = () => {
         <div className="Messages_List">
           {messages.map((item) => {
             if (item.userId != currentUserId) {
-              return <OthersMessage text={item.text} key={item.id} />;
+              return <OthersMessage message={item} key={item.id} />;
             } else {
-              return <UsersMessage text={item.text} key={item.id} />;
+              return <UsersMessage message={item} key={item.id} />;
             }
           })}
         </div>
