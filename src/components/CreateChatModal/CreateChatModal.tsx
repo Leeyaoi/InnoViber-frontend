@@ -18,8 +18,8 @@ const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
   const { createChat, currentUserId } = useGlobalStore((state) => ({
     createChat: state.createChat,
     currentUserId: state.currentUserId,
+  }));
   const [textInput, setTextInput] = useState("");
-  const userId = useGlobalStore((state) => state.currentUserId);
 
   const handleClose = () => {
     setIsOpen(false);
