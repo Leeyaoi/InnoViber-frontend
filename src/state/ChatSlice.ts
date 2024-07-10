@@ -2,8 +2,6 @@ import { StateCreator } from "zustand";
 import ShortChatType from "../shared/types/ShortChatType";
 import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
-import { MessageSlice } from "./MessageSlice";
-import { UserSlice } from "./UserSlice";
 
 export interface ChatSlice {
   loading: boolean;

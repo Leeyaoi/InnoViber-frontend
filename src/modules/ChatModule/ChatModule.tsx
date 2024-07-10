@@ -74,7 +74,7 @@ const ChatModule = () => {
               return <UsersMessage message={item} key={item.id} />;
             }
           })}
-          <div ref={messagesEnd}></div>
+          <div id="downDiv" ref={messagesEnd}></div>
         </div>
       </div>
       <CreateMessageComponent />

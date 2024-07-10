@@ -21,17 +21,19 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <Auth0Provider
-    domain={import.meta.env.VITE_AUTH_DOMAIN}
-    clientId={import.meta.env.VITE_AUTH_CLIENT_ID}
-    authorizationParams={{
-      redirect_uri: window.location.origin,
-    }}
-  >
-    <React.StrictMode>
-      <ThemeProvider theme={theme}>
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <Auth0Provider
+        domain={import.meta.env.VITE_AUTH_DOMAIN}
+        clientId={import.meta.env.VITE_AUTH_CLIENT_ID}
+        authorizationParams={{
+          redirect_uri: window.location.origin,
+          audience: import.meta.env.VITE_AUTH_AUDIENCE,
+          scope: "openid profile email",
+        }}
+      >
         <App />
-      </ThemeProvider>
-    </React.StrictMode>
-  </Auth0Provider>
+      </Auth0Provider>
+    </ThemeProvider>
+  </React.StrictMode>
 );

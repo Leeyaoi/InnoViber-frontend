@@ -3,17 +3,19 @@ import ChatListModule from "../../modules/ChatListModule/ChatListModule";
 import ChatModule from "../../modules/ChatModule/ChatModule";
 import "./MainPage.scss";
 import MenuBar from "../../modules/MenuBar/MenuBar";
+import { GetToken } from "../../shared/helpers/client";
 
 const MainPage = () => {
+  GetToken();
   return (
-    <Grid container className="Container">
-      <Grid item xs={0.5}>
+    <Grid container className="Container" columns={24}>
+      <Grid item xs={1}>
         <MenuBar />
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={6}>
         <ChatListModule />
       </Grid>
-      <Grid item xs={8.5}>
+      <Grid item xs={17}>
         <ChatModule />
       </Grid>
     </Grid>

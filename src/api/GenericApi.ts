@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { RESTMethod } from "../shared/types/MethodEnum";
-import client from "../shared/helpers/client";
+import { client } from "../shared/helpers/client";
 
 interface Props {
   uri: string;
@@ -54,6 +54,7 @@ export const HttpRequest = async <V, E = AxiosError>({
         error: new Error(`Request failed with status ${res.status}`) as E,
       };
     }
+    console.log(res);
     return { code: "success", data: res.data };
   } catch (error) {
     return { code: "error", error: error as E };
