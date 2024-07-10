@@ -6,7 +6,6 @@ export const GetToken = async () => {
 
   if (isAuthenticated) {
     const token = await getAccessTokenSilently();
-    console.log(token);
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
 };

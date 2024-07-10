@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import { client } from "../shared/helpers/client";
 
@@ -31,19 +31,29 @@ export const HttpRequest = async <V, E = AxiosError>({
   try {
     switch (method) {
       case RESTMethod.Get:
-        res = await client.get<V>(uri);
+        res = await client.get<V>(uri, {
+          headers: axios.defaults.headers.common,
+        });
         break;
       case RESTMethod.GetById:
-        res = await client.get<V>(uri + "/" + id);
+        res = await client.get<V>(uri + "/" + id, {
+          headers: axios.defaults.headers.common,
+        });
         break;
       case RESTMethod.Post:
-        res = await client.post<V>(uri, item);
+        res = await client.post<V>(uri, item, {
+          headers: axios.defaults.headers.common,
+        });
         break;
       case RESTMethod.Delete:
-        res = await client.delete<V>(uri + "/" + id);
+        res = await client.delete<V>(uri + "/" + id, {
+          headers: axios.defaults.headers.common,
+        });
         break;
       case RESTMethod.Put:
-        res = await client.put<V>(uri + "/" + id, item);
+        res = await client.put<V>(uri + "/" + id, item, {
+          headers: axios.defaults.headers.common,
+        });
         break;
       default:
         throw "Bad request";
@@ -54,7 +64,6 @@ export const HttpRequest = async <V, E = AxiosError>({
         error: new Error(`Request failed with status ${res.status}`) as E,
       };
     }
-    console.log(res);
     return { code: "success", data: res.data };
   } catch (error) {
     return { code: "error", error: error as E };
