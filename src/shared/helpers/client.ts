@@ -33,6 +33,6 @@ export const AxiosInterceptor = ({ children }: Props) => {
     );
 
     return () => client.interceptors.request.eject(interceptor);
-  }, []);
+  }, [getAccessTokenSilently]);
   return children;
 };
