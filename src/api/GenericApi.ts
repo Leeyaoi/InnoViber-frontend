@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import { client } from "../shared/helpers/client";
 
@@ -31,29 +31,19 @@ export const HttpRequest = async <V, E = AxiosError>({
   try {
     switch (method) {
       case RESTMethod.Get:
-        res = await client.get<V>(uri, {
-          headers: axios.defaults.headers.common,
-        });
+        res = await client.get<V>(uri);
         break;
       case RESTMethod.GetById:
-        res = await client.get<V>(uri + "/" + id, {
-          headers: axios.defaults.headers.common,
-        });
+        res = await client.get<V>(uri + "/" + id);
         break;
       case RESTMethod.Post:
-        res = await client.post<V>(uri, item, {
-          headers: axios.defaults.headers.common,
-        });
+        res = await client.post<V>(uri, item);
         break;
       case RESTMethod.Delete:
-        res = await client.delete<V>(uri + "/" + id, {
-          headers: axios.defaults.headers.common,
-        });
+        res = await client.delete<V>(uri + "/" + id);
         break;
       case RESTMethod.Put:
-        res = await client.put<V>(uri + "/" + id, item, {
-          headers: axios.defaults.headers.common,
-        });
+        res = await client.put<V>(uri + "/" + id, item);
         break;
       default:
         throw "Bad request";
