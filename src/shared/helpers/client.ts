@@ -1,20 +1,38 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
+import axios, { AxiosRequestHeaders, InternalAxiosRequestConfig } from "axios";
+import { useEffect } from "react";
 
-export const BuildClient = async () => {
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const token = isAuthenticated ? await getAccessTokenSilently() : "";
-  client = axios.create({
-    baseURL: import.meta.env.VITE_API_URI,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-
-export let client = axios.create({
+export const client = axios.create({
   baseURL: import.meta.env.VITE_API_URI,
-  headers: {
-    Authorization: "",
-  },
 });
+
+interface Props {
+  children: React.ReactNode;
+}
+
+export const AxiosInterceptor = ({ children }: Props) => {
+  const { getAccessTokenSilently } = useAuth0();
+  useEffect(() => {
+    const resInterceptor = async (
+      config: InternalAxiosRequestConfig<unknown>
+    ) => {
+      const token = await getAccessTokenSilently();
+      config.headers = {
+        Authorization: `Bearer ${token}`,
+      } as AxiosRequestHeaders;
+      return config;
+    };
+
+    const errInterceptor = (error: unknown) => {
+      return Promise.reject(error);
+    };
+
+    const interceptor = client.interceptors.request.use(
+      resInterceptor,
+      errInterceptor
+    );
+
+    return () => client.interceptors.request.eject(interceptor);
+  }, []);
+  return children;
+};

@@ -3,10 +3,8 @@ import ChatListModule from "../../modules/ChatListModule/ChatListModule";
 import ChatModule from "../../modules/ChatModule/ChatModule";
 import "./MainPage.scss";
 import MenuBar from "../../modules/MenuBar/MenuBar";
-import { BuildClient } from "../../shared/helpers/client";
 
 const MainPage = () => {
-  BuildClient();
   return (
     <Grid container className="Container" columns={24}>
       <Grid item xs={1}>
