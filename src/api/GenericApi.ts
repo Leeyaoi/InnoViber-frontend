@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { RESTMethod } from "../shared/types/MethodEnum";
-import client from "../shared/helpers/client";
+import { client } from "../shared/helpers/client";
 
 interface Props {
   uri: string;

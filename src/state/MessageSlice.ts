@@ -27,7 +27,7 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => ({
       method: RESTMethod.Get,
     });
     if (res.code == "error") {
-      set({ errorMessage: res.error.message, loading: false });
+      set({ errorMessage: res.error.message, loading: false, messages: [] });
     } else {
       set({
         success: true,
