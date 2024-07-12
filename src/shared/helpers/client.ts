@@ -11,7 +11,6 @@ export const useAxiosInterceptors = () => {
   client.interceptors.request.use(
     async (config) => {
       const token = await getAccessTokenSilently();
-      console.log(token);
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
