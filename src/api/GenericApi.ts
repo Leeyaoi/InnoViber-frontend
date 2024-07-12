@@ -48,6 +48,7 @@ export const HttpRequest = async <V, E = AxiosError>({
       default:
         throw "Bad request";
     }
+    console.log(res);
     if (res.status >= 400) {
       return {
         code: "error",

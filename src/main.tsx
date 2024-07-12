@@ -4,7 +4,6 @@ import "./index.scss";
 import { ThemeProvider } from "@mui/material";
 import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App";
-import { AxiosInterceptor } from "./shared/helpers/client";
 import { theme } from "./shared/assets/theme";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -19,9 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           scope: "openid profile email",
         }}
       >
-        <AxiosInterceptor>
-          <App />
-        </AxiosInterceptor>
+        <App />
       </Auth0Provider>
     </ThemeProvider>
   </React.StrictMode>
