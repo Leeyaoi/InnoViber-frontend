@@ -17,16 +17,7 @@ const ChatModule = () => {
     messages,
     fetchMessages,
     currentUserId,
-  } = useGlobalStore((state) => ({
-    currentChatId: state.currentChatId,
-    currentChat: state.currentChat,
-    setCurrentChatId: state.setCurrentChatId,
-    getChatById: state.getChatById,
-    deleteChat: state.deleteChat,
-    messages: state.messages,
-    fetchMessages: state.fetchMessages,
-    currentUserId: state.currentUserId,
-  }));
+  } = useGlobalStore();
 
   const messagesEnd: RefObject<HTMLDivElement> = createRef();
 
@@ -43,7 +34,7 @@ const ChatModule = () => {
   }, [currentChatId, fetchMessages]);
 
   useEffect(() => {
-    messagesEnd.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEnd.current?.scrollIntoView();
   }, [messages, messagesEnd]);
 
   if (typeof currentChat == "undefined") {

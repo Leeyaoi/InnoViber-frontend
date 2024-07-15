@@ -6,13 +6,7 @@ import { useGlobalStore } from "../../state/GlobalStore";
 import { useState } from "react";
 
 const CreateMessageComponent = () => {
-  const { currentChatId, currentUserId, createMessage } = useGlobalStore(
-    (state) => ({
-      currentChatId: state.currentChatId,
-      currentUserId: state.currentUserId,
-      createMessage: state.createMessage,
-    })
-  );
+  const { currentChatId, currentUserId, createMessage } = useGlobalStore();
 
   const [messageText, setMessageText] = useState("");
 

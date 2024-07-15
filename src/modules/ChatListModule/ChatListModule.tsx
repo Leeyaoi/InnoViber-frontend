@@ -8,21 +8,17 @@ import { useGlobalStore } from "../../state/GlobalStore";
 import ShortChatType from "../../shared/types/ShortChatType";
 
 const ChatListModule = () => {
-  const { currentChatId, setCurrentChatId, chats, fetchChats } = useGlobalStore(
-    (state) => ({
-      currentChatId: state.currentChatId,
-      setCurrentChatId: state.setCurrentChatId,
-      chats: state.chats,
-      fetchChats: state.fetchChats,
-    })
-  );
+  const { currentChatId, setCurrentChatId, chats, fetchChats, currentUserId } =
+    useGlobalStore();
 
   const [filteredChatList, SetFilteredChatList] =
     useState<ShortChatType[]>(chats);
 
   useEffect(() => {
-    fetchChats();
-  }, [fetchChats]);
+    if (currentUserId != "") {
+      fetchChats();
+    }
+  }, [currentUserId, fetchChats]);
 
   useEffect(() => {
     SetFilteredChatList(chats);
@@ -41,7 +37,11 @@ const ChatListModule = () => {
           {filteredChatList.map((item) => (
             <ListItem
               className={currentChatId === item.id ? "activeItem" : ""}
-              onClick={() => setCurrentChatId(item.id)}
+              onClick={() => {
+                if (currentChatId !== item.id) {
+                  setCurrentChatId(item.id);
+                }
+              }}
               key={item.id}
             >
               <ChatItem chatName={item.name} />

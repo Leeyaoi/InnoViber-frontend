@@ -15,10 +15,7 @@ interface Props {
 }
 
 const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
-  const { createChat, currentUserId } = useGlobalStore((state) => ({
-    createChat: state.createChat,
-    currentUserId: state.currentUserId,
-  }));
+  const { createChat, currentUserId } = useGlobalStore();
   const [textInput, setTextInput] = useState("");
 
   const handleClose = () => {
