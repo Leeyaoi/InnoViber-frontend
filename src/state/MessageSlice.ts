@@ -32,20 +32,16 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
     fetchMessages: async (chatId: string) => {
       set({ loading: true });
       const res = await HttpRequest<MessageType[]>({
-        uri: "/Message",
-        method: RESTMethod.Get,
+        uri: "/Message/Chat",
+        method: RESTMethod.GetById,
+        id: chatId,
       });
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false, messages: [] });
       } else {
         set({
           success: true,
-          messages: res.data
-            .filter((mes) => mes.chatId == chatId)
-            .sort((m1, m2) => {
-              if (m1.date > m2.date) return 0;
-              return -1;
-            }),
+          messages: res.data,
           loading: false,
         });
       }

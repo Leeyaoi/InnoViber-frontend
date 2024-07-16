@@ -9,14 +9,24 @@ import { useEffect } from "react";
 
 const MainPage = () => {
   const { isAuthenticated, user } = useAuth0();
-  const { setCurrentUser, isExists, createUser } = useGlobalStore();
+  const { setCurrentUser, isExists, createUser, loading } = useGlobalStore();
   useEffect(() => {
-    setCurrentUser(user!);
-
-    if (!isExists(user)) {
-      createUser(user);
+    async function ensureUserCreated() {
+      const exists = await isExists(user);
+      if (!exists) {
+        console.log("creating");
+        createUser(user);
+      }
+      console.log("created");
     }
-  }, [createUser, isAuthenticated, isExists, setCurrentUser, user]);
+    ensureUserCreated();
+  }, [createUser, isAuthenticated, isExists, user]);
+
+  useEffect(() => {
+    if (!loading) {
+      setCurrentUser(user!);
+    }
+  }, [loading, setCurrentUser, user]);
   return (
     <Grid container className="Container" columns={24}>
       <Grid item xs={1}>
