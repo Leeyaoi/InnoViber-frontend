@@ -16,8 +16,6 @@ export interface UserSlice {
   getShortUser: (userId: string) => Promise<ShortUserType>;
   getUserById: (userId: string) => Promise<UserType>;
   getUsersId: (mongoId: string) => Promise<string>;
-  createUser: (user: User | undefined) => void;
-  isExists: (user: User | undefined) => Promise<boolean>;
 }
 
 const InitialUserSlice = {
@@ -42,15 +40,32 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
         });
         return;
       }
+
+      set({ loading: true });
+      const res = await HttpRequest<UserType>({
+        uri: "/ShortUser/auth",
+        method: RESTMethod.Post,
+        item: {
+          auth0Id: user.sub,
+          nickName: user.nickname,
+          name: user.name,
+          email: user.email,
+          about: "",
+          userPhoto: user.picture,
+        },
+      });
+
+      if (res.code == "error") {
+        set({ errorMessage: res.error.message, loading: false });
+        return;
+      }
+
+      set({ currentUser: res.data });
+
       get()
         .getUsersId(user.sub!)
         .then((id) => {
           set({ currentUserId: id });
-        });
-      get()
-        .getUserById(get().currentUserId)
-        .then((user) => {
-          set({ currentUser: user });
         });
     },
 
@@ -103,62 +118,6 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
         return "";
       }
       return ShortUser.data[0].id;
-    },
-
-    createUser: async (user: User | undefined) => {
-      if (typeof user == "undefined") {
-        return;
-      }
-      set({ loading: true });
-      const userRes = await HttpRequest<UserType>({
-        uri: "/User",
-        method: RESTMethod.Post,
-        item: {
-          auth0Id: user.sub,
-          nickName: user.nickname,
-          name: user.name,
-          email: user.email,
-          about: "",
-          userPhoto: user.picture,
-        },
-      });
-
-      if (userRes.code == "error") {
-        set({ errorMessage: userRes.error.message, loading: false });
-      } else {
-        set({ currentUser: userRes.data });
-        const shortUserRes = await HttpRequest<ShortUserType>({
-          uri: "/ShortUser",
-          method: RESTMethod.Post,
-          item: {
-            mongoId: userRes.data.id,
-          },
-        });
-        if (shortUserRes.code == "error") {
-          set({ errorMessage: shortUserRes.error.message, loading: false });
-        } else {
-          set({ currentUserId: shortUserRes.data.id, loading: false });
-        }
-      }
-    },
-
-    isExists: async (user: User | undefined) => {
-      if (typeof user === "undefined") {
-        return true;
-      }
-      let res = await HttpRequest<UserType>({
-        uri: "/User/auth",
-        method: RESTMethod.GetById,
-        id: user.sub,
-      });
-      if (res.code == "error") {
-        set({ errorMessage: res.error.message, loading: false });
-        res = { code: "not found", data: {} as UserType };
-      }
-      if (res.code == "not found") {
-        return false;
-      }
-      return true;
     },
   };
 };

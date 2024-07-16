@@ -9,23 +9,13 @@ import { useEffect } from "react";
 
 const MainPage = () => {
   const { isAuthenticated, user } = useAuth0();
-  const { setCurrentUser, isExists, createUser, loading } = useGlobalStore();
+  const { setCurrentUser, loading } = useGlobalStore();
 
   useEffect(() => {
     if (!isAuthenticated) {
       resetGlobalStore();
     }
   }, [isAuthenticated]);
-
-  useEffect(() => {
-    async function ensureUserCreated() {
-      const exists = await isExists(user);
-      if (!exists) {
-        createUser(user);
-      }
-    }
-    ensureUserCreated();
-  }, [createUser, isAuthenticated, isExists, user]);
 
   useEffect(() => {
     if (!loading) {

@@ -14,20 +14,12 @@ type SuccessResponse<V> = {
   data: V;
 };
 
-type UndefinedResponse<V> = {
-  code: "not found";
-  data: V;
-};
-
 type ErrorResponse<E = AxiosError> = {
   code: "error";
   error: E;
 };
 
-type BaseResponse<V, E> =
-  | SuccessResponse<V>
-  | ErrorResponse<E>
-  | UndefinedResponse<V>;
+type BaseResponse<V, E> = SuccessResponse<V> | ErrorResponse<E>;
 
 export const HttpRequest = async <V, E = AxiosError>({
   uri,
@@ -61,9 +53,6 @@ export const HttpRequest = async <V, E = AxiosError>({
         code: "error",
         error: new Error(`Request failed with status ${res.status}`) as E,
       };
-    }
-    if (res.status == 204) {
-      return { code: "not found", data: {} as V };
     }
     return { code: "success", data: res.data };
   } catch (error) {
