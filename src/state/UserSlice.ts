@@ -89,7 +89,6 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
         method: RESTMethod.GetById,
         id: authId,
       });
-      console.log(user);
       if (user.code == "error") {
         set({ errorMessage: user.error.message, loading: false });
         return "";
@@ -107,7 +106,6 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
     },
 
     createUser: async (user: User | undefined) => {
-      console.log(user);
       if (typeof user == "undefined") {
         return;
       }
@@ -157,7 +155,6 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
         set({ errorMessage: res.error.message, loading: false });
         res = { code: "not found", data: {} as UserType };
       }
-      console.log(res);
       if (res.code == "not found") {
         return false;
       }

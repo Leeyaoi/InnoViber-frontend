@@ -14,10 +14,8 @@ const MainPage = () => {
     async function ensureUserCreated() {
       const exists = await isExists(user);
       if (!exists) {
-        console.log("creating");
         createUser(user);
       }
-      console.log("created");
     }
     ensureUserCreated();
   }, [createUser, isAuthenticated, isExists, user]);
