@@ -11,6 +11,8 @@ export interface UserSlice {
   errorMessage: string;
   currentUserId: string;
   currentUser: UserType;
+  token: string;
+  setToken: (token: string) => void;
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
 }
@@ -18,6 +20,7 @@ export interface UserSlice {
 const InitialUserSlice = {
   loading: false,
   success: false,
+  token: "",
   errorMessage: "",
   currentUserId: "",
   currentUser: {} as UserType,
@@ -29,6 +32,9 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
   });
   return {
     ...InitialUserSlice,
+    setToken: (token: string) => {
+      set({ token: `Bearer ${token}` });
+    },
     setCurrentUser: async (user: User) => {
       if (typeof user == "undefined") {
         set({

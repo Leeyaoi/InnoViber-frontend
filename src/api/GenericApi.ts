@@ -28,6 +28,7 @@ export const HttpRequest = async <V, E = AxiosError>({
   id = "",
 }: Props): Promise<BaseResponse<V, E>> => {
   let res: AxiosResponse<V>;
+  console.log("api is working in " + uri);
   try {
     switch (method) {
       case RESTMethod.Get:

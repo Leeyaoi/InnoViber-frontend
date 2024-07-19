@@ -1,4 +1,4 @@
-import { createRef, RefObject, useEffect } from "react";
+import { createRef, RefObject, useEffect, useState } from "react";
 import ChatHeader from "../../components/ChatHeader/ChatHeader";
 import { useGlobalStore } from "../../state/GlobalStore";
 import "./ChatModule.scss";
@@ -19,23 +19,32 @@ const ChatModule = () => {
     currentUserId,
   } = useGlobalStore();
 
+  const [loaded, setIsLoaded] = useState(false);
+
   const messagesEnd: RefObject<HTMLDivElement> = createRef();
 
   useEffect(() => {
+    console.log("fetching opened chat");
     if (currentChatId != "") {
       getChatById(currentChatId);
     }
   }, [getChatById, currentChatId]);
 
   useEffect(() => {
+    console.log("fetching messages");
     if (currentChatId != "") {
       fetchMessages(currentChatId);
     }
   }, [currentChatId, fetchMessages]);
 
   useEffect(() => {
-    messagesEnd.current?.scrollIntoView();
-  }, [messages, messagesEnd]);
+    console.log("scroll effect");
+    if (loaded) {
+      console.log("scrolling");
+      console.log(messages);
+      messagesEnd.current?.scrollIntoView();
+    }
+  }, [loaded, messages]);
 
   if (typeof currentChat == "undefined") {
     return (
@@ -65,7 +74,11 @@ const ChatModule = () => {
               return <UsersMessage message={item} key={item.id} />;
             }
           })}
-          <div id="downDiv" ref={messagesEnd}></div>
+          <div
+            id="downDiv"
+            ref={messagesEnd}
+            onTransitionEnd={() => setIsLoaded(true)}
+          ></div>
         </div>
       </div>
       <CreateMessageComponent />

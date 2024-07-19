@@ -1,26 +1,38 @@
 import ChatItem from "../../components/ChatItem/ChatItem";
-import SearchBar from "../../shared/UI/SearchBar/SearchBar";
 import AddChatComponent from "../../components/AddChatComponent/AddChatComponent";
 import { useEffect, useState } from "react";
 import "./ChatListModule.scss";
 import { List, ListItem } from "@mui/material";
 import { useGlobalStore } from "../../state/GlobalStore";
 import ShortChatType from "../../shared/types/ShortChatType";
+import SearchBar from "../../shared/UI/SearchBar/SearchBar";
 
-const ChatListModule = () => {
-  const { currentChatId, setCurrentChatId, chats, fetchChats, currentUserId } =
-    useGlobalStore();
+interface Props {
+  joinChat: (userName: string, userId: string, chatId: string) => Promise<void>;
+}
+
+const ChatListModule = ({ joinChat }: Props) => {
+  const {
+    currentChatId,
+    setCurrentChatId,
+    chats,
+    fetchChats,
+    currentUserId,
+    currentUser,
+  } = useGlobalStore();
 
   const [filteredChatList, SetFilteredChatList] =
     useState<ShortChatType[]>(chats);
 
   useEffect(() => {
+    console.log("fetching chats");
     if (currentUserId != "") {
       fetchChats();
     }
   }, [currentUserId, fetchChats]);
 
   useEffect(() => {
+    console.log("setting filtered chats");
     SetFilteredChatList(chats);
   }, [chats]);
 
@@ -40,6 +52,8 @@ const ChatListModule = () => {
               onClick={() => {
                 if (currentChatId !== item.id) {
                   setCurrentChatId(item.id);
+                  console.log("hi");
+                  joinChat(currentUser.nickName, currentUserId, item.id);
                 }
               }}
               key={item.id}

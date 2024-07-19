@@ -17,8 +17,11 @@ const CreateMessageComponent = () => {
   };
 
   const handleClick = () => {
+    console.log("clicked!");
     createMessage(currentChatId, currentUserId, messageText);
+    console.log("created");
     setMessageText("");
+    console.log("cleared");
   };
 
   return (
