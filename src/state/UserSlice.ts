@@ -63,9 +63,8 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
     getUserById: async (userId: string) => {
       set({ loading: true });
       const res = await HttpRequest<UserType>({
-        uri: "/User/auth",
-        method: RESTMethod.GetById,
-        id: userId,
+        uri: `/User/auth/${userId}`,
+        method: RESTMethod.Get,
       });
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false });

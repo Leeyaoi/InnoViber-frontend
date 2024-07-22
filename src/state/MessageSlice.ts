@@ -11,10 +11,9 @@ export interface MessageSlice {
   success: boolean;
   errorMessage: string;
   messages: MessageType[];
-  limit: number;
-  page: number;
-  count: number;
-  total: number;
+  messagesPage: number;
+  messagesCount: number;
+  messagesTotal: number;
   resetMessages: () => void;
   fetchMessages: (chatId: string) => void;
   createMessage: (chatId: string, userId: string, text: string) => void;
@@ -27,10 +26,9 @@ const InitialMessageSlice = {
   success: false,
   errorMessage: "",
   messages: [],
-  limit: 10,
-  page: 1,
-  count: 1,
-  total: 0,
+  messagesPage: 1,
+  messagesCount: 1,
+  messagesTotal: 0,
 };
 
 export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
@@ -45,20 +43,14 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
     },
 
     getMoreMessages: async (chatId: string) => {
-      if (get().page == get().count) {
+      if (get().messagesPage == get().messagesCount) {
         return;
       }
-      set({ page: get().page + 1 });
-      console.log(get().page);
+      const page = get().messagesPage + 1;
       set({ loading: true });
       const res = await HttpRequest<PaginatedModel<MessageType>>({
-        uri: "/Message/Chat",
-        method: RESTMethod.Paginate,
-        id: chatId,
-        item: {
-          limit: get().limit,
-          page: get().page,
-        },
+        uri: `/Message/Chat/${chatId}?page=${page}`,
+        method: RESTMethod.Get,
       });
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false, messages: [] });
@@ -68,10 +60,8 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
             success: true,
             messages: [...res.data.items, ...get().messages],
             loading: false,
-            limit: res.data.limit,
-            page: res.data.page,
-            count: res.data.count,
-            total: res.data.total,
+            messagesPage: res.data.page,
+            messagesCount: res.data.count,
           });
         } else {
           set({
@@ -85,13 +75,8 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
     fetchMessages: async (chatId: string) => {
       set({ loading: true });
       const res = await HttpRequest<PaginatedModel<MessageType>>({
-        uri: "/Message/Chat",
-        method: RESTMethod.Paginate,
-        id: chatId,
-        item: {
-          limit: get().limit,
-          page: get().page,
-        },
+        uri: `/Message/Chat/${chatId}?page=${get().messagesPage}`,
+        method: RESTMethod.Get,
       });
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false, messages: [] });
@@ -100,10 +85,8 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
           success: true,
           messages: res.data.items,
           loading: false,
-          limit: res.data.limit,
-          page: res.data.page,
-          count: res.data.count,
-          total: res.data.total,
+          messagesPage: res.data.page,
+          messagesCount: res.data.count,
         });
       }
     },
@@ -121,7 +104,7 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
         set({
           success: true,
           messages: [...get().messages, res.data],
-          total: get().total + 1,
+          messagesTotal: get().messagesTotal + 1,
           loading: false,
         });
       }

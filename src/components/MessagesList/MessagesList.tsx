@@ -20,7 +20,6 @@ const MessagesList = () => {
   }, [messagesEnd]);
 
   useEffect(() => {
-    console.log("fetching");
     if (currentChatId != "") {
       fetchMessages(currentChatId);
     }
@@ -29,7 +28,6 @@ const MessagesList = () => {
   const scrollEvent = (e: SyntheticEvent) => {
     const target = e.target as HTMLTextAreaElement;
     if (target.scrollTop == 0) {
-      console.log("getting more");
       getMoreMessages(currentChatId);
     }
   };
