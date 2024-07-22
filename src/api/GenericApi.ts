@@ -33,9 +33,6 @@ export const HttpRequest = async <V, E = AxiosError>({
       case RESTMethod.Get:
         res = await client.get<V>(uri);
         break;
-      case RESTMethod.GetById:
-        res = await client.get<V>(uri + "/" + id);
-        break;
       case RESTMethod.Post:
         res = await client.post<V>(uri, item);
         break;

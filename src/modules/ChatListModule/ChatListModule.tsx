@@ -8,8 +8,14 @@ import { useGlobalStore } from "../../state/GlobalStore";
 import ShortChatType from "../../shared/types/ShortChatType";
 
 const ChatListModule = () => {
-  const { currentChatId, setCurrentChatId, chats, fetchChats, currentUserId } =
-    useGlobalStore();
+  const {
+    currentChatId,
+    setCurrentChatId,
+    chats,
+    fetchChats,
+    currentUserId,
+    resetMessages,
+  } = useGlobalStore();
 
   const [filteredChatList, SetFilteredChatList] =
     useState<ShortChatType[]>(chats);
@@ -39,6 +45,7 @@ const ChatListModule = () => {
               className={currentChatId === item.id ? "activeItem" : ""}
               onClick={() => {
                 if (currentChatId !== item.id) {
+                  resetMessages();
                   setCurrentChatId(item.id);
                 }
               }}
