@@ -45,6 +45,14 @@ export const HttpRequest = async <V, E = AxiosError>({
       case RESTMethod.Put:
         res = await client.put<V>(uri + "/" + id, item);
         break;
+      case RESTMethod.Paginate:
+        if (!("limit" in item && "page" in item)) {
+          throw "Bad request";
+        }
+        res = await client.get<V>(
+          uri + "/" + id + "/" + item.limit + "/" + item.page
+        );
+        break;
       default:
         throw "Bad request";
     }
