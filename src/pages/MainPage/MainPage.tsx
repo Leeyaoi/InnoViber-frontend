@@ -9,19 +9,21 @@ import { useEffect } from "react";
 
 const MainPage = () => {
   const { isAuthenticated, user } = useAuth0();
-  const { setCurrentUser, loading } = useGlobalStore();
+  const { setCurrentUser, loading, currentUserId } = useGlobalStore();
 
   useEffect(() => {
     if (!isAuthenticated) {
+      console.log("resetting");
       resetGlobalStore();
     }
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && currentUserId == "") {
+      console.log("setting current user");
       setCurrentUser(user!);
     }
-  }, [loading, setCurrentUser, user]);
+  }, [currentUserId, loading, setCurrentUser, user]);
   return (
     <Grid container className="Container" columns={24}>
       <Grid item xs={1}>

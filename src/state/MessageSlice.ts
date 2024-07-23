@@ -55,6 +55,17 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false, messages: [] });
       } else {
+        console.log(res.data.total);
+        console.log(get().messagesTotal);
+        if (res.data.total > get().messagesTotal) {
+          console.log(res.data.items);
+          let num = res.data.total - get().messagesTotal;
+          console.log(num);
+          while (num--) {
+            res.data.items.pop();
+          }
+          console.log(res.data.items);
+        }
         if (!get().messages.includes(res.data.items[0])) {
           set({
             success: true,
@@ -62,6 +73,7 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
             loading: false,
             messagesPage: res.data.page,
             messagesCount: res.data.count,
+            messagesTotal: res.data.total,
           });
         } else {
           set({
@@ -87,6 +99,7 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
           loading: false,
           messagesPage: res.data.page,
           messagesCount: res.data.count,
+          messagesTotal: res.data.total,
         });
       }
     },
@@ -104,7 +117,6 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
         set({
           success: true,
           messages: [...get().messages, res.data],
-          messagesTotal: get().messagesTotal + 1,
           loading: false,
         });
       }
