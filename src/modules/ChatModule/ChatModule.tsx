@@ -17,6 +17,7 @@ const ChatModule = () => {
 
   useEffect(() => {
     if (currentChatId != "") {
+      console.log("getting current chat");
       getChatById(currentChatId);
     }
   }, [getChatById, currentChatId]);

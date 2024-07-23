@@ -27,6 +27,7 @@ const MessagesList = () => {
 
   useEffect(() => {
     if (currentChatId != "") {
+      console.log("fetching messages");
       fetchMessages(currentChatId);
     }
   }, [currentChatId, fetchMessages]);
@@ -44,9 +45,16 @@ const MessagesList = () => {
     }
   };
 
+  useEffect(() => {
+    if (messages.length != 0) {
+      console.log("fetching names");
+      getNames(messages);
+    }
+  }, [getNames, messages]);
+
   return (
     <div className="Messages_List" onScroll={scrollEvent}>
-      {messages.map((item) => {
+      {messages.map((item, index) => {
         if (item.userId != currentUserId) {
           return (
             <OthersMessage

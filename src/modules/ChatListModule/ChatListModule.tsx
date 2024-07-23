@@ -21,11 +21,13 @@ const ChatListModule = () => {
 
   useEffect(() => {
     if (currentUserId != "") {
+      console.log("fetching chats");
       fetchChats();
     }
   }, [currentUserId, fetchChats]);
 
   useEffect(() => {
+    console.log("setting filtered chats");
     SetFilteredChatList(chats);
   }, [chats]);
 

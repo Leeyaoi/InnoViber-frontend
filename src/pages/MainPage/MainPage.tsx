@@ -39,6 +39,7 @@ const MainPage = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
+      console.log("resetting");
       resetGlobalStore();
     }
   }, [isAuthenticated]);
@@ -49,7 +50,6 @@ const MainPage = () => {
     }
   }, [currentUserId, loading, setCurrentUser, user]);
 
-  const laptop = useMediaQuery("(max-width:1300px)");
   const tablet = useMediaQuery("(max-width:768px)");
   const mobile = useMediaQuery("(max-width:600px)");
 
@@ -65,22 +65,7 @@ const MainPage = () => {
     return <Tablet />;
   }
 
-  if (laptop) {
-    return <Laptop />;
-  }
-  return (
-    <Grid container className="Container" columns={24}>
-      <Grid item xs={1}>
-        <MenuBar />
-      </Grid>
-      <Grid item xs={6}>
-        <ChatListModule />
-      </Grid>
-      <Grid item xs={17}>
-        <ChatModule />
-      </Grid>
-    </Grid>
-  );
+  return <Laptop />;
 };
 
 export default MainPage;
