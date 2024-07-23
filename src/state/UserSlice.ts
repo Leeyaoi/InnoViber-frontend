@@ -4,6 +4,7 @@ import { User } from "@auth0/auth0-react";
 import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import { sliceResetFns } from "./GlobalStore";
+import MessageType from "../shared/types/MessageType";
 
 export interface UserSlice {
   loading: boolean;
@@ -11,8 +12,12 @@ export interface UserSlice {
   errorMessage: string;
   currentUserId: string;
   currentUser: UserType;
+  names: string[];
+  token: string;
+  setToken: (token: string) => void;
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
+  getNames: (messages: MessageType[]) => void;
 }
 
 const InitialUserSlice = {
@@ -21,6 +26,8 @@ const InitialUserSlice = {
   errorMessage: "",
   currentUserId: "",
   currentUser: {} as UserType,
+  names: [],
+  token: "",
 };
 
 export const UserStore: StateCreator<UserSlice> = (set) => {
@@ -29,6 +36,9 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
   });
   return {
     ...InitialUserSlice,
+    setToken: (token: string) => {
+      set({ token: `Bearer ${token}` });
+    },
     setCurrentUser: async (user: User) => {
       if (typeof user == "undefined") {
         set({
@@ -57,7 +67,7 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
         return;
       }
 
-      set({ currentUser: res.data, currentUserId: user.sub });
+      set({ currentUser: res.data, currentUserId: user.sub, loading: false });
     },
 
     getUserById: async (userId: string) => {
@@ -70,7 +80,25 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
         set({ errorMessage: res.error.message, loading: false });
         return {} as UserType;
       }
+      set({ loading: false });
       return res.data;
+    },
+
+    getNames: async (messages: MessageType[]) => {
+      set({ loading: true });
+      const usersId = [] as string[];
+      messages.forEach((message) => usersId.push(message.userId));
+
+      const res = await HttpRequest<string[]>({
+        uri: `/User/names`,
+        method: RESTMethod.Post,
+        item: usersId,
+      });
+      if (res.code == "error") {
+        set({ errorMessage: res.error.message, loading: false, names: [] });
+        return;
+      }
+      set({ loading: false, names: res.data });
     },
   };
 };

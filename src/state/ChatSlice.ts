@@ -98,9 +98,9 @@ export const ChatStore: StateCreator<
         set({ errorMessage: res.error.message, loading: false });
       } else {
         if (!get().chats.find((chat) => chat.id === id)) {
-          set({ chats: [...get().chats, res.data] });
+          set({ chats: [...get().chats, res.data], loading: false });
         }
-        set({ currentChat: res.data });
+        set({ currentChat: res.data, loading: false });
       }
     },
   };

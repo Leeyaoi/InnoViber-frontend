@@ -5,6 +5,7 @@ import { RESTMethod } from "../shared/types/MethodEnum";
 import MessageType from "../shared/types/MessageType";
 import { sliceResetFns, useGlobalStore } from "./GlobalStore";
 import PaginatedModel from "../shared/types/PaginatedModel";
+import { ConnectionSlice } from "./ConnectionSlice";
 
 export interface MessageSlice {
   loading: boolean;
@@ -14,6 +15,7 @@ export interface MessageSlice {
   messagesPage: number;
   messagesCount: number;
   messagesTotal: number;
+  getMessage: (message: MessageType) => void;
   resetMessages: () => void;
   fetchMessages: (chatId: string) => void;
   createMessage: (chatId: string, userId: string, text: string) => void;
@@ -31,7 +33,12 @@ const InitialMessageSlice = {
   messagesTotal: 0,
 };
 
-export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
+export const MessageStore: StateCreator<
+  MessageSlice & ConnectionSlice,
+  [],
+  [],
+  MessageSlice
+> = (set, get) => {
   sliceResetFns.add(() => {
     set(InitialMessageSlice);
   });
@@ -40,6 +47,10 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
 
     resetMessages: () => {
       set(InitialMessageSlice);
+    },
+
+    getMessage: (message: MessageType) => {
+      set({ messages: [...get().messages, message] });
     },
 
     getMoreMessages: async (chatId: string) => {
@@ -55,6 +66,9 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false, messages: [] });
       } else {
+        if (res.data.total > get().messagesTotal) {
+          res.data.items.slice(res.data.total - get().messagesTotal);
+        }
         if (!get().messages.includes(res.data.items[0])) {
           set({
             success: true,
@@ -62,6 +76,7 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
             loading: false,
             messagesPage: res.data.page,
             messagesCount: res.data.count,
+            messagesTotal: res.data.total,
           });
         } else {
           set({
@@ -93,14 +108,20 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
 
     createMessage: async (chatId: string, userId: string, text: string) => {
       set({ loading: true });
+      console.log("sending post request on /Message");
       const res = await HttpRequest<MessageType>({
         uri: "/Message",
         method: RESTMethod.Post,
         item: { chatId: chatId, userId: userId, text: text },
       });
       if (res.code == "error") {
+        console.log("error came");
         set({ errorMessage: res.error.message, loading: false });
       } else {
+        console.log("success");
+        console.log("sending");
+        get().connection.invoke("SendMessage", res.data);
+        console.log("setting");
         set({
           success: true,
           messages: [...get().messages, res.data],
