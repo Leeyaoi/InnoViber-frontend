@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import ShortChatType from "../shared/types/ShortChatType";
+import ChatType from "../shared/types/ChatType";
 import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import { UserSlice } from "./UserSlice";
@@ -10,14 +10,16 @@ export interface ChatSlice {
   loading: boolean;
   success: boolean;
   errorMessage: string;
-  chats: ShortChatType[];
+  chats: ChatType[];
   currentChatId: string;
-  currentChat: ShortChatType | undefined;
+  currentChat: ChatType | undefined;
   setCurrentChatId: (id: string) => void;
   fetchChats: () => void;
   createChat: (ChatName: string, userId: string) => void;
   deleteChat: (id: string) => void;
   getChatById: (id: string) => void;
+
+  getFirstChatPage: () => void;
 }
 
 const InitialChatSlice = {
@@ -47,7 +49,7 @@ export const ChatStore: StateCreator<
 
     fetchChats: async () => {
       set({ loading: true });
-      const res = await HttpRequest<PaginatedModel<ShortChatType>>({
+      const res = await HttpRequest<PaginatedModel<ChatType>>({
         uri: `/Chat/user/${get().currentUserId}`,
         method: RESTMethod.Get,
       });
@@ -60,7 +62,7 @@ export const ChatStore: StateCreator<
 
     createChat: async (ChatName: string, userId: string) => {
       set({ loading: true });
-      const res = await HttpRequest<ShortChatType>({
+      const res = await HttpRequest<ChatType>({
         uri: "/Chat",
         method: RESTMethod.Post,
         item: { name: ChatName, userId: userId },
@@ -75,9 +77,10 @@ export const ChatStore: StateCreator<
         });
       }
     },
+
     deleteChat: async (id: string) => {
       set({ loading: true });
-      const res = await HttpRequest<ShortChatType>({
+      const res = await HttpRequest<ChatType>({
         uri: "/Chat",
         method: RESTMethod.Delete,
         id: id,
@@ -88,9 +91,10 @@ export const ChatStore: StateCreator<
         get().fetchChats();
       }
     },
+
     getChatById: async (id: string) => {
       set({ loading: true });
-      const res = await HttpRequest<ShortChatType>({
+      const res = await HttpRequest<ChatType>({
         uri: `/Chat/${id}`,
         method: RESTMethod.Get,
       });
@@ -101,6 +105,29 @@ export const ChatStore: StateCreator<
           set({ chats: [...get().chats, res.data] });
         }
         set({ currentChat: res.data });
+      }
+    },
+
+    getFirstChatPage: async () => {
+      set({ loading: true });
+      const res = await HttpRequest<PaginatedModel<ChatType>>({
+        uri: `/Chat/user/${get().currentUserId}`,
+        method: RESTMethod.Get,
+      });
+      if (res.code == "error") {
+        set({ errorMessage: res.error.message, loading: false });
+      } else {
+        res.data.items.forEach((chat) => {
+          const index = get().chats.findIndex((c) => c.id == chat.id);
+          if (index > -1) {
+            get().chats.splice(index, 1);
+          }
+        });
+        set({
+          success: true,
+          chats: [...res.data.items, ...get().chats],
+          loading: false,
+        });
       }
     },
   };

@@ -1,11 +1,11 @@
-import ShortChatType from "../../shared/types/ShortChatType";
+import ChatType from "../../shared/types/ChatType";
 import "./ChatHeader.scss";
 import { Avatar, Typography, IconButton } from "@mui/material";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import MenuButton from "../../shared/UI/MenuButton/MenuButton";
 
 interface Props {
-  chat: ShortChatType;
+  chat: ChatType;
   setCurrentChatId: (id: string) => void;
   deleteChat: (id: string) => void;
 }

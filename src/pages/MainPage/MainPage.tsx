@@ -9,18 +9,37 @@ import { useEffect } from "react";
 
 const MainPage = () => {
   const { isAuthenticated, user } = useAuth0();
-  const { setCurrentUser, loading, currentUserId } = useGlobalStore();
+  const {
+    setCurrentUser,
+    loading,
+    currentUserId,
+    getFirstChatPage,
+    getFirstMessagePage,
+    currentChatId,
+  } = useGlobalStore();
+
+  useEffect(() => {
+    const update = async () => {
+      await getFirstChatPage();
+      if (currentChatId != "") {
+        await getFirstMessagePage(currentChatId);
+      }
+    };
+
+    const intervalId = setInterval(() => {
+      update();
+    }, 1000 * 5);
+    return () => clearInterval(intervalId);
+  }, [currentChatId, getFirstChatPage, getFirstMessagePage]);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      console.log("resetting");
       resetGlobalStore();
     }
   }, [isAuthenticated]);
 
   useEffect(() => {
     if (!loading && currentUserId == "") {
-      console.log("setting current user");
       setCurrentUser(user!);
     }
   }, [currentUserId, loading, setCurrentUser, user]);

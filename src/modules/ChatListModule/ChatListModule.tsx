@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import "./ChatListModule.scss";
 import { List, ListItem } from "@mui/material";
 import { useGlobalStore } from "../../state/GlobalStore";
-import ShortChatType from "../../shared/types/ShortChatType";
+import ChatType from "../../shared/types/ChatType";
 
 const ChatListModule = () => {
   const {
@@ -17,18 +17,15 @@ const ChatListModule = () => {
     resetMessages,
   } = useGlobalStore();
 
-  const [filteredChatList, SetFilteredChatList] =
-    useState<ShortChatType[]>(chats);
+  const [filteredChatList, SetFilteredChatList] = useState<ChatType[]>(chats);
 
   useEffect(() => {
     if (currentUserId != "") {
-      console.log("fetching chats");
       fetchChats();
     }
   }, [currentUserId, fetchChats]);
 
   useEffect(() => {
-    console.log("setting filtered chats");
     SetFilteredChatList(chats);
   }, [chats]);
 
@@ -53,7 +50,7 @@ const ChatListModule = () => {
               }}
               key={item.id}
             >
-              <ChatItem chatName={item.name} />
+              <ChatItem chat={item} />
             </ListItem>
           ))}
         </div>

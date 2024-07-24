@@ -21,13 +21,11 @@ const MessagesList = () => {
   useEffect(() => {
     if (!loading && messages.length != 0) {
       messagesEnd.current?.scrollIntoView();
-      console.log("scrolling");
     }
   }, [loading, messages.length, messagesEnd]);
 
   useEffect(() => {
     if (currentChatId != "") {
-      console.log("fetching messages");
       fetchMessages(currentChatId);
     }
   }, [currentChatId, fetchMessages]);
@@ -35,14 +33,12 @@ const MessagesList = () => {
   const scrollEvent = (e: SyntheticEvent) => {
     const target = e.target as HTMLTextAreaElement;
     if (target.scrollTop == 0 && !loading) {
-      console.log("getting more messages");
       getMoreMessages(currentChatId);
     }
   };
 
   useEffect(() => {
     if (messages.length != 0) {
-      console.log("fetching names");
       getNames(messages);
     }
   }, [getNames, messages]);

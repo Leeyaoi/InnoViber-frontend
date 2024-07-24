@@ -1,12 +1,12 @@
 import SearchIcon from "@mui/icons-material/Search";
-import ShortChatType from "../../types/ShortChatType";
+import ChatType from "../../types/ChatType";
 import "./SearchBar.scss";
 import { InputBase } from "@mui/material";
 
 interface Props {
   placeholder?: string;
-  list: ShortChatType[];
-  SetSearchResults: (value: ShortChatType[]) => void;
+  list: ChatType[];
+  SetSearchResults: (value: ChatType[]) => void;
 }
 
 const SearchBar = ({
