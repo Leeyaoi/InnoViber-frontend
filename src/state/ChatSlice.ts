@@ -109,7 +109,6 @@ export const ChatStore: StateCreator<
     },
 
     getFirstChatPage: async () => {
-      set({ loading: true });
       const res = await HttpRequest<PaginatedModel<ChatType>>({
         uri: `/Chat/user/${get().currentUserId}`,
         method: RESTMethod.Get,
@@ -126,7 +125,6 @@ export const ChatStore: StateCreator<
         set({
           success: true,
           chats: [...res.data.items, ...get().chats],
-          loading: false,
         });
       }
     },

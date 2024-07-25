@@ -6,12 +6,12 @@ import MenuBar from "../../modules/MenuBar/MenuBar";
 import { useAuth0 } from "@auth0/auth0-react";
 import { resetGlobalStore, useGlobalStore } from "../../state/GlobalStore";
 import { useEffect } from "react";
-import UnauthorizedPage from "../UnauthorizedPage/UnauthorizedPage";
 import { useMediaQuery } from "@mui/material";
 import LargeLaptop from "./LargeLaptop/LargeLaptop";
 import SmallLaptop from "./SmallLaptop/SmallLaptop";
 import Tablet from "./Tablet/Tablet";
 import LargeMobile from "./LargeMobile/LargeMobile";
+import UnauthorizedPage from "./UnauthorizedPage/UnauthorizedPage";
 
 const MainPage = () => {
   const { isAuthenticated, user } = useAuth0();
@@ -45,6 +45,7 @@ const MainPage = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
+    console.log(loading);
     if (!loading && currentUserId == "") {
       setCurrentUser(user!);
     }
