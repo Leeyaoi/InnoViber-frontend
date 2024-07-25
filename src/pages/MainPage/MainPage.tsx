@@ -6,6 +6,12 @@ import MenuBar from "../../modules/MenuBar/MenuBar";
 import { useAuth0 } from "@auth0/auth0-react";
 import { resetGlobalStore, useGlobalStore } from "../../state/GlobalStore";
 import { useEffect } from "react";
+import UnauthorizedPage from "../UnauthorizedPage/UnauthorizedPage";
+import { useMediaQuery } from "@mui/material";
+import LargeLaptop from "./LargeLaptop/LargeLaptop";
+import SmallLaptop from "./SmallLaptop/SmallLaptop";
+import Tablet from "./Tablet/Tablet";
+import LargeMobile from "./LargeMobile/LargeMobile";
 
 const MainPage = () => {
   const { isAuthenticated, user } = useAuth0();
@@ -28,7 +34,7 @@ const MainPage = () => {
 
     const intervalId = setInterval(() => {
       update();
-    }, 1000 * 5);
+    }, 1000 * 10);
     return () => clearInterval(intervalId);
   }, [currentChatId, getFirstChatPage, getFirstMessagePage]);
 
@@ -43,6 +49,31 @@ const MainPage = () => {
       setCurrentUser(user!);
     }
   }, [currentUserId, loading, setCurrentUser, user]);
+
+  const largeLaptop = useMediaQuery("(max-width:1440px)");
+  const smallLaptop = useMediaQuery("(max-width:1300px)");
+  const tablet = useMediaQuery("(max-width:768px)");
+  const largePhone = useMediaQuery("(max-width:600px)");
+
+  if (currentUserId == "") {
+    return <UnauthorizedPage />;
+  }
+
+  if (largePhone) {
+    return <LargeMobile />;
+  }
+
+  if (tablet) {
+    return <Tablet />;
+  }
+
+  if (smallLaptop) {
+    return <SmallLaptop />;
+  }
+
+  if (largeLaptop) {
+    return <LargeLaptop />;
+  }
   return (
     <Grid container className="Container" columns={24}>
       <Grid item xs={1}>

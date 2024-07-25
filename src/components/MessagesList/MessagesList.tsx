@@ -22,7 +22,8 @@ const MessagesList = () => {
     if (!loading && messages.length != 0) {
       messagesEnd.current?.scrollIntoView();
     }
-  }, [loading, messages.length, messagesEnd]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages.length]);
 
   useEffect(() => {
     if (currentChatId != "") {
