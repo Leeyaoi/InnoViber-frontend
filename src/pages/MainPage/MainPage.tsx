@@ -45,7 +45,6 @@ const MainPage = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    console.log(loading);
     if (!loading && currentUserId == "") {
       setCurrentUser(user!);
     }
