@@ -24,7 +24,7 @@ const InitialUserSlice = {
   errorMessage: "",
   currentUserId: "",
   currentUser: {} as UserType,
-  users: {},
+  users: {} as { [id: string]: UserType },
 };
 
 export const UserStore: StateCreator<UserSlice> = (set) => {
@@ -87,7 +87,10 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
         item: usersId,
       });
       if (res.code == "error") {
-        set({ errorMessage: res.error.message, users: {} });
+        set({
+          errorMessage: res.error.message,
+          users: {} as { [id: string]: UserType },
+        });
         return;
       }
       set({ users: res.data });

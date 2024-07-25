@@ -31,18 +31,18 @@ const MessagesList = () => {
     }
   }, [currentChatId, fetchMessages]);
 
+  useEffect(() => {
+    if (messages.length != 0) {
+      getNames(messages);
+    }
+  }, [getNames, messages]);
+
   const scrollEvent = (e: SyntheticEvent) => {
     const target = e.target as HTMLTextAreaElement;
     if (target.scrollTop == 0 && !loading) {
       getMoreMessages(currentChatId);
     }
   };
-
-  useEffect(() => {
-    if (messages.length != 0) {
-      getNames(messages);
-    }
-  }, [getNames, messages]);
 
   return (
     <div className="Messages_List" onScroll={scrollEvent}>
@@ -53,7 +53,7 @@ const MessagesList = () => {
               message={item}
               key={item.id}
               userName={
-                "nickName" in users[item.userId]
+                item.userId in users
                   ? users[item.userId].nickName
                   : "Other User"
               }
