@@ -114,7 +114,7 @@ export const ChatStore: StateCreator<
         method: RESTMethod.Get,
       });
       if (res.code == "error") {
-        set({ errorMessage: res.error.message, loading: false });
+        set({ errorMessage: res.error.message });
       } else {
         res.data.items.forEach((chat) => {
           const index = get().chats.findIndex((c) => c.id == chat.id);
