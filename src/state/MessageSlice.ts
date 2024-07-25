@@ -142,8 +142,8 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false, messages: [] });
       } else {
-        res.data.items.forEach((chat) => {
-          const index = get().messages.findIndex((c) => c.id == chat.id);
+        res.data.items.forEach((message) => {
+          const index = get().messages.findIndex((m) => m.id == message.id);
           if (index > -1) {
             get().messages.splice(index, 1);
           }

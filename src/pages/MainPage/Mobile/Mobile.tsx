@@ -2,10 +2,10 @@ import { Grid } from "@mui/material";
 import ChatListModule from "../../../modules/ChatListModule/ChatListModule";
 import ChatModule from "../../../modules/ChatModule/ChatModule";
 import MenuBar from "../../../modules/MenuBar/MenuBar";
-import "./LargeMobile.scss";
+import "./Mobile.scss";
 import { useGlobalStore } from "../../../state/GlobalStore";
 
-const LargeMobile = () => {
+const Mobile = () => {
   const { currentChatId } = useGlobalStore();
   if (currentChatId == "") {
     return (
@@ -28,4 +28,4 @@ const LargeMobile = () => {
   );
 };
 
-export default LargeMobile;
+export default Mobile;
