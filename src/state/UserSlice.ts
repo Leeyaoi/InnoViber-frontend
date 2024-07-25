@@ -12,7 +12,7 @@ export interface UserSlice {
   errorMessage: string;
   currentUserId: string;
   currentUser: UserType;
-  names: string[];
+  users: { [id: string]: UserType };
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
   getNames: (messages: MessageType[]) => void;
@@ -24,7 +24,7 @@ const InitialUserSlice = {
   errorMessage: "",
   currentUserId: "",
   currentUser: {} as UserType,
-  names: [],
+  users: {},
 };
 
 export const UserStore: StateCreator<UserSlice> = (set) => {
@@ -78,20 +78,19 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
     },
 
     getNames: async (messages: MessageType[]) => {
-      set({ loading: true });
       const usersId = [] as string[];
       messages.forEach((message) => usersId.push(message.userId));
 
-      const res = await HttpRequest<string[]>({
+      const res = await HttpRequest<{ [id: string]: UserType }>({
         uri: `/User/names`,
         method: RESTMethod.Post,
         item: usersId,
       });
       if (res.code == "error") {
-        set({ errorMessage: res.error.message, loading: false, names: [] });
+        set({ errorMessage: res.error.message, users: {} });
         return;
       }
-      set({ loading: false, names: res.data });
+      set({ users: res.data });
     },
   };
 };

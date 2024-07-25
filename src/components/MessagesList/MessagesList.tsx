@@ -13,7 +13,7 @@ const MessagesList = () => {
     getMoreMessages,
     loading,
     getNames,
-    names,
+    users,
   } = useGlobalStore();
 
   const messagesEnd: RefObject<HTMLDivElement> = createRef();
@@ -46,13 +46,17 @@ const MessagesList = () => {
 
   return (
     <div className="Messages_List" onScroll={scrollEvent}>
-      {messages.map((item, index) => {
+      {messages.map((item) => {
         if (item.userId != currentUserId) {
           return (
             <OthersMessage
               message={item}
               key={item.id}
-              userName={names[index]}
+              userName={
+                "nickName" in users[item.userId]
+                  ? users[item.userId].nickName
+                  : "Other User"
+              }
             />
           );
         } else {
