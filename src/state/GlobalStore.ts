@@ -13,7 +13,7 @@ export const resetGlobalStore = () => {
   });
 };
 
-interface GlobalStoreState
+export interface GlobalStoreState
   extends UserSlice,
     MessageSlice,
     ChatSlice,
