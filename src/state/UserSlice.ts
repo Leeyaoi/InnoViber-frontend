@@ -15,7 +15,7 @@ export interface UserSlice {
   users: { [id: string]: UserType };
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
-  getNames: (messages: MessageType[]) => void;
+  getNames: (messages: MessageType[] | RoleType[]) => void;
 }
 
 const InitialUserSlice = {
@@ -77,7 +77,7 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
       return res.data;
     },
 
-    getNames: async (messages: MessageType[]) => {
+    getNames: async (messages: MessageType[] | RoleType[]) => {
       const usersId = [] as string[];
       messages.forEach((message) => usersId.push(message.userId));
 
