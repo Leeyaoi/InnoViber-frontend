@@ -9,7 +9,28 @@ import { useEffect } from "react";
 
 const MainPage = () => {
   const { isAuthenticated, user } = useAuth0();
-  const { setCurrentUser, loading } = useGlobalStore();
+  const {
+    setCurrentUser,
+    loading,
+    currentUserId,
+    getFirstChatPage,
+    getFirstMessagePage,
+    currentChatId,
+  } = useGlobalStore();
+
+  useEffect(() => {
+    const update = async () => {
+      await getFirstChatPage();
+      if (currentChatId != "") {
+        await getFirstMessagePage(currentChatId);
+      }
+    };
+
+    const intervalId = setInterval(() => {
+      update();
+    }, 1000 * 5);
+    return () => clearInterval(intervalId);
+  }, [currentChatId, getFirstChatPage, getFirstMessagePage]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -18,10 +39,10 @@ const MainPage = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && currentUserId == "") {
       setCurrentUser(user!);
     }
-  }, [loading, setCurrentUser, user]);
+  }, [currentUserId, loading, setCurrentUser, user]);
   return (
     <Grid container className="Container" columns={24}>
       <Grid item xs={1}>

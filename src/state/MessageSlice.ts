@@ -19,6 +19,8 @@ export interface MessageSlice {
   createMessage: (chatId: string, userId: string, text: string) => void;
   deleteMessage: (id: string) => void;
   getMoreMessages: (chatId: string) => void;
+
+  getFirstMessagePage: (chatId: string) => void;
 }
 
 const InitialMessageSlice = {
@@ -55,6 +57,12 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false, messages: [] });
       } else {
+        if (res.data.total > get().messagesTotal) {
+          let num = res.data.total - get().messagesTotal;
+          while (num--) {
+            res.data.items.pop();
+          }
+        }
         if (!get().messages.includes(res.data.items[0])) {
           set({
             success: true,
@@ -62,6 +70,7 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
             loading: false,
             messagesPage: res.data.page,
             messagesCount: res.data.count,
+            messagesTotal: res.data.total,
           });
         } else {
           set({
@@ -87,6 +96,7 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
           loading: false,
           messagesPage: res.data.page,
           messagesCount: res.data.count,
+          messagesTotal: res.data.total,
         });
       }
     },
@@ -104,7 +114,6 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
         set({
           success: true,
           messages: [...get().messages, res.data],
-          messagesTotal: get().messagesTotal + 1,
           loading: false,
         });
       }
@@ -122,6 +131,39 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
       } else {
         const { currentChatId } = useGlobalStore();
         get().fetchMessages(currentChatId);
+      }
+    },
+
+    getFirstMessagePage: async (chatId: string) => {
+      set({ loading: true });
+      const res = await HttpRequest<PaginatedModel<MessageType>>({
+        uri: `/Message/Chat/${chatId}?page=1`,
+        method: RESTMethod.Get,
+      });
+      if (res.code == "error") {
+        set({ errorMessage: res.error.message, loading: false, messages: [] });
+      } else {
+        res.data.items.forEach((chat) => {
+          const index = get().messages.findIndex((c) => c.id == chat.id);
+          if (index > -1) {
+            get().messages.splice(index, 1);
+          }
+        });
+        if (!get().messages.includes(res.data.items[0])) {
+          set({
+            success: true,
+            messages: [...get().messages, ...res.data.items],
+            loading: false,
+            messagesPage: res.data.page,
+            messagesCount: res.data.count,
+            messagesTotal: res.data.total,
+          });
+        } else {
+          set({
+            success: true,
+            loading: false,
+          });
+        }
       }
     },
   };
