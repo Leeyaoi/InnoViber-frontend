@@ -7,13 +7,8 @@ import CreateMessageComponent from "../../components/CreateMessageComponent/Crea
 import MessagesList from "../../components/MessagesList/MessagesList";
 
 const ChatModule = () => {
-  const {
-    currentChatId,
-    currentChat,
-    setCurrentChatId,
-    getChatById,
-    deleteChat,
-  } = useGlobalStore();
+  const { currentChatId, currentChat, setCurrentChatId, getChatById } =
+    useGlobalStore();
 
   useEffect(() => {
     if (currentChatId != "") {
@@ -35,11 +30,7 @@ const ChatModule = () => {
 
   return (
     <div className="ChatModule">
-      <ChatHeader
-        chat={currentChat}
-        setCurrentChatId={setCurrentChatId}
-        deleteChat={deleteChat}
-      />
+      <ChatHeader chat={currentChat} setCurrentChatId={setCurrentChatId} />
       <div className="ChatBackground" id="Chat_is_opened_bg">
         <MessagesList />
       </div>

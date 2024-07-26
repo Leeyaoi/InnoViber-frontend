@@ -15,7 +15,10 @@ export interface RoleSlice {
   rolesCount: number;
   rolesTotal: number;
   roles: RoleType[];
+  open: boolean;
   resetRoles: () => void;
+  toggleOpen: () => void;
+  close: () => void;
   setCurrentRole: (chatId: string) => void;
   fetchRoles: (chatId: string) => void;
   getMoreRoles: (chatId: string) => void;
@@ -32,6 +35,7 @@ const InitialRoleSlice = {
   rolesCount: 1,
   rolesTotal: 0,
   roles: [],
+  open: false,
 };
 
 export const RoleStore: StateCreator<
@@ -48,6 +52,14 @@ export const RoleStore: StateCreator<
 
     resetRoles: () => {
       set(InitialRoleSlice);
+    },
+
+    toggleOpen: () => {
+      set({ open: !get().open });
+    },
+
+    close: () => {
+      set({ open: false });
     },
 
     fetchRoles: async (chatId: string) => {

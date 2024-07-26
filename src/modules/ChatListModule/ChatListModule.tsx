@@ -15,6 +15,8 @@ const ChatListModule = () => {
     fetchChats,
     currentUserId,
     resetMessages,
+    setCurrentRole,
+    close,
   } = useGlobalStore();
 
   const [filteredChatList, SetFilteredChatList] = useState<ChatType[]>(chats);
@@ -46,6 +48,8 @@ const ChatListModule = () => {
                 if (currentChatId !== item.id) {
                   resetMessages();
                   setCurrentChatId(item.id);
+                  setCurrentRole(item.id);
+                  close();
                 }
               }}
               key={item.id}

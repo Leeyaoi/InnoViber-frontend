@@ -53,9 +53,7 @@ const MessagesList = () => {
               message={item}
               key={item.id}
               userName={
-                item.userId in users
-                  ? users[item.userId].nickName
-                  : "Other User"
+                item.userId in users ? users[item.userId].name : "Other User"
               }
             />
           );

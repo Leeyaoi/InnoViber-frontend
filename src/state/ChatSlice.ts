@@ -5,6 +5,7 @@ import { RESTMethod } from "../shared/types/MethodEnum";
 import { UserSlice } from "./UserSlice";
 import { sliceResetFns } from "./GlobalStore";
 import PaginatedModel from "../shared/types/PaginatedModel";
+import { RoleSlice } from "./RoleSlice";
 
 export interface ChatSlice {
   loading: boolean;
@@ -32,7 +33,7 @@ const InitialChatSlice = {
 };
 
 export const ChatStore: StateCreator<
-  ChatSlice & UserSlice,
+  ChatSlice & UserSlice & RoleSlice,
   [],
   [],
   ChatSlice

@@ -1,10 +1,9 @@
-import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { Button, FormControl } from "@mui/material";
+import { Button, FormControl, Modal } from "@mui/material";
 import { useState } from "react";
 import "./CreateChatModal.scss";
 import { useGlobalStore } from "../../state/GlobalStore";
@@ -29,20 +28,7 @@ const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
   };
 
   return (
-    <Dialog
-      className="ModalCreateChat"
-      open={isOpen}
-      onClose={handleClose}
-      PaperProps={{
-        component: "form",
-        onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-          event.preventDefault();
-          createChat(textInput, currentUserId);
-          handleClose();
-          setTextInput("");
-        },
-      }}
-    >
+    <Modal className="ModalCreateChat" open={isOpen} onClose={handleClose}>
       <div className="ModalCreateChat_Content">
         <DialogTitle>Create chat</DialogTitle>
         <FormControl>
@@ -62,13 +48,21 @@ const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
             />
           </DialogContent>
           <DialogActions>
-            <Button type="submit" id="ModalCreateChat_Button_Submit">
+            <Button
+              id="ModalCreateChat_Button_Submit"
+              onClick={(event) => {
+                event.preventDefault();
+                createChat(textInput, currentUserId);
+                handleClose();
+                setTextInput("");
+              }}
+            >
               Add Chat
             </Button>
           </DialogActions>
         </FormControl>
       </div>
-    </Dialog>
+    </Modal>
   );
 };
 

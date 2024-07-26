@@ -27,7 +27,7 @@ const InitialUserSlice = {
   users: {} as { [id: string]: UserType },
 };
 
-export const UserStore: StateCreator<UserSlice> = (set) => {
+export const UserStore: StateCreator<UserSlice> = (set, get) => {
   sliceResetFns.add(() => {
     set(InitialUserSlice);
   });
@@ -89,11 +89,14 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
       if (res.code == "error") {
         set({
           errorMessage: res.error.message,
-          users: {} as { [id: string]: UserType },
         });
         return;
       }
-      set({ users: res.data });
+      for (const key in res.data) {
+        if (!(key in get().users)) {
+          get().users[key] = res.data[key];
+        }
+      }
     },
   };
 };
