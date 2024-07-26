@@ -5,38 +5,26 @@ import MenuButton from "../../shared/UI/MenuButton/MenuButton";
 import { resetGlobalStore } from "../../state/GlobalStore";
 
 const MenuBar = () => {
-  const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
+  const { isAuthenticated, user, logout } = useAuth0();
 
   return (
     <>
       <Avatar
         src={isAuthenticated ? user?.picture : "profile.jpg"}
-        className="UserPhoto"
+        id="UserPhoto"
         slotProps={{ img: { referrerPolicy: "no-referrer" } }}
       ></Avatar>
       <MenuButton
         id="MainPage_MenuBar_LoginMenu"
-        options={
-          isAuthenticated
-            ? [
-                {
-                  name: "Log out",
-                  task: () => {
-                    logout();
-                    resetGlobalStore();
-                  },
-                },
-              ]
-            : [
-                {
-                  name: "Login",
-                  task: () => {
-                    loginWithRedirect();
-                    resetGlobalStore();
-                  },
-                },
-              ]
-        }
+        options={[
+          {
+            name: "Log out",
+            task: () => {
+              logout();
+              resetGlobalStore();
+            },
+          },
+        ]}
       />
     </>
   );
