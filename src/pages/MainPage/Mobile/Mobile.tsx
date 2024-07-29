@@ -4,9 +4,10 @@ import ChatModule from "../../../modules/ChatModule/ChatModule";
 import MenuBar from "../../../modules/MenuBar/MenuBar";
 import "./Mobile.scss";
 import { useGlobalStore } from "../../../state/GlobalStore";
+import RoleListModule from "../../../modules/RoleListModule/RoleListModule";
 
 const Mobile = () => {
-  const { currentChatId } = useGlobalStore();
+  const { currentChatId, open } = useGlobalStore();
   if (currentChatId == "") {
     return (
       <Grid container className="Container">
@@ -19,6 +20,16 @@ const Mobile = () => {
       </Grid>
     );
   }
+
+  if (open) {
+    return (
+      <Grid container className="Container">
+        <Grid item xs={12}>
+          <RoleListModule />
+        </Grid>
+      </Grid>
+    );
+  }
   return (
     <Grid container className="Container">
       <Grid item xs={12}>
@@ -27,5 +38,4 @@ const Mobile = () => {
     </Grid>
   );
 };
-
 export default Mobile;

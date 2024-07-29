@@ -16,7 +16,6 @@ export interface UserSlice {
   clearSuggestedUsers: () => void;
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
-  getNames: (messages: MessageType[]) => void;
   getNames: (messages: MessageType[] | RoleType[]) => void;
   getSuggestedUsers: (query: string) => void;
 }
@@ -31,7 +30,6 @@ const InitialUserSlice = {
   suggestedUsers: [],
 };
 
-export const UserStore: StateCreator<UserSlice> = (set) => {
 export const UserStore: StateCreator<UserSlice> = (set, get) => {
   sliceResetFns.add(() => {
     set(InitialUserSlice);
@@ -83,7 +81,6 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
       return res.data;
     },
 
-    getNames: async (messages: MessageType[]) => {
     getNames: async (messages: MessageType[] | RoleType[]) => {
       const usersId = [] as string[];
       messages.forEach((message) => usersId.push(message.userId));
