@@ -135,7 +135,6 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
     },
 
     getFirstMessagePage: async (chatId: string) => {
-      set({ loading: true });
       const res = await HttpRequest<PaginatedModel<MessageType>>({
         uri: `/Message/Chat/${chatId}?page=1`,
         method: RESTMethod.Get,
@@ -143,8 +142,8 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false, messages: [] });
       } else {
-        res.data.items.forEach((chat) => {
-          const index = get().messages.findIndex((c) => c.id == chat.id);
+        res.data.items.forEach((message) => {
+          const index = get().messages.findIndex((m) => m.id == message.id);
           if (index > -1) {
             get().messages.splice(index, 1);
           }
@@ -153,7 +152,6 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
           set({
             success: true,
             messages: [...get().messages, ...res.data.items],
-            loading: false,
             messagesPage: res.data.page,
             messagesCount: res.data.count,
             messagesTotal: res.data.total,
@@ -161,7 +159,6 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
         } else {
           set({
             success: true,
-            loading: false,
           });
         }
       }

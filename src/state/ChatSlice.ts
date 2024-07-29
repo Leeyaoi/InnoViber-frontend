@@ -109,13 +109,12 @@ export const ChatStore: StateCreator<
     },
 
     getFirstChatPage: async () => {
-      set({ loading: true });
       const res = await HttpRequest<PaginatedModel<ChatType>>({
         uri: `/Chat/user/${get().currentUserId}`,
         method: RESTMethod.Get,
       });
       if (res.code == "error") {
-        set({ errorMessage: res.error.message, loading: false });
+        set({ errorMessage: res.error.message });
       } else {
         res.data.items.forEach((chat) => {
           const index = get().chats.findIndex((c) => c.id == chat.id);
@@ -126,7 +125,6 @@ export const ChatStore: StateCreator<
         set({
           success: true,
           chats: [...res.data.items, ...get().chats],
-          loading: false,
         });
       }
     },

@@ -13,7 +13,7 @@ const MessagesList = () => {
     getMoreMessages,
     loading,
     getNames,
-    names,
+    users,
   } = useGlobalStore();
 
   const messagesEnd: RefObject<HTMLDivElement> = createRef();
@@ -22,13 +22,20 @@ const MessagesList = () => {
     if (!loading && messages.length != 0) {
       messagesEnd.current?.scrollIntoView();
     }
-  }, [loading, messages.length, messagesEnd]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages.length]);
 
   useEffect(() => {
     if (currentChatId != "") {
       fetchMessages(currentChatId);
     }
   }, [currentChatId, fetchMessages]);
+
+  useEffect(() => {
+    if (messages.length != 0) {
+      getNames(messages);
+    }
+  }, [getNames, messages]);
 
   const scrollEvent = (e: SyntheticEvent) => {
     const target = e.target as HTMLTextAreaElement;
@@ -51,7 +58,11 @@ const MessagesList = () => {
             <OthersMessage
               message={item}
               key={item.id}
-              userName={names[index]}
+              userName={
+                item.userId in users
+                  ? users[item.userId].nickName
+                  : "Other User"
+              }
             />
           );
         } else {
