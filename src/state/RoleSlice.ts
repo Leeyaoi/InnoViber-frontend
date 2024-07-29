@@ -24,6 +24,7 @@ export interface RoleSlice {
   getMoreRoles: (chatId: string) => void;
   createRole: (role: RoleType) => void;
   deleteRole: (role: RoleType) => void;
+  changeRole: (role: RoleType) => void;
 }
 
 const InitialRoleSlice = {
@@ -161,6 +162,24 @@ export const RoleStore: StateCreator<
         uri: `/ChatRole`,
         method: RESTMethod.Delete,
         id: role.id,
+      });
+      if (res.code == "error") {
+        set({ errorMessage: res.error.message, loading: false });
+      } else {
+        set({
+          success: true,
+          loading: false,
+        });
+      }
+    },
+
+    changeRole: async (role: RoleType) => {
+      set({ loading: true });
+      const res = await HttpRequest<RoleType>({
+        uri: `/ChatRole`,
+        method: RESTMethod.Put,
+        id: role.id,
+        item: role,
       });
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false });
