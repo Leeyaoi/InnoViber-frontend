@@ -3,6 +3,8 @@ import AddIcon from "@mui/icons-material/Add";
 import "./AddRoleComponent.scss";
 import { useGlobalStore } from "../../state/GlobalStore";
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
+import CreateRoleModal from "../CreateRoleModal/CreateRoleModal";
+import { useState } from "react";
 
 interface Props {
   mobile?: boolean;
@@ -10,6 +12,7 @@ interface Props {
 
 const AddRoleComponent = ({ mobile = false }: Props) => {
   const { toggleOpen } = useGlobalStore();
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {};
   return (
@@ -24,10 +27,11 @@ const AddRoleComponent = ({ mobile = false }: Props) => {
       ) : (
         <></>
       )}
-      <IconButton id="AddRole_Button">
+      <IconButton id="AddRole_Button" onClick={() => setOpen(true)}>
         <AddIcon />
       </IconButton>
       <Typography className="AddRole_Label">Add user</Typography>
+      <CreateRoleModal open={open} setOpen={setOpen} />
     </div>
   );
 };

@@ -37,6 +37,8 @@ const RoleItem = ({ user, role }: Props) => {
       },
     ];
   };
+
+  console.log(currentRole);
   return (
     <div className="RoleItem">
       <Avatar
