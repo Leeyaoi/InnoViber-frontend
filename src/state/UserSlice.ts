@@ -29,6 +29,7 @@ const InitialUserSlice = {
 };
 
 export const UserStore: StateCreator<UserSlice> = (set, get) => {
+export const UserStore: StateCreator<UserSlice> = (set, get) => {
   sliceResetFns.add(() => {
     set(InitialUserSlice);
   });
@@ -77,6 +78,7 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
     },
 
     getNames: async (messages: MessageType[] | RoleType[]) => {
+    getNames: async (messages: MessageType[] | RoleType[]) => {
       const usersId = [] as string[];
       messages.forEach((message) => usersId.push(message.userId));
 
@@ -88,7 +90,7 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
       if (res.code == "error") {
         set({
           errorMessage: res.error.message,
-          users: {} as { [id: string]: UserType },
+          suggestedUsers: [],
         });
         return;
       }

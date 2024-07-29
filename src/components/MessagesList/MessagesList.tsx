@@ -44,24 +44,16 @@ const MessagesList = () => {
     }
   };
 
-  useEffect(() => {
-    if (messages.length != 0) {
-      getNames(messages);
-    }
-  }, [getNames, messages]);
-
   return (
     <div className="Messages_List" onScroll={scrollEvent}>
-      {messages.map((item, index) => {
+      {messages.map((item) => {
         if (item.userId != currentUserId) {
           return (
             <OthersMessage
               message={item}
               key={item.id}
               userName={
-                item.userId in users
-                  ? users[item.userId].nickName
-                  : "Other User"
+                item.userId in users ? users[item.userId].name : "Other User"
               }
             />
           );

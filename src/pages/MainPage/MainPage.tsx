@@ -44,7 +44,6 @@ const MainPage = () => {
       setCurrentUser(user!);
     }
   }, [currentUserId, loading, setCurrentUser, user]);
-
   const tablet = useMediaQuery("(max-width:768px)");
   const mobile = useMediaQuery("(max-width:600px)");
 
