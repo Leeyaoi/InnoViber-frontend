@@ -126,8 +126,6 @@ export const RoleStore: StateCreator<
         uri: `/ChatRole/chat/${chatId}?userId=${get().currentUserId}`,
         method: RESTMethod.Get,
       });
-      console.log(get().currentUserId);
-      console.log(res);
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false });
       } else {
@@ -152,6 +150,7 @@ export const RoleStore: StateCreator<
         set({
           success: true,
           loading: false,
+          roles: [...get().roles, res.data],
         });
       }
     },
@@ -169,6 +168,7 @@ export const RoleStore: StateCreator<
         set({
           success: true,
           loading: false,
+          roles: get().roles.filter((r) => r.id != role.id),
         });
       }
     },

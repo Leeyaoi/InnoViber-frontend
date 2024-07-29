@@ -3,8 +3,13 @@ import { useGlobalStore } from "../../state/GlobalStore";
 import "./RoleListModule.scss";
 import { useEffect } from "react";
 import RoleItem from "../../components/RoleItem/RoleItem";
+import AddRoleComponent from "../../components/AddRoleComponent/AddRoleComponent";
 
-const RoleListModule = () => {
+interface Props {
+  mobile?: boolean;
+}
+
+const RoleListModule = ({ mobile = false }: Props) => {
   const { roles, fetchRoles, currentChatId, getNames, users } =
     useGlobalStore();
 
@@ -21,6 +26,7 @@ const RoleListModule = () => {
   }, [getNames, roles]);
   return (
     <div className="RoleListModule">
+      <AddRoleComponent mobile={mobile} />
       <List className="RoleListModule_RoleList">
         <div className="RoleListModule_RoleItems">
           {roles.map((item) => (
