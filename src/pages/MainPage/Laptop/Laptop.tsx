@@ -14,13 +14,13 @@ const Laptop = () => {
         <Grid item xs={3} lg={2}>
           <MenuBar />
         </Grid>
-        <Grid item xs={12} lg={12}>
+        <Grid item xs={11} lg={12}>
           <ChatListModule />
         </Grid>
-        <Grid item xs={21} lg={22}>
+        <Grid item xs={18} lg={22}>
           <ChatModule />
         </Grid>
-        <Grid item xs={12} lg={12}>
+        <Grid item xs={16} lg={12}>
           <RoleListModule />
         </Grid>
       </Grid>
