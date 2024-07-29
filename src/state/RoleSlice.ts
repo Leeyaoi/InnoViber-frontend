@@ -5,6 +5,7 @@ import { HttpRequest } from "../api/GenericApi";
 import { UserRoles } from "../shared/types/UserRolesEnum";
 import { UserSlice } from "./UserSlice";
 import PaginatedModel from "../shared/types/PaginatedModel";
+import { ChatSlice } from "./ChatSlice";
 
 export interface RoleSlice {
   loading: boolean;
@@ -40,7 +41,7 @@ const InitialRoleSlice = {
 };
 
 export const RoleStore: StateCreator<
-  RoleSlice & UserSlice,
+  RoleSlice & UserSlice & ChatSlice,
   [],
   [],
   RoleSlice
@@ -152,6 +153,7 @@ export const RoleStore: StateCreator<
         set({
           success: true,
           loading: false,
+          roles: [...get().roles, res.data],
         });
       }
     },
@@ -169,6 +171,8 @@ export const RoleStore: StateCreator<
         set({
           success: true,
           loading: false,
+          roles: get().roles.filter((r) => r.id != role.id),
+          chats: get().chats.filter((c) => c.id != role.chatId),
         });
       }
     },
