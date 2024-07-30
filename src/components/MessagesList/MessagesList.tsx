@@ -27,7 +27,6 @@ const MessagesList = () => {
 
   useEffect(() => {
     if (currentChatId != "") {
-      console.log("fetching messages");
       fetchMessages(currentChatId);
     }
   }, [currentChatId, fetchMessages]);
@@ -47,7 +46,6 @@ const MessagesList = () => {
 
   useEffect(() => {
     if (messages.length != 0) {
-      console.log("fetching names");
       getNames(messages);
     }
   }, [getNames, messages]);

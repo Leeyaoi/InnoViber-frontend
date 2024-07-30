@@ -1,8 +1,4 @@
-import Grid from "@mui/material/Grid";
-import ChatListModule from "../../modules/ChatListModule/ChatListModule";
-import ChatModule from "../../modules/ChatModule/ChatModule";
 import "./MainPage.scss";
-import MenuBar from "../../modules/MenuBar/MenuBar";
 import { useAuth0 } from "@auth0/auth0-react";
 import { resetGlobalStore, useGlobalStore } from "../../state/GlobalStore";
 import { useEffect } from "react";
@@ -39,7 +35,6 @@ const MainPage = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      console.log("resetting");
       resetGlobalStore();
     }
   }, [isAuthenticated]);
