@@ -1,0 +1,34 @@
+@import "../../index.scss";
+
+.CreateRoleModal_bg{
+    background-color: rgba($color: $darker-color, $alpha: 0.1);
+}
+
+.CreateRoleModal{
+    border-radius: 0.5rem;
+    background-color: $back-color;
+    width: 25rem;
+    height: 11.5rem;
+    margin: auto;
+    margin-top: 20%;
+
+    & .MuiInputBase-root{
+        background-color: #fff;
+        margin: 0.5rem;
+        width: 24rem;
+    }
+}
+
+#CreateRoleModal_Label{
+    color: $font-color;
+    padding: 0.5rem;
+    padding-top: 1rem;
+}
+
+#CreateRoleModal_Button{
+    color: $font-color;
+    border-color: $font-color;
+    margin: 0.5rem;
+    margin-top: 1rem;
+    margin-left: 70%;
+}

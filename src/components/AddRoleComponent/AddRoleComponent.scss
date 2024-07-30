@@ -1,0 +1,23 @@
+@import "../../index.scss";
+
+.AddRole{
+    display: flex;
+    justify-content: baseline;
+    padding: 0.5rem;
+    padding-left: 1rem;
+}
+
+.AddRole > p{
+    margin: auto 1rem;
+}
+
+#AddRole_Button{
+    color: $light-color;
+    background-color: $darker-color;
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.AddRole_Label{
+    margin-left: 2rem;
+}
