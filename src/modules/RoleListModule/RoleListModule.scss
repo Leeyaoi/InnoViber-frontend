@@ -3,7 +3,7 @@
 .RoleListModule{
     padding: 0;
     list-style-type: none;
-    border: 1px solid $light-color;
+    border: 0.0625rem solid $light-color;
     background-color: $back-color;
     height: 100vh;
     overflow: auto;
@@ -12,7 +12,7 @@
 
 .RoleListModule_RoleList{
     height: 82%;
-    border: 1px solid $light-color;
+    border: 0.0625rem solid $light-color;
     border-left: none;
     border-right: none;
     width: 100%;
