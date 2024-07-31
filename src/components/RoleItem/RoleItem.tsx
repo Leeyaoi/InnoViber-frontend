@@ -12,16 +12,6 @@ interface Props {
 
 const RoleItem = ({ user, role }: Props) => {
   const { deleteRole, currentRole, currentUserId } = useGlobalStore();
-  const getRoleName = () => {
-    switch (role.role) {
-      case UserRoles.Admin:
-        return "Admin";
-      case UserRoles.Owner:
-        return "Owner";
-      default:
-        return "Member";
-    }
-  };
 
   const getOptions = () => {
     return [
@@ -48,7 +38,7 @@ const RoleItem = ({ user, role }: Props) => {
       />
       <div className="RoleItem_UserInfo">
         <Typography variant="h2">{user?.name}</Typography>
-        {getRoleName()}
+        {UserRoles[role.role]}
       </div>
       {currentRole !== UserRoles.Member &&
       typeof user !== "undefined" &&
