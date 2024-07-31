@@ -1,8 +1,11 @@
 import { List, ListItem } from "@mui/material";
 import { useGlobalStore } from "../../state/GlobalStore";
 import "./RoleListModule.scss";
+import LeftChatComponent from "../../components/LeftChatComponent/LeftChatComponent";
+import DeleteChatComponent from "../../components/DeleteChatComponent/DeleteChatComponent";
 import { useEffect } from "react";
 import RoleItem from "../../components/RoleItem/RoleItem";
+import { UserRoles } from "../../shared/types/UserRolesEnum";
 import AddRoleComponent from "../../components/AddRoleComponent/AddRoleComponent";
 
 interface Props {
@@ -10,7 +13,7 @@ interface Props {
 }
 
 const RoleListModule = ({ mobile = false }: Props) => {
-  const { roles, fetchRoles, currentChatId, getNames, users } =
+  const { roles, currentRole, fetchRoles, currentChatId, getNames, users } =
     useGlobalStore();
 
   useEffect(() => {
@@ -36,6 +39,10 @@ const RoleListModule = ({ mobile = false }: Props) => {
           ))}
         </div>
       </List>
+      <div className="RoleButtons">
+        <LeftChatComponent />
+        {currentRole == UserRoles.Owner ? <DeleteChatComponent /> : <></>}
+      </div>
     </div>
   );
 };

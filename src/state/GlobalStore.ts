@@ -4,6 +4,7 @@ import { MessageSlice, MessageStore } from "./MessageSlice";
 import { UserSlice, UserStore } from "./UserSlice";
 import { devtools, persist, createJSONStorage } from "zustand/middleware";
 import { RoleSlice, RoleStore } from "./RoleSlice";
+import { RoleSlice, RoleStore } from "./RoleSlice";
 
 export const sliceResetFns = new Set<() => void>();
 
@@ -26,6 +27,7 @@ export const useGlobalStore = create<GlobalStoreState>()(
         ...UserStore(...a),
         ...ChatStore(...a),
         ...MessageStore(...a),
+        ...RoleStore(...a),
         ...RoleStore(...a),
       }),
       {

@@ -89,7 +89,6 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
       if (res.code == "error") {
         set({
           errorMessage: res.error.message,
-          users: {} as { [id: string]: UserType },
         });
         return;
       }
