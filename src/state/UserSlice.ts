@@ -17,7 +17,7 @@ export interface UserSlice {
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
   getNames: (messages: MessageType[] | RoleType[]) => void;
-  getSuggestedUsers: (query: string) => void;
+  getSuggestedUsers: (query: string) => Promise<UserType[]>;
 }
 
 const InitialUserSlice = {
@@ -36,10 +36,6 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
   });
   return {
     ...InitialUserSlice,
-
-    clearSuggestedUsers: () => {
-      set({ suggestedUsers: [] });
-    },
 
     setCurrentUser: async (user: User) => {
       if (typeof user == "undefined") {
@@ -113,11 +109,10 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
       if (res.code == "error") {
         set({
           errorMessage: res.error.message,
-          suggestedUsers: [],
         });
-        return;
+        return [];
       }
-      set({ suggestedUsers: res.data });
+      return res.data;
     },
   };
 };

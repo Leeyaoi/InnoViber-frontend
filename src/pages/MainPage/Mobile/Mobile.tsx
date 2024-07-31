@@ -25,7 +25,7 @@ const Mobile = () => {
     return (
       <Grid container className="Container">
         <Grid item xs={12}>
-          <RoleListModule />
+          <RoleListModule mobile={true} />
         </Grid>
       </Grid>
     );
