@@ -3,7 +3,7 @@
 .MainPage_ChatList{
     padding: 0;
     list-style-type: none;
-    border: 1px solid $light-color;
+    border: 0.0625rem solid $light-color;
     background-color: $back-color;
     height: 98vh;
     max-height: 100vh;
@@ -11,7 +11,7 @@
 }
 
 .MainPage_ChatItems > *{
-    border: 1px solid $light-color;
+    border: 0.0625rem solid $light-color;
     border-radius: 0.5rem;
     margin-top: 0.3rem;
 }
