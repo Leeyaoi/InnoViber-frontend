@@ -1,0 +1,21 @@
+@import "../../index.scss";
+
+.RoleItem{
+    width: 100%;
+    border: 0.0625rem solid $light-color;
+    border-radius: 0.5rem;
+    display: flex;
+    padding: 0.5rem;
+}
+
+.RoleItem_UserInfo{
+    display: inline;
+    margin: auto;
+    margin-left: 0.5rem;
+}
+
+#UserRoleMenu > .MuiButtonBase-root > .MuiSvgIcon-root{
+    color: $light-color;
+    height: 2.5rem;
+    width: 2.5rem;
+}

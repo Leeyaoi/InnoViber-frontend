@@ -1,17 +1,23 @@
 @import "../../index.scss";
 
-.MainPage_ChatList{
+.RoleListModule{
     padding: 0;
     list-style-type: none;
     border: 0.0625rem solid $light-color;
     background-color: $back-color;
-    height: 98vh;
-    max-height: 100vh;
+    height: 100vh;
     overflow: auto;
+    width: 100%;
 }
 
-.MainPage_ChatItems > *{
+.RoleListModule_RoleList{
+    height: 82%;
     border: 0.0625rem solid $light-color;
-    border-radius: 0.5rem;
-    margin-top: 0.3rem;
+    border-left: none;
+    border-right: none;
+    width: 100%;
+}
+
+.RoleListItem{
+    padding: 0 !important;
 }
