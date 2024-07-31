@@ -16,6 +16,14 @@ const RoleItem = ({ user, role }: Props) => {
   const { deleteRole, currentRole, currentUserId } = useGlobalStore();
   const [open, setOpen] = useState(false);
 
+  const isUserCorrect = () => {
+    return (
+      currentRole !== UserRoles.Member &&
+      typeof user !== "undefined" &&
+      user.auth0Id != currentUserId
+    );
+  };
+
   const getOptions = () => {
     return [
       {
@@ -45,9 +53,7 @@ const RoleItem = ({ user, role }: Props) => {
         <Typography variant="h2">{user?.name}</Typography>
         {UserRoles[role.role]}
       </div>
-      {currentRole !== UserRoles.Member &&
-      typeof user !== "undefined" &&
-      user.auth0Id != currentUserId ? (
+      {isUserCorrect() ? (
         <>
           <MenuButton options={getOptions()} id="UserRoleMenu" />
           <ChangeRoleModal open={open} setOpen={setOpen} roleObj={role} />

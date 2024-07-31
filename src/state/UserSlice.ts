@@ -13,7 +13,6 @@ export interface UserSlice {
   currentUser: UserType;
   users: { [id: string]: UserType };
   suggestedUsers: UserType[];
-  clearSuggestedUsers: () => void;
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
   getNames: (messages: MessageType[] | RoleType[]) => void;
