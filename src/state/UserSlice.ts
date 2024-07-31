@@ -13,6 +13,7 @@ export interface UserSlice {
   currentUserId: string;
   currentUser: UserType;
   users: { [id: string]: UserType };
+  putUser: (user: UserType) => void;
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
   getNames: (messages: MessageType[]) => void;
@@ -27,12 +28,13 @@ const InitialUserSlice = {
   users: {} as { [id: string]: UserType },
 };
 
-export const UserStore: StateCreator<UserSlice> = (set) => {
+export const UserStore: StateCreator<UserSlice> = (set, get) => {
   sliceResetFns.add(() => {
     set(InitialUserSlice);
   });
   return {
     ...InitialUserSlice,
+
     setCurrentUser: async (user: User) => {
       if (typeof user == "undefined") {
         set({
@@ -75,6 +77,22 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
         return {} as UserType;
       }
       return res.data;
+    },
+
+    putUser: async (user: UserType) => {
+      set({ loading: true });
+      const res = await HttpRequest<UserType>({
+        uri: "/User",
+        method: RESTMethod.Put,
+        item: user,
+        id: user.id,
+      });
+      if (res.code == "error") {
+        set({ errorMessage: res.error.message, loading: false });
+        return;
+      }
+      get().users[user.auth0Id] = res.data;
+      set({ loading: false });
     },
 
     getNames: async (messages: MessageType[]) => {

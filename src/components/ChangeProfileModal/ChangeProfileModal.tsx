@@ -2,7 +2,9 @@ import { Avatar, Badge, Button, Modal, TextField } from "@mui/material";
 import { UserType } from "../../shared/types/UserType";
 import AddPhotoAlternateRoundedIcon from "@mui/icons-material/AddPhotoAlternateRounded";
 import "./ChangeProfileModal.scss";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { PostPicture } from "../../api/GenericApi";
+import { useGlobalStore } from "../../state/GlobalStore";
 
 interface Props {
   open: boolean;
@@ -16,8 +18,31 @@ const ChangeProfileModal = ({ open, setOpen, user }: Props) => {
   const [name, setName] = useState(user.name);
   const [nickName, setNickName] = useState(user.nickName);
 
+  const { putUser } = useGlobalStore();
+
+  const fileRef = useRef<HTMLInputElement>(null);
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSave = async () => {
+    if (
+      fileRef.current?.files !== null &&
+      typeof fileRef.current?.files[0] !== "undefined"
+    ) {
+      const res = await PostPicture(fileRef.current?.files[0]);
+      console.log(res);
+      if (res.code !== "error") {
+        user.userPhoto = res.data.secure_url;
+      }
+    }
+    user.about = about;
+    user.name = name;
+    user.nickName = nickName;
+
+    await putUser(user);
+    handleClose();
   };
 
   return (
@@ -31,7 +56,18 @@ const ChangeProfileModal = ({ open, setOpen, user }: Props) => {
             badgeContent={
               <>
                 <label>
-                  <input type="file" id="ChangeProfile_GetFileInput" />
+                  <input
+                    type="file"
+                    id="ChangeProfile_GetFileInput"
+                    ref={fileRef}
+                    onChange={(event) => {
+                      const file = event.target.files?.item(0) ?? ({} as File);
+                      console.log(file);
+                      setPicture(
+                        URL.createObjectURL(file) ?? "../../profile.jpg"
+                      );
+                    }}
+                  />
                   <Avatar id="ChangeProfile_GetFileBtn">
                     <AddPhotoAlternateRoundedIcon />
                   </Avatar>
@@ -82,7 +118,11 @@ const ChangeProfileModal = ({ open, setOpen, user }: Props) => {
               setNickName(event.target.value);
             }}
           />
-          <Button variant="outlined" id="SaveProfile_button">
+          <Button
+            variant="outlined"
+            id="SaveProfile_button"
+            onClick={handleSave}
+          >
             SAVE
           </Button>
         </div>
