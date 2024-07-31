@@ -35,7 +35,7 @@ const MenuButton = ({ options, id }: Props) => {
             key={option.name}
             onClick={() => {
               option.task();
-              handleClose;
+              handleClose();
             }}
           >
             {option.name}

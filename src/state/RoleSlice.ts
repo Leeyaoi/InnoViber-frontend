@@ -127,8 +127,6 @@ export const RoleStore: StateCreator<
         uri: `/ChatRole/chat/${chatId}?userId=${get().currentUserId}`,
         method: RESTMethod.Get,
       });
-      console.log(get().currentUserId);
-      console.log(res);
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false });
       } else {
