@@ -1,0 +1,35 @@
+@import "../../index.scss";
+
+.ProfileModal_bg{
+    display: flex;
+    align-items: center;
+}
+
+.ProfileModal{
+    display: block;
+    background-color: $back-color;
+    color: $font-color;
+    width: 30%;
+    margin: auto;
+}
+
+.ProfileModal .MuiTypography-root{
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.ProfileModal .MuiTypography-root{
+    margin: 0.5rem auto;
+}
+
+.ProfileModal *{
+    margin: auto;
+}
+
+#ChangeProfile_btn{
+    display: block;
+    margin: 0.5rem auto !important;
+    color: $font-color;
+    border-color: $font-color;
+}
