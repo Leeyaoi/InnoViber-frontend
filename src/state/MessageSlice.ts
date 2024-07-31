@@ -5,6 +5,7 @@ import { RESTMethod } from "../shared/types/MethodEnum";
 import MessageType from "../shared/types/MessageType";
 import { sliceResetFns, useGlobalStore } from "./GlobalStore";
 import PaginatedModel from "../shared/types/PaginatedModel";
+import { MessageStatus } from "../shared/types/MessageStatus";
 
 export interface MessageSlice {
   loading: boolean;
@@ -102,19 +103,28 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
     },
 
     createMessage: async (chatId: string, userId: string, text: string) => {
-      set({ loading: true });
+      set({
+        messages: [
+          ...get().messages,
+          {
+            chatId: chatId,
+            userId: userId,
+            text: text,
+            status: MessageStatus.Send,
+          } as MessageType,
+        ],
+      });
       const res = await HttpRequest<MessageType>({
         uri: "/Message",
         method: RESTMethod.Post,
         item: { chatId: chatId, userId: userId, text: text },
       });
       if (res.code == "error") {
-        set({ errorMessage: res.error.message, loading: false });
+        set({ errorMessage: res.error.message });
       } else {
         set({
           success: true,
           messages: [...get().messages, res.data],
-          loading: false,
         });
       }
     },
