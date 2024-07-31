@@ -5,7 +5,6 @@ import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import { sliceResetFns } from "./GlobalStore";
 import MessageType from "../shared/types/MessageType";
-
 export interface UserSlice {
   loading: boolean;
   success: boolean;
@@ -13,9 +12,13 @@ export interface UserSlice {
   currentUserId: string;
   currentUser: UserType;
   users: { [id: string]: UserType };
+  suggestedUsers: UserType[];
+  clearSuggestedUsers: () => void;
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
   getNames: (messages: MessageType[]) => void;
+  getNames: (messages: MessageType[] | RoleType[]) => void;
+  getSuggestedUsers: (query: string) => void;
 }
 
 const InitialUserSlice = {
@@ -25,14 +28,21 @@ const InitialUserSlice = {
   currentUserId: "",
   currentUser: {} as UserType,
   users: {} as { [id: string]: UserType },
+  suggestedUsers: [],
 };
 
 export const UserStore: StateCreator<UserSlice> = (set) => {
+export const UserStore: StateCreator<UserSlice> = (set, get) => {
   sliceResetFns.add(() => {
     set(InitialUserSlice);
   });
   return {
     ...InitialUserSlice,
+
+    clearSuggestedUsers: () => {
+      set({ suggestedUsers: [] });
+    },
+
     setCurrentUser: async (user: User) => {
       if (typeof user == "undefined") {
         set({
@@ -41,7 +51,6 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
         });
         return;
       }
-
       set({ loading: true });
       const res = await HttpRequest<UserType>({
         uri: "/User/auth",
@@ -55,15 +64,12 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
           userPhoto: user.picture,
         },
       });
-
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false });
         return;
       }
-
       set({ currentUser: res.data, currentUserId: user.sub });
     },
-
     getUserById: async (userId: string) => {
       set({ loading: true });
       const res = await HttpRequest<UserType>({
@@ -78,6 +84,7 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
     },
 
     getNames: async (messages: MessageType[]) => {
+    getNames: async (messages: MessageType[] | RoleType[]) => {
       const usersId = [] as string[];
       messages.forEach((message) => usersId.push(message.userId));
 
@@ -94,6 +101,26 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
         return;
       }
       set({ users: res.data });
+      for (const key in res.data) {
+        if (!(key in get().users)) {
+          get().users[key] = res.data[key];
+        }
+      }
+    },
+
+    getSuggestedUsers: async (query: string) => {
+      const res = await HttpRequest<UserType[]>({
+        uri: `https://localhost:7081/api/User?query=${query}`,
+        method: RESTMethod.Get,
+      });
+      if (res.code == "error") {
+        set({
+          errorMessage: res.error.message,
+          suggestedUsers: [],
+        });
+        return;
+      }
+      set({ suggestedUsers: res.data });
     },
   };
 };
