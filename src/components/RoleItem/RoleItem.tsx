@@ -4,6 +4,8 @@ import { UserType } from "../../shared/types/UserType";
 import "./RoleItem.scss";
 import { useGlobalStore } from "../../state/GlobalStore";
 import MenuButton from "../../shared/UI/MenuButton/MenuButton";
+import { useState } from "react";
+import ChangeRoleModal from "../ChangeRoleModal/ChangeRoleModal";
 
 interface Props {
   user: UserType;
@@ -12,6 +14,15 @@ interface Props {
 
 const RoleItem = ({ user, role }: Props) => {
   const { deleteRole, currentRole, currentUserId } = useGlobalStore();
+  const [open, setOpen] = useState(false);
+
+  const isUserCorrect = () => {
+    return (
+      currentRole !== UserRoles.Member &&
+      typeof user !== "undefined" &&
+      user.auth0Id != currentUserId
+    );
+  };
 
   const getOptions = () => {
     return [
@@ -23,7 +34,9 @@ const RoleItem = ({ user, role }: Props) => {
       },
       {
         name: "Change role",
-        task: () => {},
+        task: () => {
+          setOpen(true);
+        },
       },
     ];
   };
@@ -40,10 +53,11 @@ const RoleItem = ({ user, role }: Props) => {
         <Typography variant="h2">{user?.name}</Typography>
         {UserRoles[role.role]}
       </div>
-      {currentRole !== UserRoles.Member &&
-      typeof user !== "undefined" &&
-      user.auth0Id != currentUserId ? (
-        <MenuButton options={getOptions()} id="UserRoleMenu" />
+      {isUserCorrect() ? (
+        <>
+          <MenuButton options={getOptions()} id="UserRoleMenu" />
+          <ChangeRoleModal open={open} setOpen={setOpen} roleObj={role} />
+        </>
       ) : (
         <></>
       )}
