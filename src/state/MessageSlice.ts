@@ -111,6 +111,7 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
             userId: userId,
             text: text,
             status: MessageStatus.Send,
+            date: Date.now().toString(),
           } as MessageType,
         ],
       });

@@ -1,6 +1,7 @@
 import { MessageStatus } from "../../types/MessageStatus";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
+import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import "./TimeStatusIndicator.scss";
 import { Typography } from "@mui/material";
 
@@ -18,11 +19,11 @@ const TimeStatusIndicator = ({
   const getStatusIcon = () => {
     switch (status) {
       case MessageStatus.Send:
-        return <CheckRoundedIcon className="status_icon" />;
+        return <AccessTimeRoundedIcon className="status_icon" />;
       case MessageStatus.Delivered:
-        return <DoneAllRoundedIcon className="status_icon" />;
+        return <CheckRoundedIcon className="status_icon" />;
       default:
-        return <DoneAllRoundedIcon className="status_icon delivered" />;
+        return <DoneAllRoundedIcon className="status_icon" />;
     }
   };
   if (reverse) {
@@ -34,8 +35,6 @@ const TimeStatusIndicator = ({
             minute: "2-digit",
           })}
         </Typography>
-        {"\t"}
-        {getStatusIcon()}
       </div>
     );
   } else {
