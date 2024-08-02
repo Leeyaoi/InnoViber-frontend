@@ -1,11 +1,4 @@
-import {
-  Modal,
-  Typography,
-  Button,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import { Modal, Typography, Button, MenuItem, Select } from "@mui/material";
 import "./ChangeRoleModal.scss";
 import { useState } from "react";
 import { UserRoles } from "../../shared/types/UserRolesEnum";
@@ -23,10 +16,6 @@ const ChangeRoleModal = ({ open, setOpen, roleObj }: Props) => {
 
   const handleClose = () => setOpen(false);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setRole(event.target.value as unknown as UserRoles);
-  };
-
   const handleClick = () => {
     roleObj.role = role as UserRoles;
     changeRole(roleObj);
@@ -41,8 +30,8 @@ const ChangeRoleModal = ({ open, setOpen, roleObj }: Props) => {
         </Typography>
         <Select
           id="ChangeRoleModal-select"
-          value={role as unknown as string}
-          onChange={handleChange}
+          value={role}
+          onChange={(e) => setRole(e.target.value as UserRoles)}
         >
           <MenuItem value={UserRoles.Member}>Member</MenuItem>
           <MenuItem value={UserRoles.Owner}>Owner</MenuItem>
