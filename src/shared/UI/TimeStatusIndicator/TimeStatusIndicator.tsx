@@ -6,7 +6,7 @@ import "./TimeStatusIndicator.scss";
 import { Typography } from "@mui/material";
 
 interface Props {
-  date: string;
+  date: string | number;
   status?: MessageStatus;
   reverse?: boolean;
 }
