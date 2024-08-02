@@ -18,28 +18,17 @@ interface Props {
 }
 
 const ChangeRoleModal = ({ open, setOpen, roleObj }: Props) => {
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState<UserRoles>(roleObj.role);
   const { changeRole } = useGlobalStore();
 
   const handleClose = () => setOpen(false);
 
   const handleChange = (event: SelectChangeEvent) => {
-    setRole(event.target.value as string);
-  };
-
-  const getRole = () => {
-    switch (role) {
-      case "0":
-        return UserRoles.Member;
-      case "1":
-        return UserRoles.Owner;
-      default:
-        return UserRoles.Admin;
-    }
+    setRole(event.target.value as unknown as UserRoles);
   };
 
   const handleClick = () => {
-    roleObj.role = getRole();
+    roleObj.role = role as UserRoles;
     changeRole(roleObj);
     handleClose();
   };
@@ -52,12 +41,12 @@ const ChangeRoleModal = ({ open, setOpen, roleObj }: Props) => {
         </Typography>
         <Select
           id="ChangeRoleModal-select"
-          value={role}
+          value={role as unknown as string}
           onChange={handleChange}
         >
-          <MenuItem value="0">Member</MenuItem>
-          <MenuItem value="1">Owner</MenuItem>
-          <MenuItem value="2">Admin</MenuItem>
+          <MenuItem value={UserRoles.Member}>Member</MenuItem>
+          <MenuItem value={UserRoles.Owner}>Owner</MenuItem>
+          <MenuItem value={UserRoles.Admin}>Admin</MenuItem>
         </Select>
         <Button
           variant="outlined"
