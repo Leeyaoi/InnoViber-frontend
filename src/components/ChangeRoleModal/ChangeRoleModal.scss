@@ -1,0 +1,43 @@
+@import "../../index.scss";
+
+.ChangeRoleModal_bg{
+    background-color: rgba($color: $darker-color, $alpha: 0.1);
+}
+
+.ChangeRoleModal{
+    border-radius: 0.5rem;
+    background-color: $back-color;
+    width: 25rem;
+    height: 11.5rem;
+    margin: auto;
+    margin-top: 20%;
+}
+
+#ChangeRoleModal_Label{
+    color: $font-color;
+    padding: 0.5rem;
+    padding-top: 1rem;
+}
+
+.ChangeRoleModal .MuiInputBase-root{
+    width: 95%;
+    color: $font-color;
+    margin: 0.5rem;
+    margin-bottom: 0;
+}
+
+.ChangeRoleModal .MuiSvgIcon-root{
+    color: $font-color;
+}
+
+#ChangeRoleModal-select{
+    width: 100%;
+}
+
+#ChangeRoleModal_Button{
+    color: $font-color;
+    border-color: $font-color;
+    margin: 0.5rem;
+    margin-top: 1rem;
+    margin-left: 60%;
+}
