@@ -1,0 +1,65 @@
+@import "../../index.scss";
+
+.ChangeProfileModal_bg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ChangeProfileModal{
+    width: 25rem;
+    background-color: $back-color;
+    border-radius: 0.5rem;
+}
+
+#ChangeProfile_Badge_Box{
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#ChangeProfile_GetFileInput {
+    display: none;
+}
+
+#ChangeProfile_Avatar{
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto;
+}
+
+#ChangeProfile_GetFileBtn{
+    background-color: $darker-color;
+    margin: 0;
+}
+
+#ChangeProfile_About_Box{
+    margin: 1rem auto;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#ChangeProfile_About_Box .MuiFormControl-root{
+    margin-top: 0.7rem;
+}
+
+#ChangeProfile_About_Box label{
+    color: $font-color;
+}
+
+#ChangeProfile_About_Box input, #ChangeProfile_About_Box textarea{
+    color: $font-color;
+}
+
+#ChangeProfile_About_Box .MuiOutlinedInput-notchedOutline{
+    border-color: $light-color;
+}
+
+#SaveProfile_button{
+    margin-top: 0.7rem;
+    color: $font-color;
+    border-color: $light-color;
+}

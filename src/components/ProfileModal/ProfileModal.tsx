@@ -2,6 +2,8 @@ import { Avatar, Button, Modal, Typography } from "@mui/material";
 import "./ProfileModal.scss";
 import { UserType } from "../../shared/types/UserType";
 import { useGlobalStore } from "../../state/GlobalStore";
+import { useState } from "react";
+import ChangeProfileModal from "../ChangeProfileModal/ChangeProfileModal";
 
 interface Props {
   open: boolean;
@@ -12,8 +14,14 @@ interface Props {
 const ProfileModal = ({ open, setOpen, user }: Props) => {
   const { currentUserId } = useGlobalStore();
 
+  const [openChange, setOpenChange] = useState(false);
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClick = () => {
+    setOpenChange(true);
   };
 
   return (
@@ -32,9 +40,20 @@ const ProfileModal = ({ open, setOpen, user }: Props) => {
         <Typography>{user.name}</Typography>
         <Typography>{user.about}</Typography>
         {user.auth0Id == currentUserId ? (
-          <Button variant="outlined" id="ChangeProfile_btn">
-            Change profile data
-          </Button>
+          <>
+            <Button
+              variant="outlined"
+              id="ChangeProfile_btn"
+              onClick={handleClick}
+            >
+              Change profile data
+            </Button>
+            <ChangeProfileModal
+              open={openChange}
+              setOpen={setOpenChange}
+              user={user}
+            />
+          </>
         ) : (
           <></>
         )}
