@@ -32,7 +32,6 @@ const ChangeProfileModal = ({ open, setOpen, user }: Props) => {
       typeof fileRef.current?.files[0] !== "undefined"
     ) {
       const res = await PostPicture(fileRef.current?.files[0]);
-      console.log(res);
       if (res.code !== "error") {
         user.userPhoto = res.data.secure_url;
       }
@@ -62,7 +61,6 @@ const ChangeProfileModal = ({ open, setOpen, user }: Props) => {
                     ref={fileRef}
                     onChange={(event) => {
                       const file = event.target.files?.item(0) ?? ({} as File);
-                      console.log(file);
                       setPicture(
                         URL.createObjectURL(file) ?? "../../profile.jpg"
                       );
