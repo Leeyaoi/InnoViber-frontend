@@ -5,6 +5,7 @@ import { HttpRequest } from "../api/GenericApi";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import { sliceResetFns } from "./GlobalStore";
 import MessageType from "../shared/types/MessageType";
+
 export interface UserSlice {
   loading: boolean;
   success: boolean;
@@ -26,7 +27,6 @@ const InitialUserSlice = {
   currentUserId: "",
   currentUser: {} as UserType,
   users: {} as { [id: string]: UserType },
-  suggestedUsers: [],
 };
 
 export const UserStore: StateCreator<UserSlice> = (set, get) => {
@@ -104,11 +104,9 @@ export const UserStore: StateCreator<UserSlice> = (set, get) => {
       if (res.code == "error") {
         set({
           errorMessage: res.error.message,
-          users: {} as { [id: string]: UserType },
         });
         return;
       }
-      set({ users: res.data });
       for (const key in res.data) {
         if (!(key in get().users)) {
           get().users[key] = res.data[key];
