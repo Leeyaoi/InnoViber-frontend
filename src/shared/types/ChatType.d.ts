@@ -6,6 +6,7 @@ type ChatType = {
   id: string;
   name: string;
   lastMessage: MessageType;
+  lastActivity: string | null;
 };
 
 export default ChatType;

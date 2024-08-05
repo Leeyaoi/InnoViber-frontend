@@ -25,7 +25,13 @@ const ChatItem = ({ chat }: Props) => {
     if (chat?.lastMessage.status == MessageStatus.Delivered) {
       return true;
     }
-    return messages.findIndex((m) => m.id == chat.lastMessage.id) < 0;
+    if (chat?.lastActivity === null) {
+      return false;
+    }
+    if (messages.findIndex((m) => m.id == chat.lastMessage.id) >= 0) {
+      return false;
+    }
+    return chat?.lastActivity < chat?.lastMessage.date;
   };
 
   return (
