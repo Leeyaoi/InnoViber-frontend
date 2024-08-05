@@ -1,7 +1,7 @@
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ListRoundedIcon from "@mui/icons-material/ListRounded";
+import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
 import { useState } from "react";
 import "./MenuButton.scss";
 
@@ -27,7 +27,7 @@ const MenuButton = ({ options, id }: Props) => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <ListRoundedIcon className="Icon" />
+        <MoreVertRoundedIcon className="Icon" />
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {options.map((option) => (
@@ -35,7 +35,7 @@ const MenuButton = ({ options, id }: Props) => {
             key={option.name}
             onClick={() => {
               option.task();
-              handleClose;
+              handleClose();
             }}
           >
             {option.name}

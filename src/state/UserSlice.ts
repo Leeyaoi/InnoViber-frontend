@@ -13,9 +13,11 @@ export interface UserSlice {
   currentUserId: string;
   currentUser: UserType;
   users: { [id: string]: UserType };
+  putUser: (user: UserType) => void;
   setCurrentUser: (user: User) => void;
   getUserById: (userId: string) => Promise<UserType>;
-  getNames: (messages: MessageType[]) => void;
+  getNames: (messages: MessageType[] | RoleType[]) => void;
+  getSuggestedUsers: (query: string) => Promise<UserType[]>;
 }
 
 const InitialUserSlice = {
@@ -27,12 +29,13 @@ const InitialUserSlice = {
   users: {} as { [id: string]: UserType },
 };
 
-export const UserStore: StateCreator<UserSlice> = (set) => {
+export const UserStore: StateCreator<UserSlice> = (set, get) => {
   sliceResetFns.add(() => {
     set(InitialUserSlice);
   });
   return {
     ...InitialUserSlice,
+
     setCurrentUser: async (user: User) => {
       if (typeof user == "undefined") {
         set({
@@ -41,7 +44,6 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
         });
         return;
       }
-
       set({ loading: true });
       const res = await HttpRequest<UserType>({
         uri: "/User/auth",
@@ -55,15 +57,12 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
           userPhoto: user.picture,
         },
       });
-
       if (res.code == "error") {
         set({ errorMessage: res.error.message, loading: false });
         return;
       }
-
       set({ currentUser: res.data, currentUserId: user.sub });
     },
-
     getUserById: async (userId: string) => {
       set({ loading: true });
       const res = await HttpRequest<UserType>({
@@ -77,7 +76,23 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
       return res.data;
     },
 
-    getNames: async (messages: MessageType[]) => {
+    putUser: async (user: UserType) => {
+      set({ loading: true });
+      const res = await HttpRequest<UserType>({
+        uri: "/User",
+        method: RESTMethod.Put,
+        item: user,
+        id: user.id,
+      });
+      if (res.code == "error") {
+        set({ errorMessage: res.error.message, loading: false });
+        return;
+      }
+      get().users[user.auth0Id] = res.data;
+      set({ loading: false });
+    },
+
+    getNames: async (messages: MessageType[] | RoleType[]) => {
       const usersId = [] as string[];
       messages.forEach((message) => usersId.push(message.userId));
 
@@ -89,11 +104,28 @@ export const UserStore: StateCreator<UserSlice> = (set) => {
       if (res.code == "error") {
         set({
           errorMessage: res.error.message,
-          users: {} as { [id: string]: UserType },
         });
         return;
       }
-      set({ users: res.data });
+      for (const key in res.data) {
+        if (!(key in get().users)) {
+          get().users[key] = res.data[key];
+        }
+      }
+    },
+
+    getSuggestedUsers: async (query: string) => {
+      const res = await HttpRequest<UserType[]>({
+        uri: `https://localhost:7081/api/User?query=${query}`,
+        method: RESTMethod.Get,
+      });
+      if (res.code == "error") {
+        set({
+          errorMessage: res.error.message,
+        });
+        return [];
+      }
+      return res.data;
     },
   };
 };
