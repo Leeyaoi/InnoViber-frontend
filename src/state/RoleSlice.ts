@@ -201,6 +201,7 @@ export const RoleStore: StateCreator<GlobalStoreState, [], [], RoleSlice> = (
         set({ errorMessage: res.error.message });
       } else {
         set({
+          currentRole: res.data.role,
           success: true,
         });
       }
