@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import { Button, FormControl, Modal, Typography } from "@mui/material";
+import { Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import "./CreateChatModal.scss";
 import { useGlobalStore } from "../../state/GlobalStore";
@@ -24,35 +24,40 @@ const AddChatFormComponent = ({ isOpen, setIsOpen }: Props) => {
   };
 
   return (
-    <Modal className="ModalCreateChat" open={isOpen} onClose={handleClose}>
+    <Modal
+      className="ModalCreateChat"
+      open={isOpen}
+      onClose={handleClose}
+      disableRestoreFocus
+    >
       <div className="ModalCreateChat_Content">
-        <FormControl>
-          <Typography variant="h1">Create chat</Typography>
-          <Typography id="ModalCreateChat_Content_Text">Chat name</Typography>
+        <Typography variant="h1">Create chat</Typography>
+        <Typography id="ModalCreateChat_Content_Text">Chat name</Typography>
 
-          <TextField
-            id="ModalCreateChat_Content_NameInput"
-            label="Please enter new chat name"
-            variant="outlined"
-            value={textInput}
-            onChange={handleTextInputChange}
-            fullWidth
-            autoFocus
-            required
-          />
-          <Button
-            id="ModalCreateChat_Button_Submit"
-            variant="outlined"
-            onClick={(event) => {
-              event.preventDefault();
+        <TextField
+          id="ModalCreateChat_Content_NameInput"
+          label="Please enter new chat name"
+          variant="outlined"
+          value={textInput}
+          onChange={handleTextInputChange}
+          fullWidth
+          autoFocus
+          required
+        />
+        <Button
+          id="ModalCreateChat_Button_Submit"
+          variant="outlined"
+          onClick={(event) => {
+            event.preventDefault();
+            if (textInput != "") {
               createChat(textInput, currentUserId);
-              handleClose();
-              setTextInput("");
-            }}
-          >
-            Add Chat
-          </Button>
-        </FormControl>
+            }
+            handleClose();
+            setTextInput("");
+          }}
+        >
+          Add Chat
+        </Button>
       </div>
     </Modal>
   );
