@@ -17,6 +17,7 @@ const MainPage = () => {
     getFirstChatPage,
     getFirstMessagePage,
     currentChatId,
+    updateActivityTime,
   } = useGlobalStore();
 
   useEffect(() => {
@@ -24,6 +25,7 @@ const MainPage = () => {
       await getFirstChatPage();
       if (currentChatId != "") {
         await getFirstMessagePage(currentChatId);
+        await updateActivityTime();
       }
     };
 
@@ -31,7 +33,12 @@ const MainPage = () => {
       update();
     }, 1000 * 10);
     return () => clearInterval(intervalId);
-  }, [currentChatId, getFirstChatPage, getFirstMessagePage]);
+  }, [
+    currentChatId,
+    getFirstChatPage,
+    getFirstMessagePage,
+    updateActivityTime,
+  ]);
 
   useEffect(() => {
     if (!isAuthenticated) {

@@ -4,7 +4,6 @@ import { MessageSlice, MessageStore } from "./MessageSlice";
 import { UserSlice, UserStore } from "./UserSlice";
 import { devtools, persist, createJSONStorage } from "zustand/middleware";
 import { RoleSlice, RoleStore } from "./RoleSlice";
-import { RoleSlice, RoleStore } from "./RoleSlice";
 
 export const sliceResetFns = new Set<() => void>();
 
@@ -14,7 +13,7 @@ export const resetGlobalStore = () => {
   });
 };
 
-interface GlobalStoreState
+export interface GlobalStoreState
   extends UserSlice,
     MessageSlice,
     ChatSlice,

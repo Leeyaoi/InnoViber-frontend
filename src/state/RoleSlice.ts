@@ -1,11 +1,9 @@
 import { StateCreator } from "zustand";
-import { sliceResetFns } from "./GlobalStore";
+import { GlobalStoreState, sliceResetFns } from "./GlobalStore";
 import { RESTMethod } from "../shared/types/MethodEnum";
 import { HttpRequest } from "../api/GenericApi";
 import { UserRoles } from "../shared/types/UserRolesEnum";
-import { UserSlice } from "./UserSlice";
 import PaginatedModel from "../shared/types/PaginatedModel";
-import { ChatSlice } from "./ChatSlice";
 
 export interface RoleSlice {
   loading: boolean;
@@ -26,6 +24,7 @@ export interface RoleSlice {
   createRole: (role: RoleType) => void;
   deleteRole: (role: RoleType) => void;
   changeRole: (role: RoleType) => void;
+  updateActivityTime: () => void;
 }
 
 const InitialRoleSlice = {
@@ -40,12 +39,10 @@ const InitialRoleSlice = {
   open: false,
 };
 
-export const RoleStore: StateCreator<
-  RoleSlice & UserSlice & ChatSlice,
-  [],
-  [],
-  RoleSlice
-> = (set, get) => {
+export const RoleStore: StateCreator<GlobalStoreState, [], [], RoleSlice> = (
+  set,
+  get
+) => {
   sliceResetFns.add(() => {
     set(InitialRoleSlice);
   });
@@ -189,6 +186,23 @@ export const RoleStore: StateCreator<
         set({
           success: true,
           loading: false,
+        });
+      }
+    },
+
+    updateActivityTime: async () => {
+      const res = await HttpRequest<RoleType>({
+        uri: `/ChatRole/time?chatId=${get().currentChatId}&userId=${
+          get().currentUserId
+        }&lastActivity=${get().messages[get().messages.length - 1].date}`,
+        method: RESTMethod.Get,
+      });
+      if (res.code == "error") {
+        set({ errorMessage: res.error.message });
+      } else {
+        set({
+          currentRole: res.data.role,
+          success: true,
         });
       }
     },

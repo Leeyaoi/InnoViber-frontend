@@ -4,7 +4,7 @@ declare module "MessageType";
 
 type MessageType = {
   id: string;
-  date: string;
+  date: string | number;
   text: string;
   status: MessageStatus;
   userId: string;

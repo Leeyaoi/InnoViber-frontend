@@ -5,4 +5,5 @@ type RoleType = {
   chatId: string;
   userId: string;
   role: UserRoles;
+  lastActivity: string | null;
 };

@@ -6,6 +6,7 @@ import { useGlobalStore } from "../../state/GlobalStore";
 import MenuButton from "../../shared/UI/MenuButton/MenuButton";
 import { useState } from "react";
 import ChangeRoleModal from "../ChangeRoleModal/ChangeRoleModal";
+import ProfileModal from "../ProfileModal/ProfileModal";
 
 interface Props {
   user: UserType;
@@ -15,6 +16,7 @@ interface Props {
 const RoleItem = ({ user, role }: Props) => {
   const { deleteRole, currentRole, currentUserId } = useGlobalStore();
   const [open, setOpen] = useState(false);
+  const [openProfile, setProfileOpen] = useState(false);
 
   const isUserCorrect = () => {
     return (
@@ -48,6 +50,7 @@ const RoleItem = ({ user, role }: Props) => {
           typeof user !== "undefined" ? user.userPhoto : "../../../profile.jpg"
         }
         slotProps={{ img: { referrerPolicy: "no-referrer" } }}
+        onClick={() => setProfileOpen(true)}
       />
       <div className="RoleItem_UserInfo">
         <Typography variant="h2">{user?.name}</Typography>
@@ -61,6 +64,7 @@ const RoleItem = ({ user, role }: Props) => {
       ) : (
         <></>
       )}
+      <ProfileModal open={openProfile} setOpen={setProfileOpen} user={user} />
     </div>
   );
 };

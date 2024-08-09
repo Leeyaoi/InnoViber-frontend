@@ -5,6 +5,8 @@ import { RESTMethod } from "../shared/types/MethodEnum";
 import MessageType from "../shared/types/MessageType";
 import { sliceResetFns, useGlobalStore } from "./GlobalStore";
 import PaginatedModel from "../shared/types/PaginatedModel";
+import { MessageStatus } from "../shared/types/MessageStatus";
+import { UserSlice } from "./UserSlice";
 
 export interface MessageSlice {
   loading: boolean;
@@ -19,7 +21,6 @@ export interface MessageSlice {
   createMessage: (chatId: string, userId: string, text: string) => void;
   deleteMessage: (id: string) => void;
   getMoreMessages: (chatId: string) => void;
-
   getFirstMessagePage: (chatId: string) => void;
 }
 
@@ -33,7 +34,12 @@ const InitialMessageSlice = {
   messagesTotal: 0,
 };
 
-export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
+export const MessageStore: StateCreator<
+  MessageSlice & UserSlice,
+  [],
+  [],
+  MessageSlice
+> = (set, get) => {
   sliceResetFns.add(() => {
     set(InitialMessageSlice);
   });
@@ -51,7 +57,9 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
       const page = get().messagesPage + 1;
       set({ loading: true });
       const res = await HttpRequest<PaginatedModel<MessageType>>({
-        uri: `/Message/Chat/${chatId}?page=${page}`,
+        uri: `/Message/Chat/${chatId}?page=${page}&userId=${
+          get().currentUserId
+        }`,
         method: RESTMethod.Get,
       });
       if (res.code == "error") {
@@ -84,7 +92,9 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
     fetchMessages: async (chatId: string) => {
       set({ loading: true });
       const res = await HttpRequest<PaginatedModel<MessageType>>({
-        uri: `/Message/Chat/${chatId}?page=${get().messagesPage}`,
+        uri: `/Message/Chat/${chatId}?page=${get().messagesPage}&userId=${
+          get().currentUserId
+        }`,
         method: RESTMethod.Get,
       });
       if (res.code == "error") {
@@ -102,19 +112,31 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
     },
 
     createMessage: async (chatId: string, userId: string, text: string) => {
-      set({ loading: true });
+      const id = Date.now().toString();
+      set({
+        messages: [
+          ...get().messages,
+          {
+            id: id,
+            chatId: chatId,
+            userId: userId,
+            text: text,
+            status: MessageStatus.Send,
+            date: Date.now(),
+          } as MessageType,
+        ],
+      });
       const res = await HttpRequest<MessageType>({
         uri: "/Message",
         method: RESTMethod.Post,
         item: { chatId: chatId, userId: userId, text: text },
       });
       if (res.code == "error") {
-        set({ errorMessage: res.error.message, loading: false });
+        set({ errorMessage: res.error.message });
       } else {
         set({
           success: true,
-          messages: [...get().messages, res.data],
-          loading: false,
+          messages: [...get().messages.filter((m) => m.id != id), res.data],
         });
       }
     },
@@ -136,7 +158,7 @@ export const MessageStore: StateCreator<MessageSlice> = (set, get) => {
 
     getFirstMessagePage: async (chatId: string) => {
       const res = await HttpRequest<PaginatedModel<MessageType>>({
-        uri: `/Message/Chat/${chatId}?page=1`,
+        uri: `/Message/Chat/${chatId}?page=1&userId=${get().currentUserId}`,
         method: RESTMethod.Get,
       });
       if (res.code == "error") {
