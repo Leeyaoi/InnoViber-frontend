@@ -52,7 +52,7 @@ const MessagesList = () => {
 
   return (
     <div className="Messages_List" onScroll={scrollEvent}>
-      {messages.map((item, index) => {
+      {messages.map((item) => {
         if (item.userId != currentUserId) {
           return (
             <OthersMessage

@@ -8,7 +8,6 @@ import { PuffLoader } from "react-spinners";
 const App = () => {
   useAxiosInterceptors();
   const { loading } = useGlobalStore();
-
   return (
     <>
       {loading ? (

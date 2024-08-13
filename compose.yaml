@@ -1,0 +1,13 @@
+services:
+  frontend:
+    image: innoviber-frontend
+    ports:
+      - 5173:5173
+    volumes:
+      - ./certs:/app/certs
+    environment:
+      HTTPS: true
+      SSL_CRT_FILE: /app/certs/cert.pem
+      SSL_KEY_FILE: /app/certs/key.pem
+    env_file:
+      - .env

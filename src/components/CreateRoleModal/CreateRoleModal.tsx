@@ -32,6 +32,7 @@ const CreateRoleModal = ({ open, setOpen }: Props) => {
 
     if (user.length == 1) {
       createRole({
+        lastActivity: null,
         chatId: currentChatId,
         userId: user[0].auth0Id,
         role: UserRoles.Member,
