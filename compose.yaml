@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: innoviber-frontend
+    image: darya2608/innoviber-frontend:latest
     ports:
       - 5173:5173
     volumes:
