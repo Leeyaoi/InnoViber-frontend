@@ -13,25 +13,23 @@ const ChatItem = ({ chat }: Props) => {
   const { currentUserId, messages } = useGlobalStore();
 
   const hasNewMessages = () => {
-    if (typeof chat?.lastMessage == "undefined") {
+    const lastMessage = chat?.lastMessage;
+    
+    if (
+      !lastMessage ||
+      lastMessage.chatId !== chat.id ||
+      lastMessage.userId === currentUserId ||
+      messages.findIndex((m) => m.id === lastMessage.id) >= 0 ||
+      lastActivity === null
+    ) {
       return false;
     }
-    if (chat?.lastMessage.chatId != chat.id) {
-      return false;
-    }
-    if (chat?.lastMessage.userId == currentUserId) {
-      return false;
-    }
-    if (chat?.lastMessage.status == MessageStatus.Delivered) {
+
+    if (lastMessage.status === MessageStatus.Delivered) {
       return true;
     }
-    if (chat?.lastActivity === null) {
-      return false;
-    }
-    if (messages.findIndex((m) => m.id == chat.lastMessage.id) >= 0) {
-      return false;
-    }
-    return chat?.lastActivity < chat?.lastMessage.date;
+
+    return chat?.lastActivity && chat.lastActivity < lastMessage.date;
   };
 
   return (
